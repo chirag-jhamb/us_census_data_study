@@ -5,3 +5,5 @@ With the second annual State of the Capital Region report from the George Washin
 
 This year’s topic stems from our concern for the region’s economic vitality. Increasing the number of homes available for sale or to rent is the most straightforward way to limit home price appreciation and increase housing affordability. Thus, we examine the amount and location of new housing in the Capital Region.  
 
+#### Programs: python_programs/ and r_programs/
+#### Output: coming soon
