@@ -1,0 +1,17 @@
+##################################################################
+#
+# this program makes a picture of median gross rent for dc-area
+# counties, 1980 to the present
+#
+# data are downloaded from nhgis special for this
+#
+# received speciail request from COG
+#
+# june 30, 2019
+#
+# grossrentv01.R
+#
+##########################################################################
+
+
+##### A. 

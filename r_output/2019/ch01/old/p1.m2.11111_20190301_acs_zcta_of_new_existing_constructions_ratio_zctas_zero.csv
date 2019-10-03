@@ -1,0 +1,5 @@
+"ZCTA","new_constructions","existing_constructions","new_existing_constructions_ratio","share_single_family_new_constructions","total_single_family_households_since_2000","total_single_family_households","STATE","COUNTY","CENSUSAREA","zcta_area","intersected_area","percent_intersected_area","NAME","LSAD","brks"
+"20317",0,313,0,-1,0,33,11,"001",61.048,1188913.7411816,1188913.7411816,1,"District of Columbia",NA,"0"
+"20838",0,105,0,-1,0,105,24,"031",491.254,7012613.16269064,7012613.16269064,1,"Montgomery","County","0"
+"20839",0,17,0,-1,0,17,24,"031",491.254,12748897.0177481,12748897.0177481,1,"Montgomery","County","0"
+"20899",0,120,0,-1,0,0,24,"031",491.254,191068.137811244,191068.137811244,1,"Montgomery","County","0"

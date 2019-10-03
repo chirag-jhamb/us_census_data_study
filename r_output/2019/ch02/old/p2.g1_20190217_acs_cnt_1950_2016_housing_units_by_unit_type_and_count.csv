@@ -1,0 +1,11 @@
+"Unit_Type","Units_Count","sum_units","unit_freq"
+"Existing","More than 50 Units",177461,10.15
+"Existing","20 to 49 Units",52977,3.03
+"Existing","5 to 19 Units",272885,15.61
+"Existing","2 to 4 Units",61487,3.52
+"Existing","1 Unit",1183587,67.7
+"New","More than 50 Units",75525,19.21
+"New","20 to 49 Units",15238,3.88
+"New","5 to 19 Units",32156,8.18
+"New","2 to 4 Units",5874,1.49
+"New","1 Unit",264295,67.24

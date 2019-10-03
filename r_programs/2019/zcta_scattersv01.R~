@@ -1,0 +1,30 @@
+##############################################################
+#
+# this program tries to make some scatter plots by 
+# zcta for the dc area
+#
+# december 18, 2018
+#
+# zcta_scattersv01.R
+#
+##################################################################
+
+##### A. load stuff 
+
+# Importing the required packages
+library(dplyr)
+library(scales)
+library(ggplot2)
+library(reshape)
+library(splitstackshape)
+library(RColorBrewer)
+library(sf)
+
+# todays date
+dateo <- paste(substr(Sys.Date(),1,4),substr(Sys.Date(),6,7),substr(Sys.Date(),9,10),sep="")
+dateo
+
+
+##### B. load data 
+
+zs <- read.csv("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2019/summary_files_data/20181217_state_county_zcta_data.csv")

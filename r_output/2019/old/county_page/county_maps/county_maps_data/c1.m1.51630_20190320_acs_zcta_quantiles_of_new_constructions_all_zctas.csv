@@ -1,0 +1,6 @@
+"ZCTA","NAME","LSAD","STATE","COUNTY","new_constructions","existing_constructions","new_existing_constructions_ratio","share_single_family_new_constructions","total_single_family_households_since_2000","total_single_family_households","CENSUSAREA","zcta_area","intersected_area","percent_intersected_area","brks"
+"22401","Fredericksburg","city",51,"630",2585,7834,0.33,0.65,1685,5371,10.44,27266119.3324267,27054388.2600744,0.992234645870544,"12036"
+"22405","Fredericksburg","city",51,"630",2582,7736,0.33,0.99,2549,10001,10.44,141813328.918025,18988.562345624,0.000133898290735424,"12036"
+"22406","Fredericksburg","city",51,"630",4092,4220,0.97,0.92,3767,6856,10.44,191622099.574469,1821.27966189384,9.50453870372114e-06,"12036"
+"22407","Fredericksburg","city",51,"630",5493,13854,0.4,0.87,4756,17077,10.44,150389832.620713,18084.1303224942,0.000120248357268293,"12036"
+"22408","Fredericksburg","city",51,"630",3516,5545,0.63,0.9,3158,8578,10.44,121209002.545365,66925.7304354124,0.000552151482398053,"12036"

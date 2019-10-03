@@ -1,0 +1,4 @@
+"ZCTA","NAME","LSAD","STATE","COUNTY","new_constructions","existing_constructions","new_existing_constructions_ratio","share_single_family_new_constructions","total_single_family_households_since_2000","total_single_family_households","CENSUSAREA","zcta_area","intersected_area","percent_intersected_area","brks"
+"22030","Fairfax","city",51,"600",6156,13189,0.47,0.51,3162,12475,6.239,49108581.3197197,12176599.4205434,0.247952579637113,"12036"
+"22031","Fairfax","city",51,"600",2626,9535,0.28,0.35,931,6708,6.239,17814974.8609017,3256761.35860163,0.182810325809059,"12036"
+"22032","Fairfax","city",51,"600",508,9290,0.05,0.81,412,9473,6.239,19413074.8728606,820652.424844883,0.0422731808443264,"642"

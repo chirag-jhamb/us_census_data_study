@@ -1,0 +1,3 @@
+"ZCTA","NAME","LSAD","STATE","COUNTY","new_constructions","existing_constructions","new_existing_constructions_ratio","share_single_family_new_constructions","total_single_family_households_since_2000","total_single_family_households","CENSUSAREA","zcta_area","intersected_area","percent_intersected_area","brks"
+"20110","Manassas Park","city",51,"685",1692,12289,0.14,0.66,1118,10256,2.534,32848976.9884208,5551.49779789895,0.000169000629756471,"1942"
+"20111","Manassas Park","city",51,"685",2188,7706,0.28,0.57,1244,8285,2.534,43187325.9312187,6537784.82395379,0.151382024308846,"12036"
