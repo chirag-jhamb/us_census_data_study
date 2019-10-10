@@ -3,19 +3,23 @@
 from sas7bdat import SAS7BDAT
 import pandas as pd
 from collections import Counter
+import datetime
+dateo = datetime.datetime.today().strftime('%Y%m%d')
+print("\n",dateo," running appendix table")
 #here are all the file paths that are used in the program:
 data_file_1970 = "/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/sas_output/2020/dec_county_census/dc1970_20190915.sas7bdat"
 data_file_1980 = "/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/sas_output/2020/dec_county_census/dc1980_20190915.sas7bdat"
 data_file_1990 = "/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/sas_output/2020/dec_county_census/dc1990_20190915.sas7bdat"
 data_file_2000 = "/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/sas_output/2020/dec_county_census/dc2000_20190915.sas7bdat"
-output_file = "/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/python_output/2020/appendix_1970_2000_20191009.csv"
+output_file = "/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/python_output/2020/appendix_1970_2000_"+dateo+".csv"
 #MSA file having all MSAs by population and each county
 msa_file = "/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/data_definitions/msa_definitions/csa-est2018-alldata.csv"
 
 def fix_fip_code(fip_code, code_length):  # for fixing the format of fips. For state pass code_length=2 (To convert to SS), for county code_length=3 (to convert to CCC) and for SSCCC pass code_length=5
-    while len(str(fip_code))<code_length:
-        cnt_fip = "0"+ str(fip_code)
-    return str(fip_code)
+    fip_code = str(fip_code).split(".")[0]    # convert to string and remove any decimals
+    while len(fip_code)<code_length:
+        fip_code = "0" + fip_code
+    return fip_code
 
 def get_top_msa(msa_file, top_n = 10):    # returns the counties in top_n(10 by default) MSAs by population in a dictionary format {MSA_code: list of FIPS of counties in the MSA}
     msa_dataframe = pd.read_csv(msa_file, encoding = "ISO-8859-1")
@@ -27,12 +31,14 @@ def get_top_msa(msa_file, top_n = 10):    # returns the counties in top_n(10 by 
     top_msa_county_data = msa_dataframe.loc[(msa_dataframe["CSA"].isin(top_msas)) & (msa_dataframe["LSAD"]=="County or equivalent")]   # select all counties which are in the top_n MSAs, get rid of all other types (MSAs, CSAs etc)
     top_msa_counties = {}
     for i in top_msas:    #loop over the codes of top_n MSAs and create a dictionary having list of the FIPs of counties in each MSA
-        top_msa_counties[i] = [fix_fip_code(int(i), 5) for i in list(top_msa_county_data.loc[top_msa_county_data["CSA"]==i]["STCOU"])]
+        top_msa_counties[i] = [fix_fip_code(i, 5) for i in list(top_msa_county_data.loc[top_msa_county_data["CSA"]==i]["STCOU"])]
+    print("Got top 10 MSAs!")
     return top_msa_counties, top_msas_dict
 
 def read_sas(file_location):   #given a location, the function reads the file and returns in a dataframe format
     with SAS7BDAT(file_location) as reader:
         df = reader.to_data_frame()
+    print("\n finished reading",file_location)
     return df
 
 def get_population_msa(df, col_name):  #takes dataframe and a column or a list of columns, iterates through all msas and returns the sum of population for each MSA
@@ -74,34 +80,36 @@ df = read_sas(data_file_1970)
 # get all m17 columns in the 1970 data, it has all the age categories. Summing them up gives the total population
 m17 = [i for i in df.columns if "m17" in i]
 df['FIPS'] = df['st70'].astype(int).apply(lambda x: fix_fip_code(x,2)) + df['cnty'].astype(int).apply(lambda x: fix_fip_code(x,3))
-cntr_1970 = get_population_msa(df, m17)
-dmv_1970 = get_population_county_level(df, m17)
+msa_population_1970 = get_population_msa(df, m17)
+dmv_population_1970 = get_population_county_level(df, m17)
 
 # For 1980, read the file, get column that gives total population. Fix FIPS code to get format SSCCC and then calculate total population for MSAs and DMV:
 df = read_sas(data_file_1980)
 df["FIPS"] = df["fipsstate"] + df["COUNTY"]
-cntr_1980 = get_population_msa(df, "t3_1")
-dmv_1980 = get_population_county_level(df, "t3_1")
+msa_population_1980 = get_population_msa(df, "t3_1")
+dmv_population_1980 = get_population_county_level(df, "t3_1")
 
 # For 1990, read the file, get column that gives total population. Fix FIPS code to get format SSCCC and then calculate total population for MSAs and DMV:
 df = read_sas(data_file_1990)
 df['FIPS'] = df['STATEFP'].astype(int).apply(lambda x: fix_fip_code(x,2)) + df['CNTY'].astype(int).apply(lambda x: fix_fip_code(x,3))
-cntr_1990 = get_population_msa(df, "P1_1")
-dmv_1990 = get_population_county_level(df, "P1_1")
+msa_population_1990 = get_population_msa(df, "P1_1")
+dmv_population_1990 = get_population_county_level(df, "P1_1")
 
 # For 2000, read the file, get column that gives total population. Fix FIPS code to get format SSCCC and then calculate total population for MSAs and DMV:
 df = read_sas(data_file_2000)
 df["FIPS"] = df["STATE"] + df["COUNTY"]
-cntr_2000 = get_population_msa(df, "P1_1")
-dmv_2000 = get_population_county_level(df, "P1_1")
+msa_population_2000 = get_population_msa(df, "P1_1")
+dmv_population_2000 = get_population_county_level(df, "P1_1")
 
+# Make an empty array, append output values in form a list. The array will become a DataFrame
 result = []
-for k,v in top_msa_counties.items():
-    for i in v:
-        result.append([top_msas_dict[k],k,i,cntr_1970[i],cntr_1980[i],cntr_1990[i],cntr_2000[i]], "MSA")
-
+print("\nCreating final output DataFrame")
+for i in top_msa_counties.keys():  #append each MSA
+    result.append([top_msas_dict[i],i,msa_population_1970[i],msa_population_1980[i],msa_population_1990[i],msa_population_2000[i], "MSA"])
+msa_code = 548  #DMV area
 for i in top_msa_counties[msa_code]:
-    result.append([top_msas_dict[k],548,i,dmv_1970[i],dmv_1980[i],dmv_1990[i],dmv_2000[i]], "county")
+    result.append([top_msas_dict[msa_code],i,dmv_population_1970[i],dmv_population_1980[i],dmv_population_1990[i],dmv_population_2000[i], "county"])
 
-res = pd.DataFrame(result, columns=["MSA","MSA_code","FIPS","1970","1980","1990","2000", "type"])
+res = pd.DataFrame(result, columns=["MSA","FIPS","1970","1980","1990","2000", "type"])
+print("Writing results to:",output_file)
 res.to_csv(output_file, index=False)
