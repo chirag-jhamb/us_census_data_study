@@ -67,25 +67,29 @@ def get_population_county_level(df, col_name, msa_code = 548):  #takes dataframe
     return cntr
 
 
-# get all m17 columns in the 1970 data, it has all the age categories. Summing them up gives the total population
-m17 = [i for i in df.columns if "m17" in i]
 top_msa_counties, top_msas_dict = get_top_msa(msa_file)
 
+# For 1970, read the file, get column that gives total population. Fix FIPS code to get format SSCCC and then calculate total population for MSAs and DMV:
 df = read_sas(data_file_1970)
+# get all m17 columns in the 1970 data, it has all the age categories. Summing them up gives the total population
+m17 = [i for i in df.columns if "m17" in i]
 df['FIPS'] = df['st70'].astype(int).apply(lambda x: fix_fip_code(x,2)) + df['cnty'].astype(int).apply(lambda x: fix_fip_code(x,3))
-cntr_1970 = get_population_msa(df, age_cols.keys())
-dmv_1970 = get_population_county_level(df, age_cols.keys())
+cntr_1970 = get_population_msa(df, m17)
+dmv_1970 = get_population_county_level(df, m17)
 
+# For 1980, read the file, get column that gives total population. Fix FIPS code to get format SSCCC and then calculate total population for MSAs and DMV:
 df = read_sas(data_file_1980)
 df["FIPS"] = df["fipsstate"] + df["COUNTY"]
 cntr_1980 = get_population_msa(df, "t3_1")
 dmv_1980 = get_population_county_level(df, "t3_1")
 
+# For 1990, read the file, get column that gives total population. Fix FIPS code to get format SSCCC and then calculate total population for MSAs and DMV:
 df = read_sas(data_file_1990)
 df['FIPS'] = df['STATEFP'].astype(int).apply(lambda x: fix_fip_code(x,2)) + df['CNTY'].astype(int).apply(lambda x: fix_fip_code(x,3))
 cntr_1990 = get_population_msa(df, "P1_1")
 dmv_1990 = get_population_county_level(df, "P1_1")
 
+# For 2000, read the file, get column that gives total population. Fix FIPS code to get format SSCCC and then calculate total population for MSAs and DMV:
 df = read_sas(data_file_2000)
 df["FIPS"] = df["STATE"] + df["COUNTY"]
 cntr_2000 = get_population_msa(df, "P1_1")
