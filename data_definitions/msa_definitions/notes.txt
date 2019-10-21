@@ -1,7 +1,7 @@
 csa-est2018-alldata.csv
 
 downloaded from
-https://www.census.gov/geographies/reference-files/time-series/demo/metro-micro/delineation-files.html
+https://www.census.gov/data/datasets/time-series/demo/popest/2010s-total-metro-and-micro-statistical-areas.html
 
-by cj
-9/2019
+by chirag@gwu.edu
+10/2019

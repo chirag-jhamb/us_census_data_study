@@ -1,0 +1,5 @@
+Author: Chirag Jhamb, chirag@gwmail.gwu.edu
+
+File: fips_state.csv
+Description: contains state codes and respective abbreviation
+Source: https://www.kaggle.com/laptou/us-fips-codes-for-states
