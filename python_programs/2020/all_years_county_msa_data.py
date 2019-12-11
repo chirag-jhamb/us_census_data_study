@@ -8,12 +8,23 @@ top_msa_counties, top_msa_by_state, top_msas_dict = get_top_msa()
 county_fip_codes = get_fip_codes()
 
 age_gate = False
-household_gate = False
+household_gate = True
+race_gate = False
+household_size_gate = False
 # age_201_columns = {'less than 18': ['B01001_3_under_5_years', 'B01001_27_under_5_years', 'B01001_4_5_to_9_years', 'B01001_28_5_to_9_years', 'B01001_5_10_to_14_years', 'B01001_29_10_to_14_years', 'B01001_6_15_to_17_years', 'B01001_30_15_to_17_years'], '18 to 29': ['B01001_7_18_and_19_years', 'B01001_31_18_and_19_years', 'B01001_8_20_years', 'B01001_32_20_years', 'B01001_9_21_years', 'B01001_33_21_years', 'B01001_10_22_to_24_years', 'B01001_34_22_to_24_years', 'B01001_11_25_to_29_years', 'B01001_35_25_to_29_years'], '30 to 44': ['B01001_12_30_to_34_years', 'B01001_36_30_to_34_years', 'B01001_13_35_to_39_years', 'B01001_37_35_to_39_years', 'B01001_14_40_to_44_years', 'B01001_38_40_to_44_years'], '45 to 59': ['B01001_15_45_to_49_years', 'B01001_39_45_to_49_years', 'B01001_16_50_to_54_years', 'B01001_40_50_to_54_years', 'B01001_17_55_to_59_years', 'B01001_41_55_to_59_years'], 'above 59': ['B01001_18_60_and_61_years', 'B01001_42_60_and_61_years', 'B01001_19_62_to_64_years', 'B01001_43_62_to_64_years', 'B01001_20_65_and_66_years', 'B01001_44_65_and_66_years', 'B01001_21_67_to_69_years', 'B01001_45_67_to_69_years', 'B01001_22_70_to_74_years', 'B01001_46_70_to_74_years', 'B01001_23_75_to_79_years', 'B01001_47_75_to_79_years', 'B01001_24_80_to_84_years', 'B01001_48_80_to_84_years', 'B01001_25_85_years_and_over', 'B01001_49_85_years_and_over']}
 data_file_1970 = "/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/sas_output/2020/dec_county_census/dc1970_20190915.sas7bdat"
 data_file_1980 = "/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/sas_output/2020/dec_county_census/dc1980_20190915.sas7bdat"
 data_file_1990 = "/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/sas_output/2020/dec_county_census/dc1990_20190915.sas7bdat"
 data_file_2000 = "/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/sas_output/2020/dec_county_census/dc2000_20190915.sas7bdat"
+
+
+household_size_1980 = {"1":['t18_1'],"2":['t18_2'],"3-4":['t18_4', 't18_3'], "More than 4":['t18_5', 't18_6']}
+household_size_1990 = {"1":["P16_1"],"2":["P16_2"],"3-4":["P16_3","P16_4"], "More than 4":['P16_5', 'P16_6', 'P16_7']}
+household_size_2000 = {"1":["P14_10"],"2":["P14_11", "P14_3"],"3-4":["P14_12","P14_13","P14_5","P14_6"], "More than 4":['P14_6', 'P14_7', 'P14_8','P14_14', 'P14_15', 'P14_16']}
+household_size_sort = {"1": 4,"2": 3,"3-4": 2,"More than 4": 1}
+household_size_col_dict = {"1980":household_size_1980, "1990":household_size_1990, "2000":household_size_2000}
+
+
 file_dict = {"1970":data_file_1970, "1980":data_file_1980, "1990":data_file_1990, "2000":data_file_2000}
 
 age_1970_columns = {'less than 18': ['m17_6', 'm17_33', 'm17_7', 'm17_34', 'm17_8', 'm17_35', 'm17_9', 'm17_36', 'm17_10', 'm17_37', 'm17_5', 'm17_32', 'm17_1', 'm17_28', 'm17_4', 'm17_31', 'm17_2', 'm17_29', 'm17_3', 'm17_30'], '18 to 29': ['m17_11', 'm17_38', 'm17_12', 'm17_39', 'm17_13', 'm17_40', 'm17_14', 'm17_41', 'm17_15', 'm17_42', 'm17_16', 'm17_43'], '30 to 44': ['m17_17', 'm17_44', 'm17_18', 'm17_45', 'm17_19', 'm17_46'], '45 to 59': ['m17_20', 'm17_47', 'm17_21', 'm17_48', 'm17_22', 'm17_49'], 'above 59': ['m17_23', 'm17_50', 'm17_24', 'm17_51', 'm17_25', 'm17_52', 'm17_26', 'm17_53', 'm17_27', 'm17_54']}
@@ -31,10 +42,10 @@ household_2000 = {"Households with kids":['P10_8', "P10_12" , "P10_15"],"Family 
 household_col_dict = {"1980":household_1980, "1990":household_1990, "2000":household_2000}
 household_sort = {"Households with kids":3,"Family Households w/o kids":1,"Non-famiy hosueholds w/o kids":2}
 
-race_1980 = {'white alone': ['t12_1', 't14_2'], 'AA alone': ['t12_2', 't14_3'], 'Asian alone': ['t12_6', 't12_7', 't12_8', 't12_9', 't12_10', 't12_11', 't12_12', 't12_13', 't12_14', 't12_15'], 'hispanic or latino': ['t14_1'], 'all others': ['t12_3', 't12_4', 't12_5', 't12_17'], 'total': ['t12_1', 't12_2', 't12_3', 't12_4', 't12_5', 't12_6', 't12_7', 't12_8', 't12_9', 't12_10', 't12_11', 't12_12', 't12_13', 't12_14', 't12_15', 't12_16', 't12_17']}
-race_1990 = {'white alone': ['P12_11', 'P12_21'], 'AA alone': ['P12_12', 'P12_22'], 'Asian alone': ['P12_14', 'P12_23'], 'hispanic or latino': ['P12_15', 'P12_21', 'P12_22', 'P12_23', 'P12_24', 'P12_25'], 'all others': ['P12_13', 'P12_15'], 'total': ['P12_11', 'P12_12', 'P12_13', 'P12_14', 'P12_15', 'P12_21', 'P12_22', 'P12_23', 'P12_24', 'P12_25']}
-race_2000 = {'white alone': ['P6_2'], 'AA alone': ["P6_3"], 'Asian alone': ["P6_2"], 'hispanic or latino': ['P7_10'], 'all others': ["P6_6","P6_7","P6_8"], 'total': ['P7_1']}
-race_col_dict = {"1980":race_1980, "1990":race_1990, "2000":race_1990}
+race_1980 = {'white alone': ['t12_1', 't14_2'], 'AA alone': ['t12_2', 't14_3'],'hispanic or latino': ['t14_1'], 'total': ['t12_1', 't12_2', 't12_3', 't12_4', 't12_5', 't12_6', 't12_7', 't12_8', 't12_9', 't12_10', 't12_11', 't12_12', 't12_13', 't12_14', 't12_15', 't12_16', 't12_17']}
+race_1990 = {'white alone': ['P12_11', 'P12_21'], 'AA alone': ['P12_12', 'P12_22'],'hispanic or latino': ['P12_15', 'P12_21', 'P12_22', 'P12_23', 'P12_24', 'P12_25'], 'total': ['P12_11', 'P12_12', 'P12_13', 'P12_14', 'P12_15', 'P12_21', 'P12_22', 'P12_23', 'P12_24', 'P12_25']}
+race_2000 = {'white alone': ['P7_3','P7_11'], 'AA alone': ["P7_4","P7_12"], 'hispanic or latino': ['P7_10'], 'total': ['P7_1']}
+race_col_dict = {"1980":race_1980, "1990":race_1990, "2000":race_2000}
 race_sort = {'white alone': 1, 'AA alone': 2, 'Asian alone': 3, 'hispanic or latino': 4, 'all others': 5}
 
 def read_sas(file_location):   #given a location, the function reads the file and returns in a dataframe format
@@ -55,7 +66,7 @@ def get_population_msa(df, col_dict):
         totals[k] += sum(population_per_type.values())
     return cntr,totals
 
-def get_population_county_level(df, col_dict, msa_code = 548):  #takes dataframe and a column or a list of columns and code of MSA, iterates through all counties in the msa and returns population in ther county. By default claculates for dmv MSA
+def get_population_county_level(df, col_dict, msa_code = 47900):  #takes dataframe and a column or a list of columns and code of MSA, iterates through all counties in the msa and returns population in ther county. By default claculates for dmv MSA
     cntr = {}
     totals = Counter()
     for i in top_msa_counties[msa_code]:
@@ -82,7 +93,7 @@ def get_population_msa_race(df, col_dict):
         # totals[k] += sum(population_per_type.values())
     return cntr,totals
 
-def get_population_county_level_race(df, col_dict, msa_code = 548):  #takes dataframe and a column or a list of columns and code of MSA, iterates through all counties in the msa and returns population in ther county. By default claculates for dmv MSA
+def get_population_county_level_race(df, col_dict, msa_code = 47900):  #takes dataframe and a column or a list of columns and code of MSA, iterates through all counties in the msa and returns population in ther county. By default claculates for dmv MSA
     cntr = {}
     totals = Counter()
     for i in top_msa_counties[msa_code]:
@@ -149,27 +160,54 @@ if household_gate==True:
 
     pd.DataFrame(household_output, columns = ["household_type","population","fip","year","total_poplulation", "type","household_sort"]).to_csv("~/household_type_19_data.csv", index=False)
 
+if race_gate==True:
+    race_output = []
+    for fl in file_dict.items():
+        yr = fl[0]
+        if yr!="1970":
+            df = read_sas(fl[1])
+            if yr=="1970":
+                df['FIPS'] = df['st70'].astype(int).apply(lambda x: fix_fip_code(x,2)) + df['cnty'].astype(int).apply(lambda x: fix_fip_code(x,3))
+            elif yr=="1980":
+                df["FIPS"] = df["fipsstate"] + df["COUNTY"]
+            elif yr=="1990":
+                df['FIPS'] = df['STATEFP'].astype(int).apply(lambda x: fix_fip_code(x,2)) + df['CNTY'].astype(int).apply(lambda x: fix_fip_code(x,3))
+            else:
+                df["FIPS"] = df["STATE"] + df["COUNTY"]
+            race_msa_population, total_msa_poplulation = get_population_msa_race(df, race_col_dict[yr])
+            race_dmv_population, total_dmv_poplulation = get_population_county_level_race(df, race_col_dict[yr])
+            for i in race_msa_population.items():
+                for j in i[1].items():
+                    race_output.append([j[0],j[1],top_msas_dict[i[0]],yr,total_msa_poplulation[i[0]], "MSA", race_sort[j[0]]])
+            for i in race_dmv_population.items():
+                for j in i[1].items():
+                    race_output.append([j[0],j[1],county_fip_codes[i[0]],yr,total_dmv_poplulation[i[0]], "DMV", race_sort[j[0]]])
 
-race_output = []
-for fl in file_dict.items():
-    yr = fl[0]
-    if yr!="1970":
-        df = read_sas(fl[1])
-        if yr=="1970":
-            df['FIPS'] = df['st70'].astype(int).apply(lambda x: fix_fip_code(x,2)) + df['cnty'].astype(int).apply(lambda x: fix_fip_code(x,3))
-        elif yr=="1980":
-            df["FIPS"] = df["fipsstate"] + df["COUNTY"]
-        elif yr=="1990":
-            df['FIPS'] = df['STATEFP'].astype(int).apply(lambda x: fix_fip_code(x,2)) + df['CNTY'].astype(int).apply(lambda x: fix_fip_code(x,3))
-        else:
-            df["FIPS"] = df["STATE"] + df["COUNTY"]
-        race_msa_population, total_msa_poplulation = get_population_msa_race(df, race_col_dict[yr])
-        race_dmv_population, total_dmv_poplulation = get_population_county_level_race(df, race_col_dict[yr])
-        for i in race_msa_population.items():
-            for j in i[1].items():
-                race_output.append([j[0],j[1],top_msas_dict[i[0]],yr,total_msa_poplulation[i[0]], "MSA", race_sort[j[0]]])
-        for i in race_dmv_population.items():
-            for j in i[1].items():
-                race_output.append([j[0],j[1],county_fip_codes[i[0]],yr,total_dmv_poplulation[i[0]], "DMV", race_sort[j[0]]])
+    pd.DataFrame(race_output, columns = ["race","population","fip","year","total_poplulation", "type","race_sort"]).to_csv("~/race_type_19_data.csv", index=False)
 
-pd.DataFrame(race_output, columns = ["race","population","fip","year","total_poplulation", "type","race_sort"]).to_csv("~/race_type_19_data.csv", index=False)
+if household_size_gate==True:
+    household_output = []
+    for fl in file_dict.items():
+        yr = fl[0]
+        if yr!="1970":
+            df = read_sas(fl[1])
+            if yr=="1970":
+                df['FIPS'] = df['st70'].astype(int).apply(lambda x: fix_fip_code(x,2)) + df['cnty'].astype(int).apply(lambda x: fix_fip_code(x,3))
+            elif yr=="1980":
+                df["FIPS"] = df["fipsstate"] + df["COUNTY"]
+            elif yr=="1990":
+                df['FIPS'] = df['STATEFP'].astype(int).apply(lambda x: fix_fip_code(x,2)) + df['CNTY'].astype(int).apply(lambda x: fix_fip_code(x,3))
+            else:
+                df["FIPS"] = df["STATE"] + df["COUNTY"]
+            print("household_size ", yr, df.shape)
+            household_msa_population, total_msa_poplulation = get_population_msa(df, household_size_col_dict[yr])
+            household_dmv_population, total_dmv_poplulation = get_population_county_level(df, household_size_col_dict[yr])
+            for i in household_msa_population.items():
+                for j in i[1].items():
+                    household_output.append([j[0],j[1],top_msas_dict[i[0]],yr,total_msa_poplulation[i[0]], "MSA", household_size_sort[j[0]]])
+
+            for i in household_dmv_population.items():
+                for j in i[1].items():
+                    household_output.append([j[0],j[1],county_fip_codes[i[0]],yr,total_dmv_poplulation[i[0]], "DMV", household_size_sort[j[0]]])
+
+    pd.DataFrame(household_output, columns = ["household_size_type","population","fip","year","total_poplulation", "type","household_size_sort"]).to_csv("~/household_size_type_19_data.csv", index=False)

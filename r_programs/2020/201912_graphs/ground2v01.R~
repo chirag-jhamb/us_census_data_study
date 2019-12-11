@@ -1,0 +1,45 @@
+#################################################################
+#
+# this file tries to make graphs for state of the capital region 2020
+#
+# data are created in 
+# /groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_programs/2020/data_set_up
+# create_dataset_all_years.R
+#
+# december 7, 2019
+#
+# ground2v01.R 
+#
+##################################################################
+
+####### A. basic set up stuff ##########################################
+
+#### set todays date #####
+
+
+####### B. set gates ################################################
+
+# set colors for all graphs #
+gcolors <- TRUE
+
+# modify dataset with things for many graphs #
+cdata <- TRUE
+
+#####################################################################
+###### gcolors : set colors for all graphs #######################
+#####################################################################
+
+
+#####################################################################
+###### cdata: clean data with things needed for many graphs #########
+#####################################################################
+
+if(cdata){
+
+  # these data are created in  
+  # /groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_programs/2020/data_set_up
+  # create_dataset_all_years.R 
+  orgd <- read.csv()
+
+
+} # end of cleaning / set up data gate

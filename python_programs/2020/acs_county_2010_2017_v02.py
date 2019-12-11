@@ -33,6 +33,7 @@ def get_summary_year_data(start_year, end_year, msa):
     # specify function to collect the data for required table and save it as a csv
 
     def get_data(table_title, table_id, state):
+        print("table_title, table_id, state",table_title, table_id, state)
         '''
         This function takes the table name, table id and state as input and iterates over
         documentation file to get the table name, table id and respective columns,
@@ -126,7 +127,7 @@ def get_summary_year_data(start_year, end_year, msa):
         # print(col_names)
 
         col_names_updated = ['FILEID', 'FILETYPE', 'STATE', 'CHARITER', 'SEQUENCE', 'LOGRECNO'] + col_names
-        # print("updated col names", col_names_updated)
+        print("updated col names", col_names_updated)
 
         # total_cols =start_pos+len(col_names)
 
@@ -137,11 +138,11 @@ def get_summary_year_data(start_year, end_year, msa):
 
         # provide the path of the file in the data directory using sequence number
         path = dataDir + '/e' + end_year + '5' + state.lower() + '0' + str(seq_number).zfill(3) + '000.txt'
-        # print(path)
+        print(path)
 
         # find the ending position of the column list
         end_pos = len(col_names) + start_pos - 1
-        # print(end_pos)
+        print(end_pos)
 
         # if end_pos>max_cols:
         #   end_pos=max_cols+1
@@ -153,7 +154,7 @@ def get_summary_year_data(start_year, end_year, msa):
         # print(col_list)
 
         col_list_updated = list(range(0, 6)) + col_list
-        # print("updated col list", col_list_updated)
+        print("updated col list", col_list_updated)
 
         # read the data from the give sequence file for specified column list
         data = pd.read_csv(path, header=None, usecols=col_list_updated, dtype=str)
@@ -162,13 +163,13 @@ def get_summary_year_data(start_year, end_year, msa):
         data.columns = col_names_updated
 
         # print the dimension of the dataset
-        # print(data.shape)
+        print(data.shape)
 
         # print the column names of the dataset
-        # print(data.columns)
+        print(data.columns)
 
         # print first few rows of the dataset
-        # print(data.head())
+        print(data.head())
 
         # read the geograpy file
         path = inDir + '/geog/g' + end_year + '5' + state.lower() + '.txt'
@@ -213,13 +214,13 @@ def get_summary_year_data(start_year, end_year, msa):
 
         # print the column names of the dataset
         print(data.columns)
-
         # print first few rows of the dataset
-        # print(data.head())
+        print(data.head())
+        # print(data["SUMMARY_LEVEL"], data["SUMMARY_LEVEL"].unique())
 
         # use the table title name to save the table data
         table_name = table_title.replace(" ", "_") + "_state_" + end_year + ".csv"
-        print(table_name)
+        print("table_name",table_name)
 
         # specify the path to save the data
         save_file = os.path.join(outDir, table_name)
@@ -234,13 +235,14 @@ def get_summary_year_data(start_year, end_year, msa):
         # data = data.query('ZCTA=="860"')
 
         # for respective state subset for require counties
-        try:
-            county_codes = top_msa_by_state[msa][county_states[state]]
-            data = data[data["COUNTY"].isin(county_codes)]
-        except:
-            print(state + ' is not in the list')
 
-        # print("Number of counties", data.COUNTY.value_counts())
+        # try:
+        county_codes = top_msa_by_state[msa][county_states[state]]
+        data = data[data["COUNTY"].isin(county_codes)]
+        # except:
+        #     print(state + ' is not in the list')
+
+        print("Number of counties", data.COUNTY.value_counts())
 
         return data
 
@@ -287,7 +289,8 @@ def get_summary_year_data(start_year, end_year, msa):
         # Gross_Rent_df = get_data('GROSS RENT', 'B25063', state)
         # Gross_Rent_percent_df = get_data('MEDIAN GROSS RENT AS A PERCENTAGE OF HOUSEHOLD INCOME IN THE PAST 12 MONTHS (DOLLARS)', 'B25071', state)
         # Tenure_year_df = get_data('TENURE BY YEAR STRUCTURE BUILT', 'B25036', state)
-
+        hosuehold_size_df = get_data('HOUSEHOLD TYPE BY HOUSEHOLD SIZE', 'B11016', state)
+# B11016
 
         Age_df_subset = Age_df.iloc[:, np.r_[5, 11:len(Age_df.columns)]]
         Race_df_subset = Race_df.iloc[:, np.r_[5, 11:len(Race_df.columns)]]
@@ -310,6 +313,7 @@ def get_summary_year_data(start_year, end_year, msa):
         # Gross_Rent_df_subset = Gross_Rent_df.iloc[:, np.r_[5, 11:len(Gross_Rent_df.columns)]]
         # Gross_Rent_percent_df_subset = Gross_Rent_percent_df.iloc[:, np.r_[5, 11:len(Gross_Rent_percent_df.columns)]]
         # Tenure_year_df_subset = Tenure_year_df.iloc[:, np.r_[5, 11:len(Tenure_year_df.columns)]]
+        hosuehold_size_df_subset = hosuehold_size_df.iloc[:, np.r_[5, 11:len(hosuehold_size_df.columns)]]
 
 
         # create a list of all dataframes to merge them together
@@ -318,12 +322,16 @@ def get_summary_year_data(start_year, end_year, msa):
         #                TypeOfHousing_df_subset, MedianValue_df_subset, AgeOfHousing_df_subset, Tenure_by_year_df_subset,
                        # FamilyType_by_children_df_subset, Owner_Occupied_Housing_Value_df_subset, Race_Hispanic_Latino_df_subset, Gross_Rent_df_subset,
         #                Gross_Rent_percent_df_subset]
+
+        print("Age_df:",Age_df.shape)
+        print("Population_df:",Population_df.shape)
+        print("Age_df_subset:",Age_df_subset.shape)
         if int(end_year) > 2010:
             data_frames = [Population_df, Age_df_subset, Race_df_subset, Household_df_subset, Education_df_subset,
                        Income_df_subset, Median_Income_df_subset, NoOfHousing_df_subset, Tenure_df_subset,
                        TypeOfHousing_df_subset, MedianValue_df_subset, AgeOfHousing_df_subset, Tenure_by_year_df_subset,
                        # ,FamilyType_by_children_df_subset, Owner_Occupied_Housing_Value_df_subset,
-                       Race_Hispanic_Latino_df_subset, HouseholdFamily_df_subset
+                       Race_Hispanic_Latino_df_subset, HouseholdFamily_df_subset, hosuehold_size_df_subset
                        # Gross_Rent_df_subset, Gross_Rent_percent_df_subset, Tenure_year_df_subset
                        ]
         else:
@@ -331,11 +339,12 @@ def get_summary_year_data(start_year, end_year, msa):
                            Income_df_subset, Median_Income_df_subset, NoOfHousing_df_subset, Tenure_df_subset,
                            TypeOfHousing_df_subset, MedianValue_df_subset, AgeOfHousing_df_subset,
                            # ,FamilyType_by_children_df_subset, Owner_Occupied_Housing_Value_df_subset,
-                           Race_Hispanic_Latino_df_subset, HouseholdFamily_df_subset
+                           Race_Hispanic_Latino_df_subset, HouseholdFamily_df_subset, hosuehold_size_df_subset
                            # , Gross_Rent_df_subset,Gross_Rent_percent_df_subset, Tenure_year_df_subset
                            ]
 
         # merge all the dataframes together
+        # print("\nmerging data_frames",data_frames)
         mergedDF = reduce(lambda left, right: pd.merge(left, right, on=['LOGRECNO'], how='outer'), data_frames)
         #
         # # print columns of summary dataframe
@@ -353,23 +362,17 @@ def get_summary_year_data(start_year, end_year, msa):
         mergedDF_T = mergedDF.T
 
         # mergedDF_MD_T.columns = mergedDF_MD_T.loc["COUNTY"]
-        mergedDF_T.columns = list([county_states[state]] * len(mergedDF_T.columns)) + (mergedDF_T.loc["COUNTY"])
-
+        # print("\n\n mergedDF_T:",mergedDF_T)
+        mergedDF_T.columns = list([state + '_'] * len(mergedDF_T.columns)) + (mergedDF_T.loc["COUNTY"])
+        # print(mergedDF_T.columns)
         mergedDF_T = mergedDF_T.drop("COUNTY")
-
+        # print(mergedDF_T.head())
         return mergedDF_T
 
-    # if msa==548:
-    #     mergedDF_DC_T = get_summary_data('DC')
-    #     mergedDF_MD_T = get_summary_data('MD')
-    #     mergedDF_VA_T = get_summary_data('VA')
-    #     mergedDF_WV_T = get_summary_data('WV')
-    #
-    #     mergedDF = pd.concat([mergedDF_DC_T, mergedDF_MD_T, mergedDF_VA_T, mergedDF_WV_T], axis=1)
-    # else:
     DF_list = []
     for st in top_msa_by_state[msa].keys():
         DF_list.append(get_summary_data(state_codes[st]))
+
     mergedDF = pd.concat(DF_list, axis=1)
     # print(mergedDF.head())
     # print(mergedDF.columns.tolist())
@@ -378,10 +381,7 @@ def get_summary_year_data(start_year, end_year, msa):
     # creating multilevel index
 
     df = mergedDF
-    try:
-        estimate_end_year = list(mergedDF.loc['FILETYPE'])[0][:4]
-    except:
-        estimate_end_year = "2017"
+    estimate_end_year = list(mergedDF.loc['FILETYPE'])[0][:4]
     estimate_start_year = str(int(estimate_end_year) - 4)
 
     df['estimate_year'] = [estimate_start_year + '-' + estimate_end_year] * len(mergedDF.index)
@@ -390,11 +390,11 @@ def get_summary_year_data(start_year, end_year, msa):
     #
     df = df.reset_index()
 
-    # df = df.set_index(['estimate_year', 'index'])
+    df = df.set_index(['estimate_year', 'index'])
 
     # print(df.columns.name)
     #
-    # df.columns.name = ""
+    df.columns.name = ""
     #
     # print(df)
     return df
@@ -402,19 +402,24 @@ def get_summary_year_data(start_year, end_year, msa):
 
 #
 #
-# end_year = ['2009','2013', '2017']
+end_year = ['2009','2013', '2017']
 #
 # end_year = ['2013', '2014', '2015', '2016', '2017','2011', '2012']
 #
-end_year = ['2017']
-error_filenotfound = []
+end_year = ['2009']
+data = pd.DataFrame()
 for year in end_year:
-    for MSA in top_msa_counties.keys():
+    # for MSA in top_msa_counties.keys():
+    for MSA in [47900]:
         dft = get_summary_year_data(str(int(year) - 4), year, MSA)
+        dft["MSA"] = MSA
+        data = data.append(dft)
         filename = datetime.datetime.today().strftime('%Y%m%d') + '_cnty_acs_' + year + '_' + str(MSA) + '_population.csv'
+        print(dft.shape)
         print("Writing to:",filename)
-        dft.to_csv("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/python_output/2020/summary_files_msa/"+filename, index=False)
-        print("\nFile saved")
-
-print("\n\nerror_filenotfound: ",error_filenotfound)
-# error_filenotfound:  [['2013', 408], ['2013', 348], ['2013', 176], ['2013', 206], ['2013', 428], ['2013', 288], ['2013', 548], ['2013', 370], ['2013', 122], ['2013', 148], ['2014', 408], ['2014', 348], ['2014', 176], ['2014', 206], ['2014', 428], ['2014', 288], ['2014', 548], ['2014', 370], ['2014', 122], ['2014', 148], ['2015', 408], ['2015', 348], ['2015', 176], ['2015', 206], ['2015', 428], ['2015', 288], ['2015', 548], ['2015', 370], ['2015', 122], ['2015', 148], ['2017', 408], ['2017', 348], ['2017', 176], ['2017', 206], ['2017', 428], ['2017', 288], ['2017', 548], ['2017', 370], ['2017', 122], ['2017', 148]]
+        dft.to_csv("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/python_output/2020/summary_files_msa/"+filename)
+        print("\nFile saved:\n","/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/python_output/2020/summary_files_msa/"+filename)
+# filename = datetime.datetime.today().strftime('%Y%m%d') + '_cnty_acs_all_years_population.csv'
+# data = data.set_index(['estimate_year', 'index'])
+# data.to_csv("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/python_output/2020/summary_files_msa/"+filename)#, index=False)
+# print("\nFile saved", filename)

@@ -17,9 +17,12 @@ def fix_fip_code(fip_code, code_length):  # for fixing the format of fips. For s
         fip_code = "0" + fip_code
     return fip_code
 
-def get_fip_codes():
-    state_codes = get_state_code()
-    state_df = pd.read_excel("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/data_definitions/all-geocodes-v2016.xlsx", encoding = "ISO-8859-1", header = 4)
+def get_fip_codes(geocode_file = "/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/data_definitions/all-geocodes-v2016.xlsx", state_code_file = ""):
+    if not state_code_file:
+        state_codes = get_state_code()
+    else:
+        state_codes = get_state_code(state_code_file)
+    state_df = pd.read_excel(geocode_file, encoding = "ISO-8859-1", header = 4)
     states = state_df[state_df['Summary Level']==50]
     states["State Code (FIPS)"] = states["State Code (FIPS)"].astype(int).apply(lambda x: fix_fip_code(x,2))
     states["FIP"] = states["State Code (FIPS)"] + states["County Code (FIPS)"].astype(int).apply(lambda x: fix_fip_code(x,3))
@@ -44,7 +47,19 @@ def get_top_msa(msa_file = msa_file_import, top_n = 10):    # returns the counti
         for j in top_msa_counties[i]:
             temp[j[:2]].append(j[2:])
         top_msa_by_state[i] = temp
+    top_msa_counties[33100].append('12025')  #  YEAR 1997: Dade county (FIPS 12025) is renamed as Miami-Dade county (FIPS 12086)
     print("Got top 10 MSAs!")
+    print(top_msa_counties[33100])
     return top_msa_counties, top_msa_by_state, top_msas_dict
 # top_msa_counties, top_msa_by_state, top_msas_dict = get_top_msa()
 # set([states(str(j[:3])) for j in top_msa_counties[i]])
+
+
+def get_county_names(geocode_file = "/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/data_definitions/all-geocodes-v2016.xlsx"):
+    county_df = pd.read_excel(geocode_file, encoding = "ISO-8859-1", header = 4)
+    county_df = county_df[county_df['Summary Level']==50]
+    county_df["State Code (FIPS)"] = county_df["State Code (FIPS)"].astype(int).apply(lambda x: fix_fip_code(x,2))
+    county_df["FIP"] = county_df["State Code (FIPS)"] + county_df["County Code (FIPS)"].astype(int).apply(lambda x: fix_fip_code(x,3))
+    county_df["name"] = county_df['Area Name (including legal/statistical area description)']
+    county_dict = county_df.set_index('FIP')['name'].to_dict()
+    return county_dict
