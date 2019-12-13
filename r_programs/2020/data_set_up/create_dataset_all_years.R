@@ -2,11 +2,11 @@
 # Takes csv created by the program /groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/python_programs/2020/load_1970_2000_sasdata.py
 # transforms and adds data to output format columns
 # Reads ACS years and years 1970-2000.
-
+# Groups counties by MSA level and for DMV counties by county level
 # Writes the data subset to csv for visualisation
 # Author: Chirag Jhamb
 ################################################################################
-
+# import libraries required:
 library(data.table)
 library(dplyr)
 library(scales)
@@ -23,8 +23,11 @@ data_file_1970_2000_census <- "/groups/brooksgrp/center_for_washington_area_stud
 # folder where ACS years o/p data is
 # files created using /groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/python_programs/2020/acs_county_2010_2017_v02.py
 data_folder_acs_years <- "/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/python_output/2020/summary_files_msa"
+# date variable to be added to the final output filename:
 dateo <- paste(substr(Sys.Date(),1,4),substr(Sys.Date(),6,7),substr(Sys.Date(),9,10),sep="")
 
+####### Data Functions definitions ######
+# Added 54037 (West Virginia Manually)
 # function to get list of counties in a msa, given its msa_code. Returns unique list of county FIPS
 get_msa_counties <- function(cbsa_code){
   msa_file = "/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/data_definitions/msa_definitions/csa-est2018-alldata.csv"
@@ -76,7 +79,7 @@ get_top_n_msa_county_level <- function(top_n = 10){
   return(top_10_msa)
 }
 
-
+# function to transpose and group acs data before it is stacked up together. Uses the index of the data file to get year and county
 reformat_acs_data <- function(df){
   data <- as.data.frame(t(df))
   # remove unnecessary columns
@@ -188,29 +191,31 @@ reformat_1970_2000_data <- function(data){
 # year 1980:
   data_1980 <- subset(data, year=="1980")
   # age 1980 columns:
-  # 1 to 11 & 27 to 37
-  data_1980['less_than_18'] <- rowSums(data_1980[,c("t15_1","t15_2","t15_3","t15_4","t15_5","t15_6","t15_7","t15_8","t15_9","t15_10","t15_11","t15_27","t15_28","t15_29","t15_30","t15_31","t15_32","t15_33","t15_34","t15_35","t15_36","t15_37")])
-  # 12 to 17 & 38 to 43
-  data_1980['18_to_29'] <- rowSums(data_1980[,c("t15_12","t15_13","t15_14","t15_15","t15_16","t15_17","t15_38","t15_39","t15_40","t15_41","t15_42","t15_43")])
-  # 18 and 19 & 44 and 45
-  data_1980['30_to_44'] <- rowSums(data_1980[,c("t15_18","t15_19","t15_44","t15_45")])
-  # 20 and 21 & 46 and 47
-  data_1980['45_to_59'] <- rowSums(data_1980[,c("t15_20","t15_21","t15_46","t15_47")])
-  # 22 to 26 & 48 to 52
-  data_1980['above_59'] <- rowSums(data_1980[,c("t15_22","t15_23","t15_24","t15_25","t15_26","t15_48","t15_49","t15_50","t15_51","t15_52")])
+  # t15_1 to 26 contain total population and other t15 columns contain only female population
+  # 1 to 11
+  data_1980['less_than_18'] <- rowSums(data_1980[,c("t15_1","t15_2","t15_3","t15_4","t15_5","t15_6","t15_7","t15_8","t15_9","t15_10","t15_11")])
+  # 12 to 17
+  data_1980['18_to_29'] <- rowSums(data_1980[,c("t15_12","t15_13","t15_14","t15_15","t15_16","t15_17")])
+  # 18 and 19
+  data_1980['30_to_44'] <- rowSums(data_1980[,c("t15_18","t15_19")])
+  # 20 and 21
+  data_1980['45_to_59'] <- rowSums(data_1980[,c("t15_20","t15_21")])
+  # 22 to 26
+  data_1980['above_59'] <- rowSums(data_1980[,c("t15_22","t15_23","t15_24","t15_25","t15_26")])
 
   # race 1980 columns
   data_1980['white_alone'] <- rowSums(data_1980[,c("t12_1","t14_2")])
   data_1980['AA_alone'] <- rowSums(data_1980[,c("t12_2","t14_3")])
   names(data_1980)[names(data_1980) == 't14_1'] <- 'hispanic_or_latino'  # rename since only one column, need atleast two columns to apply the sum function
-  # data_1980['hispanic_or_latino'] <- rowSums(data_1980[,c("t14_1")])
-  # data_1980['total_population'] <- rowSums(data_1980[,c("less_than_18","18_to_29","30_to_44","45_to_59","above_59")])
-  print("Running t3_1 for total population")
+  # t3_1 for total population of 1980
   names(data_1980)[names(data_1980) == 't3_1'] <- 'total_population'  # rename since only one column, need atleast two columns to apply the sum function
+  print("DC white share:")
+  dc_1980 <- subset(data_1980,FIPS=="11001")
+  dc_1980['white_share'] <- dc_1980['white_alone']/dc_1980['total_population']
+  print(dc_1980['white_share'])
   # household type 1980 columns
   data_1980['household_with_kids'] <- rowSums(data_1980[,c("t20_1","t20_3","t20_5")])
   data_1980['family_household_without_kids'] <- rowSums(data_1980[,c("t20_2","t20_4","t20_6")])
-  # data_1980['non_family_household_without_kids'] <-
   names(data_1980)[names(data_1980) == 't20_7'] <- 'non_family_household_without_kids'  # rename since only one column, need atleast two columns to apply the sum function
   #household size columns:
   names(data_1980)[names(data_1980) == 't18_1'] <- 'household_size_1'
@@ -319,7 +324,7 @@ reformat_1970_2000_data <- function(data){
     data_1990[i] <- data_1990[i]/data_1990['total_population']
   }
   print(head(data_1980[age_cols]))
-  
+
   print("Age Share 1990:")
   print(head(data_1990[age_cols]))
   # data_1990['pop_share'] <- data_1990['pop_share']/data_1990['total_population']
@@ -331,15 +336,23 @@ reformat_1970_2000_data <- function(data){
   data_1980['pop_share'] <- rowSums(data_1980[,house_cols])
   data_1990['pop_share'] <- rowSums(data_1990[,house_cols])
   data_2000['pop_share'] <- rowSums(data_2000[,house_cols])
-  print("House Share 1980:")
+  for (i in house_cols){
+    data_1980[i] <- data_1980[i]/data_1980['total_population']
+    data_1990[i] <- data_1990[i]/data_1990['total_population']
+    data_2000[i] <- data_2000[i]/data_2000['total_population']
+  }
+  print("HOUSEHOLD SIZE CHECK:")
+
+  print("House size 1980:")
   data_1980['pop_share'] <- data_1980['pop_share']/data_1980['total_population']
-  print(head(data_1980['pop_share']))
-  print("House Share 1990:")
+  print(head(data_1980[house_cols]))
+
+  print("House size 1990:")
   data_1990['pop_share'] <- data_1990['pop_share']/data_1990['total_population']
-  print(head(data_1990['pop_share']))
-  print("House Share 2000:")
+  print(head(data_1990[house_cols]))
+  print("House size 2000:")
   data_2000['pop_share'] <- data_2000['pop_share']/data_2000['total_population']
-  print(head(data_2000['pop_share']))
+  print(head(data_2000[house_cols]))
 
   data_1980['pop_share'] <- rowSums(data_1980[,household_type_cols])
   data_1990['pop_share'] <- rowSums(data_1990[,household_type_cols])
@@ -357,6 +370,8 @@ reformat_1970_2000_data <- function(data){
   return(data_1970_to_2000)
 }
 
+#####******** Main program start *****#####
+
 top_10_msa <- get_top_n_msa_county_level()   # get top 10 MSA's county data
 top_10_msa_county_codes <- as.vector(top_10_msa$FIPS)  # list of counties that will be needed
 print("Got top MSAs")
@@ -370,7 +385,6 @@ household_type_cols <- c("household_with_kids", "family_household_without_kids",
 to_add_cols <- c(age_cols, race_cols, house_cols,household_type_cols)
 #other columns:
 all_cols <- c(to_add_cols, "FIPS", "year")
-# all_cols <- c(to_add_cols, "FIPS", "year", "MSA")
 
 # read 1970 to 2000 data:
 data_1970_to_2000 <- read.csv(data_file_1970_2000_census)
@@ -381,8 +395,9 @@ print(dim(data_1970_to_2000))
 #convert data to required columns:
 print("Reformatting data_1970_to_2000")
 data_1970_to_2000 <- reformat_1970_2000_data(data_1970_to_2000)
-# add MSA name to data:
+
 print("Adding MSAs to FIPS of data_1970_to_2000")
+# add MSA name to data_1970_to_2000:
 top_10_msa$FIPS <- as.character(top_10_msa$FIPS)
 data_1970_to_2000$FIPS <- as.character(data_1970_to_2000$FIPS)
 data_1970_to_2000 <- merge(data_1970_to_2000, top_10_msa, by="FIPS")
@@ -428,15 +443,6 @@ print(dim(data_acs_years))
 print("Combining data_acs_years and data_1970_to_2000")
 all_years_df <- rbindlist(list(data_acs_years, data_1970_to_2000),fill=TRUE)
 print(dim(all_years_df))
-# subset dmv level data for merging later with MSA level data:
-dmv_subset <- all_years_df[all_years_df$FIPS %in% as.character(get_msa_counties(47900)),]
-dmv_subset$level <- "county_level"
-
-# cols_to_be_added <- c('less_than_18', '18_to_29', '30_to_44', '45_to_59', 'above_59', "total_population","household_size_1", "household_size_2", "household_size_3_to_4", "household_size_more_than_4", "household_with_kids", "family_household_without_kids", "non_family_household_without_kids", "white_alone", "AA_alone", "hispanic_or_latino")
-# cols_to_be_added <- c('less_than_18', '18_to_29', '30_to_44', '45_to_59', 'above_59', "total_population","household_size_1", "household_size_2", "household_size_3_to_4", "household_size_more_than_4", "white_alone", "AA_alone", "hispanic_or_latino")
-# sum_by <- c("MSA","year")
-# slct <- c(sum_by,cols_to_be_added)
-# added_msa <- data_1970_to_2000 %>%group_by(.dots=sum_by) %>%summarise_each(funs(sum))
 print(head(all_years_df))
 print("Creating MSA level dataset")
 all_years_df$CBSA <- NULL
@@ -447,6 +453,16 @@ all_years_df <- merge(all_years_df, top_10_msa, by="FIPS")
 print(names(all_years_df))
 print(unique(all_years_df$CBSA))
 print(unique(all_years_df$year))
+
+# subset dmv level data for merging later with MSA level data:
+dmv_subset <- all_years_df[all_years_df$FIPS %in% as.character(get_msa_counties(47900)),]
+dmv_subset$level <- "county_level"
+
+# cols_to_be_added <- c('less_than_18', '18_to_29', '30_to_44', '45_to_59', 'above_59', "total_population","household_size_1", "household_size_2", "household_size_3_to_4", "household_size_more_than_4", "household_with_kids", "family_household_without_kids", "non_family_household_without_kids", "white_alone", "AA_alone", "hispanic_or_latino")
+# cols_to_be_added <- c('less_than_18', '18_to_29', '30_to_44', '45_to_59', 'above_59', "total_population","household_size_1", "household_size_2", "household_size_3_to_4", "household_size_more_than_4", "white_alone", "AA_alone", "hispanic_or_latino")
+# sum_by <- c("MSA","year")
+# slct <- c(sum_by,cols_to_be_added)
+# added_msa <- data_1970_to_2000 %>%group_by(.dots=sum_by) %>%summarise_each(funs(sum))
 # create sum of total population by MSA level
 total_pop_df <- all_years_df %>% group_by(CBSA, year) %>% summarise(total_population = sum(total_population))
 # loop through each column to be added and groupby to create it's MSA level data, merge with total_pop_df data:
@@ -477,6 +493,6 @@ final_df <- rbindlist(list(total_pop_df, dmv_subset),fill=TRUE)
 final_df$msa_name <- NULL
 print(head(final_df))
 filename <- paste("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/",dateo,"_dataset_all_years.csv",sep="")
-print("Saving file..")
-write.csv(final_df, filename)
-print(filename)
+# print("Saving file..")
+# write.csv(final_df, filename)
+# print(filename)

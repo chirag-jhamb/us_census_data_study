@@ -11,7 +11,7 @@
 # december 9, 2019
 # december 10, 2019
 # december 11, 2019
-#
+# december 12, 2019: edited by Chirag. Edits: changed input file name (updated date)
 # ground2v05.R 
 #
 ##################################################################
@@ -22,7 +22,8 @@
 require(tidyverse)
 require(ggplot2)
 require(scales)
-
+library(dplyr)  # added by chirag to fix cant find "groupby" error
+library(tidyr)  # added by chirag to fix cant find "gather" error
 #### set todays date #####
 dateo <- paste(substr(Sys.Date(),1,4),substr(Sys.Date(),6,7),substr(Sys.Date(),9,10),sep="")
 dateo
@@ -72,7 +73,8 @@ if(cdata){
   # these data are created in  
   # /groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_programs/2020/data_set_up
   # create_dataset_all_years.R 
-  orgd <- read.csv("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/20191211_dataset_all_years.csv")
+  # changed by chirag from 20191211 to 20191212
+  orgd <- read.csv("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/20191212_dataset_all_years.csv")
   #orgd <- read.csv("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_programs/2020/data_set_up/20191211_dataset_all_years.csv")
   print(names(orgd))
   checker <- orgd

@@ -1,0 +1,499 @@
+"NAME","year","FIPS","hhts_type_name","hhts_share"
+NA,2009,24009,"household w/ kids",0.42106679222439
+NA,2009,24017,"household w/ kids",0.418553837985747
+NA,2009,24021,"household w/ kids",0.386519674188547
+NA,2009,24031,"household w/ kids",0.360826390079599
+NA,2009,24033,"household w/ kids",0.370517928286853
+NA,2009,11001,"household w/ kids",0.221319942725637
+NA,2009,51013,"household w/ kids",0.20071315460173
+NA,2009,51043,"household w/ kids",0.271186440677966
+NA,2009,51047,"household w/ kids",0.401024713682942
+NA,2009,51059,"household w/ kids",0.361680864873085
+NA,2009,51061,"household w/ kids",0.35719004624532
+NA,2009,51107,"household w/ kids",0.448180779540361
+NA,2009,51153,"household w/ kids",0.465201968373506
+NA,2009,51157,"household w/ kids",0.293237971391417
+NA,2009,51177,"household w/ kids",0.45330548046203
+NA,2009,51179,"household w/ kids",0.47964726987897
+NA,2009,51187,"household w/ kids",0.340005865962751
+NA,2009,51510,"household w/ kids",0.193604836143812
+NA,2009,51600,"household w/ kids",0.291711134827464
+NA,2009,51610,"household w/ kids",0.340677966101695
+NA,2009,51630,"household w/ kids",0.222846231607323
+NA,2009,51683,"household w/ kids",0.452632483037018
+NA,2009,51685,"household w/ kids",0.452192287374538
+NA,2009,54037,"household w/ kids",0.355189574675491
+NA,2013,24009,"household w/ kids",0.388610419428904
+NA,2013,24017,"household w/ kids",0.384842039534022
+NA,2013,24021,"household w/ kids",0.37345518144017
+NA,2013,24031,"household w/ kids",0.35593502383772
+NA,2013,24033,"household w/ kids",0.361902313794115
+NA,2013,11001,"household w/ kids",0.207487985920675
+NA,2013,51013,"household w/ kids",0.205295699493934
+NA,2013,51043,"household w/ kids",0.315232974910394
+NA,2013,51047,"household w/ kids",0.380322962778228
+NA,2013,51059,"household w/ kids",0.369951373144434
+NA,2013,51061,"household w/ kids",0.345568525724168
+NA,2013,51107,"household w/ kids",0.487593110087199
+NA,2013,51153,"household w/ kids",0.468363510064783
+NA,2013,51157,"household w/ kids",0.258509659613615
+NA,2013,51177,"household w/ kids",0.423146083579084
+NA,2013,51179,"household w/ kids",0.448764758879036
+NA,2013,51187,"household w/ kids",0.327934941266421
+NA,2013,51510,"household w/ kids",0.212440147470514
+NA,2013,51600,"household w/ kids",0.308290155440414
+NA,2013,51610,"household w/ kids",0.357370517928287
+NA,2013,51630,"household w/ kids",0.295428980468351
+NA,2013,51683,"household w/ kids",0.419565937707091
+NA,2013,51685,"household w/ kids",0.442164599774521
+NA,2013,54037,"household w/ kids",0.331188093921263
+NA,2017,24009,"household w/ kids",0.368476257072023
+NA,2017,24017,"household w/ kids",0.389084891249
+NA,2017,24021,"household w/ kids",0.35743484925907
+NA,2017,24031,"household w/ kids",0.356135000893723
+NA,2017,24033,"household w/ kids",0.33606787221139
+NA,2017,11001,"household w/ kids",0.215097936939043
+NA,2017,51013,"household w/ kids",0.223331052683022
+NA,2017,51043,"household w/ kids",0.28430316091954
+NA,2017,51047,"household w/ kids",0.388786600938409
+NA,2017,51059,"household w/ kids",0.366711576592608
+NA,2017,51061,"household w/ kids",0.35131979483758
+NA,2017,51107,"household w/ kids",0.477332871664235
+NA,2017,51153,"household w/ kids",0.455249594418044
+NA,2017,51157,"household w/ kids",0.232194187160652
+NA,2017,51177,"household w/ kids",0.389911966542665
+NA,2017,51179,"household w/ kids",0.443025691917521
+NA,2017,51187,"household w/ kids",0.327413671599718
+NA,2017,51510,"household w/ kids",0.22830345309701
+NA,2017,51600,"household w/ kids",0.310036474879398
+NA,2017,51610,"household w/ kids",0.32912584777694
+NA,2017,51630,"household w/ kids",0.288511373452347
+NA,2017,51683,"household w/ kids",0.403827751196172
+NA,2017,51685,"household w/ kids",0.452490581833403
+NA,2017,54037,"household w/ kids",0.336264898116109
+NA,2000,11001,"household w/ kids",0.204947906190917
+NA,1990,11001,"household w/ kids",0.205040275625015
+NA,1980,11001,"household w/ kids",0.251409271272911
+NA,1970,11001,"household w/ kids",NA
+NA,2000,24009,"household w/ kids",0.426773635362592
+NA,1990,24009,"household w/ kids",0.417950079660117
+NA,1980,24009,"household w/ kids",0.470089452105852
+NA,1970,24009,"household w/ kids",NA
+NA,2000,24017,"household w/ kids",0.417948410317936
+NA,1990,24017,"household w/ kids",0.450749984818121
+NA,1980,24017,"household w/ kids",0.549861949553091
+NA,1970,24017,"household w/ kids",NA
+NA,2000,24021,"household w/ kids",0.389859516508593
+NA,1990,24021,"household w/ kids",0.395902043292013
+NA,1980,24021,"household w/ kids",0.448796627354715
+NA,1970,24021,"household w/ kids",NA
+NA,2000,24031,"household w/ kids",0.356398104265403
+NA,1990,24031,"household w/ kids",0.340307455205494
+NA,1980,24031,"household w/ kids",0.384904422653013
+NA,1970,24031,"household w/ kids",NA
+NA,2000,24033,"household w/ kids",0.360931449502878
+NA,1990,24033,"household w/ kids",0.353003038546465
+NA,1980,24033,"household w/ kids",0.437110182498913
+NA,1970,24033,"household w/ kids",NA
+NA,2000,51013,"household w/ kids",0.196417420265051
+NA,1990,51013,"household w/ kids",0.184976823925329
+NA,1980,51013,"household w/ kids",0.191930176788802
+NA,1970,51013,"household w/ kids",NA
+NA,2000,51043,"household w/ kids",0.304444444444444
+NA,1990,51043,"household w/ kids",0.318040621266428
+NA,1980,51043,"household w/ kids",0.366140602582496
+NA,1970,51043,"household w/ kids",NA
+NA,2000,51047,"household w/ kids",0.351164513208789
+NA,1990,51047,"household w/ kids",0.382851855659504
+NA,1980,51047,"household w/ kids",0.410926365795724
+NA,1970,51047,"household w/ kids",NA
+NA,2000,51059,"household w/ kids",0.370528838900133
+NA,1990,51059,"household w/ kids",0.371853910146342
+NA,1980,51059,"household w/ kids",0.448236449943582
+NA,1970,51059,"household w/ kids",NA
+NA,2000,51061,"household w/ kids",0.363517522248479
+NA,1990,51061,"household w/ kids",0.389893229798593
+NA,1980,51061,"household w/ kids",0.438007348543109
+NA,1970,51061,"household w/ kids",NA
+NA,2000,51107,"household w/ kids",0.430400026701824
+NA,1990,51107,"household w/ kids",0.402801815628776
+NA,1980,51107,"household w/ kids",0.497626033608962
+NA,1970,51107,"household w/ kids",NA
+NA,2000,51153,"household w/ kids",0.449029177494665
+NA,1990,51153,"household w/ kids",0.489772678746815
+NA,1980,51153,"household w/ kids",0.596280661722761
+NA,1970,51153,"household w/ kids",NA
+NA,2000,51157,"household w/ kids",0.294706723891273
+NA,1990,51157,"household w/ kids",0.320235756385069
+NA,1980,51157,"household w/ kids",0.358139534883721
+NA,1970,51157,"household w/ kids",NA
+NA,2000,51177,"household w/ kids",0.424357784957932
+NA,1990,51177,"household w/ kids",0.470175993255348
+NA,1980,51177,"household w/ kids",0.520062869822485
+NA,1970,51177,"household w/ kids",NA
+NA,2000,51179,"household w/ kids",0.475444650915848
+NA,1990,51179,"household w/ kids",0.472663683587924
+NA,1980,51179,"household w/ kids",0.543835280660185
+NA,1970,51179,"household w/ kids",NA
+NA,2000,51187,"household w/ kids",0.335835051546392
+NA,1990,51187,"household w/ kids",0.334808853118712
+NA,1980,51187,"household w/ kids",0.380114722753346
+NA,1970,51187,"household w/ kids",NA
+NA,2000,51510,"household w/ kids",0.195197521301317
+NA,1990,51510,"household w/ kids",0.174895303198182
+NA,1980,51510,"household w/ kids",0.205979121816483
+NA,1970,51510,"household w/ kids",NA
+NA,2000,51600,"household w/ kids",0.277299388493698
+NA,1990,51600,"household w/ kids",0.280889732808897
+NA,1980,51600,"household w/ kids",0.398031553046751
+NA,1970,51600,"household w/ kids",NA
+NA,2000,51610,"household w/ kids",0.304561717352415
+NA,1990,51610,"household w/ kids",0.236450839328537
+NA,1980,51610,"household w/ kids",0.237280187573271
+NA,1970,51610,"household w/ kids",NA
+NA,2000,51630,"household w/ kids",0.218402176601534
+NA,1990,51630,"household w/ kids",0.249832641585219
+NA,1980,51630,"household w/ kids",0.257055940510394
+NA,1970,51630,"household w/ kids",NA
+NA,2000,51683,"household w/ kids",0.437335596096733
+NA,1990,51683,"household w/ kids",0.432387137320624
+NA,1980,51683,"household w/ kids",0.509549123843276
+NA,2000,51685,"household w/ kids",0.456501690747003
+NA,1990,51685,"household w/ kids",0.456301747930083
+NA,1980,51685,"household w/ kids",0.613440860215054
+NA,2000,54037,"household w/ kids",0.320229927684035
+NA,1990,54037,"household w/ kids",0.362043454559614
+NA,1980,54037,"household w/ kids",0.399841017488076
+NA,1970,54037,"household w/ kids",NA
+NA,2009,24009,"w/o kids: fam. hh",0.346909262124168
+NA,2009,24017,"w/o kids: fam. hh",0.339997141165179
+NA,2009,24021,"w/o kids: fam. hh",0.331569751704112
+NA,2009,24031,"w/o kids: fam. hh",0.327969566897899
+NA,2009,24033,"w/o kids: fam. hh",0.292397386024562
+NA,2009,11001,"w/o kids: fam. hh",0.219616868017693
+NA,2009,51013,"w/o kids: fam. hh",0.234078602039799
+NA,2009,51043,"w/o kids: fam. hh",0.397120466557317
+NA,2009,51047,"w/o kids: fam. hh",0.350874020494274
+NA,2009,51059,"w/o kids: fam. hh",0.33545876455237
+NA,2009,51061,"w/o kids: fam. hh",0.37767011671438
+NA,2009,51107,"w/o kids: fam. hh",0.281979171244013
+NA,2009,51153,"w/o kids: fam. hh",0.306172580136881
+NA,2009,51157,"w/o kids: fam. hh",0.427828348504551
+NA,2009,51177,"w/o kids: fam. hh",0.330646350454657
+NA,2009,51179,"w/o kids: fam. hh",0.338807893473482
+NA,2009,51187,"w/o kids: fam. hh",0.338832673412524
+NA,2009,51510,"w/o kids: fam. hh",0.253770283168947
+NA,2009,51600,"w/o kids: fam. hh",0.36297877386458
+NA,2009,51610,"w/o kids: fam. hh",0.299515738498789
+NA,2009,51630,"w/o kids: fam. hh",0.235987869257554
+NA,2009,51683,"w/o kids: fam. hh",0.290560852014086
+NA,2009,51685,"w/o kids: fam. hh",0.321975699947174
+NA,2009,54037,"w/o kids: fam. hh",0.350572058898979
+NA,2013,24009,"w/o kids: fam. hh",0.375254664812599
+NA,2013,24017,"w/o kids: fam. hh",0.354596366616582
+NA,2013,24021,"w/o kids: fam. hh",0.357980935172637
+NA,2013,24031,"w/o kids: fam. hh",0.334446407423945
+NA,2013,24033,"w/o kids: fam. hh",0.302052128749905
+NA,2013,11001,"w/o kids: fam. hh",0.21953809800151
+NA,2013,51013,"w/o kids: fam. hh",0.256124674444703
+NA,2013,51043,"w/o kids: fam. hh",0.42078853046595
+NA,2013,51047,"w/o kids: fam. hh",0.367479269281127
+NA,2013,51059,"w/o kids: fam. hh",0.343111708403008
+NA,2013,51061,"w/o kids: fam. hh",0.400345871162992
+NA,2013,51107,"w/o kids: fam. hh",0.291802573903941
+NA,2013,51153,"w/o kids: fam. hh",0.312702919013606
+NA,2013,51157,"w/o kids: fam. hh",0.405703771849126
+NA,2013,51177,"w/o kids: fam. hh",0.370471600853533
+NA,2013,51179,"w/o kids: fam. hh",0.366731471383186
+NA,2013,51187,"w/o kids: fam. hh",0.379161743240425
+NA,2013,51510,"w/o kids: fam. hh",0.260979975217611
+NA,2013,51600,"w/o kids: fam. hh",0.378473857748469
+NA,2013,51610,"w/o kids: fam. hh",0.258565737051793
+NA,2013,51630,"w/o kids: fam. hh",0.233254934042336
+NA,2013,51683,"w/o kids: fam. hh",0.331345261762757
+NA,2013,51685,"w/o kids: fam. hh",0.315445321307779
+NA,2013,54037,"w/o kids: fam. hh",0.379405701644125
+NA,2017,24009,"w/o kids: fam. hh",0.392187400673829
+NA,2017,24017,"w/o kids: fam. hh",0.345839092165563
+NA,2017,24021,"w/o kids: fam. hh",0.369054231187932
+NA,2017,24031,"w/o kids: fam. hh",0.343568716451541
+NA,2017,24033,"w/o kids: fam. hh",0.326403516208338
+NA,2017,11001,"w/o kids: fam. hh",0.223105563249816
+NA,2017,51013,"w/o kids: fam. hh",0.244609520086013
+NA,2017,51043,"w/o kids: fam. hh",0.39691091954023
+NA,2017,51047,"w/o kids: fam. hh",0.365979687592802
+NA,2017,51059,"w/o kids: fam. hh",0.350256749199248
+NA,2017,51061,"w/o kids: fam. hh",0.393728368291564
+NA,2017,51107,"w/o kids: fam. hh",0.302302574629634
+NA,2017,51153,"w/o kids: fam. hh",0.321622902100412
+NA,2017,51157,"w/o kids: fam. hh",0.455764931331843
+NA,2017,51177,"w/o kids: fam. hh",0.382864668777005
+NA,2017,51179,"w/o kids: fam. hh",0.375146102106076
+NA,2017,51187,"w/o kids: fam. hh",0.381818181818182
+NA,2017,51510,"w/o kids: fam. hh",0.255814630878348
+NA,2017,51600,"w/o kids: fam. hh",0.364160489469349
+NA,2017,51610,"w/o kids: fam. hh",0.324415975885456
+NA,2017,51630,"w/o kids: fam. hh",0.258662059698627
+NA,2017,51683,"w/o kids: fam. hh",0.358612440191388
+NA,2017,51685,"w/o kids: fam. hh",0.280870657178736
+NA,2017,54037,"w/o kids: fam. hh",0.369617454825067
+NA,2000,11001,"w/o kids: fam. hh",0.261535057725572
+NA,1990,11001,"w/o kids: fam. hh",0.29119718592642
+NA,1980,11001,"w/o kids: fam. hh",0.282259715311457
+NA,1970,11001,"w/o kids: fam. hh",NA
+NA,2000,24009,"w/o kids: fam. hh",0.367822872424099
+NA,1990,24009,"w/o kids: fam. hh",0.405263468460494
+NA,1980,24009,"w/o kids: fam. hh",0.356131196421916
+NA,1970,24009,"w/o kids: fam. hh",NA
+NA,2000,24017,"w/o kids: fam. hh",0.361895620875825
+NA,1990,24017,"w/o kids: fam. hh",0.365033096496022
+NA,1980,24017,"w/o kids: fam. hh",0.307361130609762
+NA,1970,24017,"w/o kids: fam. hh",NA
+NA,2000,24021,"w/o kids: fam. hh",0.355744134635955
+NA,1990,24021,"w/o kids: fam. hh",0.372910269532583
+NA,1980,24021,"w/o kids: fam. hh",0.358370243876407
+NA,1970,24021,"w/o kids: fam. hh",NA
+NA,2000,24031,"w/o kids: fam. hh",0.339188773311996
+NA,1990,24031,"w/o kids: fam. hh",0.368493794692881
+NA,1980,24031,"w/o kids: fam. hh",0.352562958532503
+NA,1970,24031,"w/o kids: fam. hh",NA
+NA,2000,24033,"w/o kids: fam. hh",0.335122972265829
+NA,1990,24033,"w/o kids: fam. hh",0.360259848111483
+NA,1980,24033,"w/o kids: fam. hh",0.303367845767569
+NA,1970,24033,"w/o kids: fam. hh",NA
+NA,2000,51013,"w/o kids: fam. hh",0.265027638365289
+NA,1990,51013,"w/o kids: fam. hh",0.295333037018223
+NA,1980,51013,"w/o kids: fam. hh",0.31074675143606
+NA,1970,51013,"w/o kids: fam. hh",NA
+NA,2000,51043,"w/o kids: fam. hh",0.406868686868687
+NA,1990,51043,"w/o kids: fam. hh",0.456869772998805
+NA,1980,51043,"w/o kids: fam. hh",0.391965566714491
+NA,1970,51043,"w/o kids: fam. hh",NA
+NA,2000,51047,"w/o kids: fam. hh",0.391819603324829
+NA,1990,51047,"w/o kids: fam. hh",0.384907988074432
+NA,1980,51047,"w/o kids: fam. hh",0.38545790446028
+NA,1970,51047,"w/o kids: fam. hh",NA
+NA,2000,51059,"w/o kids: fam. hh",0.349229529803945
+NA,1990,51059,"w/o kids: fam. hh",0.365231461410582
+NA,1980,51059,"w/o kids: fam. hh",0.328654527061204
+NA,1970,51059,"w/o kids: fam. hh",NA
+NA,2000,51061,"w/o kids: fam. hh",0.401126250691337
+NA,1990,51061,"w/o kids: fam. hh",0.418769716088328
+NA,1980,51061,"w/o kids: fam. hh",0.380842519012219
+NA,1970,51061,"w/o kids: fam. hh",NA
+NA,2000,51107,"w/o kids: fam. hh",0.325161462592413
+NA,1990,51107,"w/o kids: fam. hh",0.366913757633152
+NA,1980,51107,"w/o kids: fam. hh",0.319071752467325
+NA,1970,51107,"w/o kids: fam. hh",NA
+NA,2000,51153,"w/o kids: fam. hh",0.326614692273563
+NA,1990,51153,"w/o kids: fam. hh",0.323473730659189
+NA,1980,51153,"w/o kids: fam. hh",0.261038220193953
+NA,1970,51153,"w/o kids: fam. hh",NA
+NA,2000,51157,"w/o kids: fam. hh",0.429184549356223
+NA,1990,51157,"w/o kids: fam. hh",0.446365422396857
+NA,1980,51157,"w/o kids: fam. hh",0.411162790697674
+NA,1970,51157,"w/o kids: fam. hh",NA
+NA,2000,51177,"w/o kids: fam. hh",0.366710387408426
+NA,1990,51177,"w/o kids: fam. hh",0.355516914321846
+NA,1980,51177,"w/o kids: fam. hh",0.327755177514793
+NA,1970,51177,"w/o kids: fam. hh",NA
+NA,2000,51179,"w/o kids: fam. hh",0.337271037961242
+NA,1990,51179,"w/o kids: fam. hh",0.36625006429049
+NA,1980,51179,"w/o kids: fam. hh",0.32731432306561
+NA,1970,51179,"w/o kids: fam. hh",NA
+NA,2000,51187,"w/o kids: fam. hh",0.369319587628866
+NA,1990,51187,"w/o kids: fam. hh",0.406036217303823
+NA,1980,51187,"w/o kids: fam. hh",0.389802421924793
+NA,1970,51187,"w/o kids: fam. hh",NA
+NA,2000,51510,"w/o kids: fam. hh",0.259117609088562
+NA,1990,51510,"w/o kids: fam. hh",0.284042892824278
+NA,1980,51510,"w/o kids: fam. hh",0.287237499492262
+NA,1970,51510,"w/o kids: fam. hh",NA
+NA,2000,51600,"w/o kids: fam. hh",0.399975040559091
+NA,1990,51600,"w/o kids: fam. hh",0.40322799403228
+NA,1980,51600,"w/o kids: fam. hh",0.34259661311333
+NA,1970,51600,"w/o kids: fam. hh",NA
+NA,2000,51610,"w/o kids: fam. hh",0.28108228980322
+NA,1990,51610,"w/o kids: fam. hh",0.360671462829736
+NA,1980,51610,"w/o kids: fam. hh",0.369519343493552
+NA,1970,51610,"w/o kids: fam. hh",NA
+NA,2000,51630,"w/o kids: fam. hh",0.269107098689092
+NA,1990,51630,"w/o kids: fam. hh",0.307939483197215
+NA,1980,51630,"w/o kids: fam. hh",0.338854149062025
+NA,1970,51630,"w/o kids: fam. hh",NA
+NA,2000,51683,"w/o kids: fam. hh",0.286635553669919
+NA,1990,51683,"w/o kids: fam. hh",0.322928668691736
+NA,1980,51683,"w/o kids: fam. hh",0.290411498326442
+NA,2000,51685,"w/o kids: fam. hh",0.330464186904396
+NA,1990,51685,"w/o kids: fam. hh",0.346826126954922
+NA,1980,51685,"w/o kids: fam. hh",0.281182795698925
+NA,2000,54037,"w/o kids: fam. hh",0.38376908337969
+NA,1990,54037,"w/o kids: fam. hh",0.374425667782883
+NA,1980,54037,"w/o kids: fam. hh",0.383445945945946
+NA,1970,54037,"w/o kids: fam. hh",NA
+NA,2009,24009,"w/o kids: non-fam. hh",0.232023945651443
+NA,2009,24017,"w/o kids: non-fam. hh",0.241449020849074
+NA,2009,24021,"w/o kids: non-fam. hh",0.281910574107341
+NA,2009,24031,"w/o kids: non-fam. hh",0.311204043022502
+NA,2009,24033,"w/o kids: non-fam. hh",0.337084685688585
+NA,2009,11001,"w/o kids: non-fam. hh",0.55906318925667
+NA,2009,51013,"w/o kids: non-fam. hh",0.565208243358471
+NA,2009,51043,"w/o kids: non-fam. hh",0.331693092764717
+NA,2009,51047,"w/o kids: non-fam. hh",0.248101265822785
+NA,2009,51059,"w/o kids: non-fam. hh",0.302860370574545
+NA,2009,51061,"w/o kids: non-fam. hh",0.265139837040299
+NA,2009,51107,"w/o kids: non-fam. hh",0.269840049215626
+NA,2009,51153,"w/o kids: non-fam. hh",0.228625451489613
+NA,2009,51157,"w/o kids: non-fam. hh",0.278933680104031
+NA,2009,51177,"w/o kids: non-fam. hh",0.216048169083313
+NA,2009,51179,"w/o kids: non-fam. hh",0.181544836647548
+NA,2009,51187,"w/o kids: non-fam. hh",0.321161460624725
+NA,2009,51510,"w/o kids: non-fam. hh",0.552624880687241
+NA,2009,51600,"w/o kids: non-fam. hh",0.345310091307957
+NA,2009,51610,"w/o kids: non-fam. hh",0.359806295399516
+NA,2009,51630,"w/o kids: non-fam. hh",0.541165899135123
+NA,2009,51683,"w/o kids: non-fam. hh",0.256806664948896
+NA,2009,51685,"w/o kids: non-fam. hh",0.225832012678288
+NA,2009,54037,"w/o kids: non-fam. hh",0.29423836642553
+NA,2013,24009,"w/o kids: non-fam. hh",0.236134915758497
+NA,2013,24017,"w/o kids: non-fam. hh",0.260561593849396
+NA,2013,24021,"w/o kids: non-fam. hh",0.268563883387192
+NA,2013,24031,"w/o kids: non-fam. hh",0.309618568738334
+NA,2013,24033,"w/o kids: non-fam. hh",0.33604555745598
+NA,2013,11001,"w/o kids: non-fam. hh",0.572973916077816
+NA,2013,51013,"w/o kids: non-fam. hh",0.538579626061363
+NA,2013,51043,"w/o kids: non-fam. hh",0.263978494623656
+NA,2013,51047,"w/o kids: non-fam. hh",0.252197767940645
+NA,2013,51059,"w/o kids: non-fam. hh",0.286936918452558
+NA,2013,51061,"w/o kids: non-fam. hh",0.25408560311284
+NA,2013,51107,"w/o kids: non-fam. hh",0.22060431600886
+NA,2013,51153,"w/o kids: non-fam. hh",0.218933570921611
+NA,2013,51157,"w/o kids: non-fam. hh",0.335786568537259
+NA,2013,51177,"w/o kids: non-fam. hh",0.206382315567384
+NA,2013,51179,"w/o kids: non-fam. hh",0.184503769737778
+NA,2013,51187,"w/o kids: non-fam. hh",0.292903315493154
+NA,2013,51510,"w/o kids: non-fam. hh",0.526579877311876
+NA,2013,51600,"w/o kids: non-fam. hh",0.313235986811116
+NA,2013,51610,"w/o kids: non-fam. hh",0.38406374501992
+NA,2013,51630,"w/o kids: non-fam. hh",0.471316085489314
+NA,2013,51683,"w/o kids: non-fam. hh",0.249088800530152
+NA,2013,51685,"w/o kids: non-fam. hh",0.2423900789177
+NA,2013,54037,"w/o kids: non-fam. hh",0.289406204434612
+NA,2017,24009,"w/o kids: non-fam. hh",0.239336342254148
+NA,2017,24017,"w/o kids: non-fam. hh",0.265076016585437
+NA,2017,24021,"w/o kids: non-fam. hh",0.273510919552998
+NA,2017,24031,"w/o kids: non-fam. hh",0.300296282654736
+NA,2017,24033,"w/o kids: non-fam. hh",0.337528611580272
+NA,2017,11001,"w/o kids: non-fam. hh",0.561796499811141
+NA,2017,51013,"w/o kids: non-fam. hh",0.532059427230965
+NA,2017,51043,"w/o kids: non-fam. hh",0.31878591954023
+NA,2017,51047,"w/o kids: non-fam. hh",0.245233711468789
+NA,2017,51059,"w/o kids: non-fam. hh",0.283031674208145
+NA,2017,51061,"w/o kids: non-fam. hh",0.254951836870856
+NA,2017,51107,"w/o kids: non-fam. hh",0.220364553706131
+NA,2017,51153,"w/o kids: non-fam. hh",0.223127503481544
+NA,2017,51157,"w/o kids: non-fam. hh",0.312040881507506
+NA,2017,51177,"w/o kids: non-fam. hh",0.22722336468033
+NA,2017,51179,"w/o kids: non-fam. hh",0.181828205976403
+NA,2017,51187,"w/o kids: non-fam. hh",0.2907681465821
+NA,2017,51510,"w/o kids: non-fam. hh",0.515881916024642
+NA,2017,51600,"w/o kids: non-fam. hh",0.325803035651253
+NA,2017,51610,"w/o kids: non-fam. hh",0.346458176337604
+NA,2017,51630,"w/o kids: non-fam. hh",0.452826566849026
+NA,2017,51683,"w/o kids: non-fam. hh",0.23755980861244
+NA,2017,51685,"w/o kids: non-fam. hh",0.266638760987861
+NA,2017,54037,"w/o kids: non-fam. hh",0.294117647058824
+NA,2000,11001,"w/o kids: non-fam. hh",0.533517036083511
+NA,1990,11001,"w/o kids: non-fam. hh",0.503762538448565
+NA,1980,11001,"w/o kids: non-fam. hh",0.466331013415633
+NA,1970,11001,"w/o kids: non-fam. hh",NA
+NA,2000,24009,"w/o kids: non-fam. hh",0.205403492213308
+NA,1990,24009,"w/o kids: non-fam. hh",0.176786451879389
+NA,1980,24009,"w/o kids: non-fam. hh",0.173779351472233
+NA,1970,24009,"w/o kids: non-fam. hh",NA
+NA,2000,24017,"w/o kids: non-fam. hh",0.220155968806239
+NA,1990,24017,"w/o kids: non-fam. hh",0.184216918685857
+NA,1980,24017,"w/o kids: non-fam. hh",0.142776919837147
+NA,1970,24017,"w/o kids: non-fam. hh",NA
+NA,2000,24021,"w/o kids: non-fam. hh",0.254396348855452
+NA,1990,24021,"w/o kids: non-fam. hh",0.231187687175405
+NA,1980,24021,"w/o kids: non-fam. hh",0.192833128768878
+NA,1970,24021,"w/o kids: non-fam. hh",NA
+NA,2000,24031,"w/o kids: non-fam. hh",0.304413122422601
+NA,1990,24031,"w/o kids: non-fam. hh",0.291198750101625
+NA,1980,24031,"w/o kids: non-fam. hh",0.262532618814484
+NA,1970,24031,"w/o kids: non-fam. hh",NA
+NA,2000,24033,"w/o kids: non-fam. hh",0.303945578231293
+NA,1990,24033,"w/o kids: non-fam. hh",0.286737113342052
+NA,1980,24033,"w/o kids: non-fam. hh",0.259521971733518
+NA,1970,24033,"w/o kids: non-fam. hh",NA
+NA,2000,51013,"w/o kids: non-fam. hh",0.53855494136966
+NA,1990,51013,"w/o kids: non-fam. hh",0.519690139056448
+NA,1980,51013,"w/o kids: non-fam. hh",0.497323071775138
+NA,1970,51013,"w/o kids: non-fam. hh",NA
+NA,2000,51043,"w/o kids: non-fam. hh",0.288686868686869
+NA,1990,51043,"w/o kids: non-fam. hh",0.225089605734767
+NA,1980,51043,"w/o kids: non-fam. hh",0.241893830703013
+NA,1970,51043,"w/o kids: non-fam. hh",NA
+NA,2000,51047,"w/o kids: non-fam. hh",0.257015883466381
+NA,1990,51047,"w/o kids: non-fam. hh",0.232240156266064
+NA,1980,51047,"w/o kids: non-fam. hh",0.203615729743996
+NA,1970,51047,"w/o kids: non-fam. hh",NA
+NA,2000,51059,"w/o kids: non-fam. hh",0.280241631295922
+NA,1990,51059,"w/o kids: non-fam. hh",0.262914628443076
+NA,1980,51059,"w/o kids: non-fam. hh",0.223109022995214
+NA,1970,51059,"w/o kids: non-fam. hh",NA
+NA,2000,51061,"w/o kids: non-fam. hh",0.235356227060184
+NA,1990,51061,"w/o kids: non-fam. hh",0.191337054113079
+NA,1980,51061,"w/o kids: non-fam. hh",0.181150132444672
+NA,1970,51061,"w/o kids: non-fam. hh",NA
+NA,2000,51107,"w/o kids: non-fam. hh",0.244438510705763
+NA,1990,51107,"w/o kids: non-fam. hh",0.230284426738073
+NA,1980,51107,"w/o kids: non-fam. hh",0.183302213923713
+NA,1970,51107,"w/o kids: non-fam. hh",NA
+NA,2000,51153,"w/o kids: non-fam. hh",0.224356130231772
+NA,1990,51153,"w/o kids: non-fam. hh",0.186753590593996
+NA,1980,51153,"w/o kids: non-fam. hh",0.142681118083286
+NA,1970,51153,"w/o kids: non-fam. hh",NA
+NA,2000,51157,"w/o kids: non-fam. hh",0.276108726752504
+NA,1990,51157,"w/o kids: non-fam. hh",0.233398821218075
+NA,1980,51157,"w/o kids: non-fam. hh",0.230697674418605
+NA,1970,51157,"w/o kids: non-fam. hh",NA
+NA,2000,51177,"w/o kids: non-fam. hh",0.208931827633642
+NA,1990,51177,"w/o kids: non-fam. hh",0.174307092422805
+NA,1980,51177,"w/o kids: non-fam. hh",0.152181952662722
+NA,1970,51177,"w/o kids: non-fam. hh",NA
+NA,2000,51179,"w/o kids: non-fam. hh",0.187284311122909
+NA,1990,51179,"w/o kids: non-fam. hh",0.161086252121586
+NA,1980,51179,"w/o kids: non-fam. hh",0.128850396274205
+NA,1970,51179,"w/o kids: non-fam. hh",NA
+NA,2000,51187,"w/o kids: non-fam. hh",0.294845360824742
+NA,1990,51187,"w/o kids: non-fam. hh",0.259154929577465
+NA,1980,51187,"w/o kids: non-fam. hh",0.230082855321861
+NA,1970,51187,"w/o kids: non-fam. hh",NA
+NA,2000,51510,"w/o kids: non-fam. hh",0.545684869610121
+NA,1990,51510,"w/o kids: non-fam. hh",0.541061803977539
+NA,1980,51510,"w/o kids: non-fam. hh",0.506783378691255
+NA,1970,51510,"w/o kids: non-fam. hh",NA
+NA,2000,51600,"w/o kids: non-fam. hh",0.322725570947211
+NA,1990,51600,"w/o kids: non-fam. hh",0.315882273158823
+NA,1980,51600,"w/o kids: non-fam. hh",0.259371833839919
+NA,1970,51600,"w/o kids: non-fam. hh",NA
+NA,2000,51610,"w/o kids: non-fam. hh",0.414355992844365
+NA,1990,51610,"w/o kids: non-fam. hh",0.402877697841727
+NA,1980,51610,"w/o kids: non-fam. hh",0.393200468933177
+NA,1970,51610,"w/o kids: non-fam. hh",NA
+NA,2000,51630,"w/o kids: non-fam. hh",0.512490724709374
+NA,1990,51630,"w/o kids: non-fam. hh",0.442227875217566
+NA,1980,51630,"w/o kids: non-fam. hh",0.404089910427582
+NA,1970,51630,"w/o kids: non-fam. hh",NA
+NA,2000,51683,"w/o kids: non-fam. hh",0.276028850233348
+NA,1990,51683,"w/o kids: non-fam. hh",0.24468419398764
+NA,1980,51683,"w/o kids: non-fam. hh",0.200039377830282
+NA,2000,51685,"w/o kids: non-fam. hh",0.213034122348601
+NA,1990,51685,"w/o kids: non-fam. hh",0.196872125114995
+NA,1980,51685,"w/o kids: non-fam. hh",0.105376344086022
+NA,2000,54037,"w/o kids: non-fam. hh",0.296000988936275
+NA,1990,54037,"w/o kids: non-fam. hh",0.263530877657503
+NA,1980,54037,"w/o kids: non-fam. hh",0.216713036565978
+NA,1970,54037,"w/o kids: non-fam. hh",NA

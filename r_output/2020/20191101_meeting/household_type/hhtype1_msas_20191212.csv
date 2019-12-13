@@ -1,0 +1,211 @@
+"NAME","year","CBSA","hhts_type_name","hhts_share"
+"Atlanta-Sandy Springs-Roswell, GA",1970,12060,"household w/ kids",NA
+"Atlanta-Sandy Springs-Roswell, GA",1980,12060,"household w/ kids",0.411120249003525
+"Atlanta-Sandy Springs-Roswell, GA",1990,12060,"household w/ kids",0.362408914250005
+"Atlanta-Sandy Springs-Roswell, GA",2000,12060,"household w/ kids",0.363752997555814
+"Atlanta-Sandy Springs-Roswell, GA",2009,12060,"household w/ kids",0.379948713662066
+"Atlanta-Sandy Springs-Roswell, GA",2013,12060,"household w/ kids",0.37272636723038
+"Atlanta-Sandy Springs-Roswell, GA",2017,12060,"household w/ kids",0.358560800770806
+"Boston-Cambridge-Newton, MA-NH",1970,14460,"household w/ kids",NA
+"Boston-Cambridge-Newton, MA-NH",1980,14460,"household w/ kids",0.352382901857697
+"Boston-Cambridge-Newton, MA-NH",1990,14460,"household w/ kids",0.306136216525662
+"Boston-Cambridge-Newton, MA-NH",2000,14460,"household w/ kids",0.312453352601362
+"Boston-Cambridge-Newton, MA-NH",2009,14460,"household w/ kids",0.322704287466003
+"Boston-Cambridge-Newton, MA-NH",2013,14460,"household w/ kids",0.310995371557005
+"Boston-Cambridge-Newton, MA-NH",2017,14460,"household w/ kids",0.302083656664464
+"Chicago-Naperville-Elgin, IL-IN-WI",1970,16980,"household w/ kids",NA
+"Chicago-Naperville-Elgin, IL-IN-WI",1980,16980,"household w/ kids",0.382790438166387
+"Chicago-Naperville-Elgin, IL-IN-WI",1990,16980,"household w/ kids",0.343280194461226
+"Chicago-Naperville-Elgin, IL-IN-WI",2000,16980,"household w/ kids",0.34653399255857
+"Chicago-Naperville-Elgin, IL-IN-WI",2009,16980,"household w/ kids",0.359864500429868
+"Chicago-Naperville-Elgin, IL-IN-WI",2013,16980,"household w/ kids",0.34479164297681
+"Chicago-Naperville-Elgin, IL-IN-WI",2017,16980,"household w/ kids",0.325584762145502
+"Dallas-Fort Worth-Arlington, TX",1970,19100,"household w/ kids",NA
+"Dallas-Fort Worth-Arlington, TX",1980,19100,"household w/ kids",0.392392351380535
+"Dallas-Fort Worth-Arlington, TX",1990,19100,"household w/ kids",0.366347138129436
+"Dallas-Fort Worth-Arlington, TX",2000,19100,"household w/ kids",0.375759002440394
+"Dallas-Fort Worth-Arlington, TX",2009,19100,"household w/ kids",0.401651558222857
+"Dallas-Fort Worth-Arlington, TX",2013,19100,"household w/ kids",0.393524065665266
+"Dallas-Fort Worth-Arlington, TX",2017,19100,"household w/ kids",0.384119232240203
+"Houston-The Woodlands-Sugar Land, TX",1970,26420,"household w/ kids",NA
+"Houston-The Woodlands-Sugar Land, TX",1980,26420,"household w/ kids",0.413171573068787
+"Houston-The Woodlands-Sugar Land, TX",1990,26420,"household w/ kids",0.390484308166163
+"Houston-The Woodlands-Sugar Land, TX",2000,26420,"household w/ kids",0.393893835942383
+"Houston-The Woodlands-Sugar Land, TX",2009,26420,"household w/ kids",0.412708220369973
+"Houston-The Woodlands-Sugar Land, TX",2013,26420,"household w/ kids",0.401337575984352
+"Houston-The Woodlands-Sugar Land, TX",2017,26420,"household w/ kids",0.392728612614849
+"Los Angeles-Long Beach-Anaheim, CA",1970,31080,"household w/ kids",NA
+"Los Angeles-Long Beach-Anaheim, CA",1980,31080,"household w/ kids",0.351921452887804
+"Los Angeles-Long Beach-Anaheim, CA",1990,31080,"household w/ kids",0.344880926723011
+"Los Angeles-Long Beach-Anaheim, CA",2000,31080,"household w/ kids",0.376135838207774
+"Los Angeles-Long Beach-Anaheim, CA",2009,31080,"household w/ kids",0.386392300880459
+"Los Angeles-Long Beach-Anaheim, CA",2013,31080,"household w/ kids",0.366844419939445
+"Los Angeles-Long Beach-Anaheim, CA",2017,31080,"household w/ kids",0.344328723796773
+"Miami-Fort Lauderdale-West Palm Beach, FL",1970,33100,"household w/ kids",NA
+"Miami-Fort Lauderdale-West Palm Beach, FL",1980,33100,"household w/ kids",0.256356522884708
+"Miami-Fort Lauderdale-West Palm Beach, FL",1990,33100,"household w/ kids",0.245451016844689
+"Miami-Fort Lauderdale-West Palm Beach, FL",2000,33100,"household w/ kids",0.307117904388238
+"Miami-Fort Lauderdale-West Palm Beach, FL",2009,33100,"household w/ kids",0.322700970590302
+"Miami-Fort Lauderdale-West Palm Beach, FL",2013,33100,"household w/ kids",0.316446228394009
+"Miami-Fort Lauderdale-West Palm Beach, FL",2017,33100,"household w/ kids",0.307199567985492
+"New York-Newark-Jersey City, NY-NJ-PA",1970,35620,"household w/ kids",NA
+"New York-Newark-Jersey City, NY-NJ-PA",1980,35620,"household w/ kids",0.354953735011434
+"New York-Newark-Jersey City, NY-NJ-PA",1990,35620,"household w/ kids",0.313592271163208
+"New York-Newark-Jersey City, NY-NJ-PA",2000,35620,"household w/ kids",0.330756386331153
+"New York-Newark-Jersey City, NY-NJ-PA",2009,35620,"household w/ kids",0.346104051435645
+"New York-Newark-Jersey City, NY-NJ-PA",2013,35620,"household w/ kids",0.337203029059447
+"New York-Newark-Jersey City, NY-NJ-PA",2017,35620,"household w/ kids",0.321474096009962
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",1970,37980,"household w/ kids",NA
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",1980,37980,"household w/ kids",0.369095926520862
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",1990,37980,"household w/ kids",0.322447106744456
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",2000,37980,"household w/ kids",0.326800654485445
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",2009,37980,"household w/ kids",0.337279208025855
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",2013,37980,"household w/ kids",0.321306493981266
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",2017,37980,"household w/ kids",0.306525355773382
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",1970,47900,"household w/ kids",NA
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",1980,47900,"household w/ kids",0.377146460353924
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",1990,47900,"household w/ kids",0.329951508599738
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",2000,47900,"household w/ kids",0.339069989145727
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",2009,47900,"household w/ kids",0.349908961618943
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",2013,47900,"household w/ kids",0.34785523461233
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",2017,47900,"household w/ kids",0.34291259952609
+"Atlanta-Sandy Springs-Roswell, GA",1970,12060,"w/o kids: fam. hh",NA
+"Atlanta-Sandy Springs-Roswell, GA",1980,12060,"w/o kids: fam. hh",0.335838167116688
+"Atlanta-Sandy Springs-Roswell, GA",1990,12060,"w/o kids: fam. hh",0.351171841247869
+"Atlanta-Sandy Springs-Roswell, GA",2000,12060,"w/o kids: fam. hh",0.335549377802899
+"Atlanta-Sandy Springs-Roswell, GA",2009,12060,"w/o kids: fam. hh",0.300399343146587
+"Atlanta-Sandy Springs-Roswell, GA",2013,12060,"w/o kids: fam. hh",0.310760797066721
+"Atlanta-Sandy Springs-Roswell, GA",2017,12060,"w/o kids: fam. hh",0.319910105492978
+"Boston-Cambridge-Newton, MA-NH",1970,14460,"w/o kids: fam. hh",NA
+"Boston-Cambridge-Newton, MA-NH",1980,14460,"w/o kids: fam. hh",0.348213586724269
+"Boston-Cambridge-Newton, MA-NH",1990,14460,"w/o kids: fam. hh",0.364892969941809
+"Boston-Cambridge-Newton, MA-NH",2000,14460,"w/o kids: fam. hh",0.332366955964856
+"Boston-Cambridge-Newton, MA-NH",2009,14460,"w/o kids: fam. hh",0.313334032225197
+"Boston-Cambridge-Newton, MA-NH",2013,14460,"w/o kids: fam. hh",0.323894749912569
+"Boston-Cambridge-Newton, MA-NH",2017,14460,"w/o kids: fam. hh",0.338683447367604
+"Chicago-Naperville-Elgin, IL-IN-WI",1970,16980,"w/o kids: fam. hh",NA
+"Chicago-Naperville-Elgin, IL-IN-WI",1980,16980,"w/o kids: fam. hh",0.343719159081953
+"Chicago-Naperville-Elgin, IL-IN-WI",1990,16980,"w/o kids: fam. hh",0.360132118924701
+"Chicago-Naperville-Elgin, IL-IN-WI",2000,16980,"w/o kids: fam. hh",0.338550624980759
+"Chicago-Naperville-Elgin, IL-IN-WI",2009,16980,"w/o kids: fam. hh",0.308932786520845
+"Chicago-Naperville-Elgin, IL-IN-WI",2013,16980,"w/o kids: fam. hh",0.319733752257461
+"Chicago-Naperville-Elgin, IL-IN-WI",2017,16980,"w/o kids: fam. hh",0.330768125974843
+"Dallas-Fort Worth-Arlington, TX",1970,19100,"w/o kids: fam. hh",NA
+"Dallas-Fort Worth-Arlington, TX",1980,19100,"w/o kids: fam. hh",0.338213416221905
+"Dallas-Fort Worth-Arlington, TX",1990,19100,"w/o kids: fam. hh",0.331759333938513
+"Dallas-Fort Worth-Arlington, TX",2000,19100,"w/o kids: fam. hh",0.3212387973083
+"Dallas-Fort Worth-Arlington, TX",2009,19100,"w/o kids: fam. hh",0.292604623002029
+"Dallas-Fort Worth-Arlington, TX",2013,19100,"w/o kids: fam. hh",0.303101050253436
+"Dallas-Fort Worth-Arlington, TX",2017,19100,"w/o kids: fam. hh",0.313773589595362
+"Houston-The Woodlands-Sugar Land, TX",1970,26420,"w/o kids: fam. hh",NA
+"Houston-The Woodlands-Sugar Land, TX",1980,26420,"w/o kids: fam. hh",0.31629446150441
+"Houston-The Woodlands-Sugar Land, TX",1990,26420,"w/o kids: fam. hh",0.320570226390292
+"Houston-The Woodlands-Sugar Land, TX",2000,26420,"w/o kids: fam. hh",0.32426273612843
+"Houston-The Woodlands-Sugar Land, TX",2009,26420,"w/o kids: fam. hh",0.298131848732078
+"Houston-The Woodlands-Sugar Land, TX",2013,26420,"w/o kids: fam. hh",0.310172790374558
+"Houston-The Woodlands-Sugar Land, TX",2017,26420,"w/o kids: fam. hh",0.317096921456214
+"Los Angeles-Long Beach-Anaheim, CA",1970,31080,"w/o kids: fam. hh",NA
+"Los Angeles-Long Beach-Anaheim, CA",1980,31080,"w/o kids: fam. hh",0.326057010943413
+"Los Angeles-Long Beach-Anaheim, CA",1990,31080,"w/o kids: fam. hh",0.342135053641041
+"Los Angeles-Long Beach-Anaheim, CA",2000,31080,"w/o kids: fam. hh",0.318344095532081
+"Los Angeles-Long Beach-Anaheim, CA",2009,31080,"w/o kids: fam. hh",0.297858013465897
+"Los Angeles-Long Beach-Anaheim, CA",2013,31080,"w/o kids: fam. hh",0.317796111829565
+"Los Angeles-Long Beach-Anaheim, CA",2017,31080,"w/o kids: fam. hh",0.338906951432975
+"Miami-Fort Lauderdale-West Palm Beach, FL",1970,33100,"w/o kids: fam. hh",NA
+"Miami-Fort Lauderdale-West Palm Beach, FL",1980,33100,"w/o kids: fam. hh",0.448888929738938
+"Miami-Fort Lauderdale-West Palm Beach, FL",1990,33100,"w/o kids: fam. hh",0.405469406291562
+"Miami-Fort Lauderdale-West Palm Beach, FL",2000,33100,"w/o kids: fam. hh",0.360320174564376
+"Miami-Fort Lauderdale-West Palm Beach, FL",2009,33100,"w/o kids: fam. hh",0.329594608263496
+"Miami-Fort Lauderdale-West Palm Beach, FL",2013,33100,"w/o kids: fam. hh",0.335930777557923
+"Miami-Fort Lauderdale-West Palm Beach, FL",2017,33100,"w/o kids: fam. hh",0.348745829539088
+"New York-Newark-Jersey City, NY-NJ-PA",1970,35620,"w/o kids: fam. hh",NA
+"New York-Newark-Jersey City, NY-NJ-PA",1980,35620,"w/o kids: fam. hh",0.358723133973317
+"New York-Newark-Jersey City, NY-NJ-PA",1990,35620,"w/o kids: fam. hh",0.380194855720939
+"New York-Newark-Jersey City, NY-NJ-PA",2000,35620,"w/o kids: fam. hh",0.348550998544602
+"New York-Newark-Jersey City, NY-NJ-PA",2009,35620,"w/o kids: fam. hh",0.319678772304911
+"New York-Newark-Jersey City, NY-NJ-PA",2013,35620,"w/o kids: fam. hh",0.328324361664782
+"New York-Newark-Jersey City, NY-NJ-PA",2017,35620,"w/o kids: fam. hh",0.341439004066251
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",1970,37980,"w/o kids: fam. hh",NA
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",1980,37980,"w/o kids: fam. hh",0.370081689251342
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",1990,37980,"w/o kids: fam. hh",0.383393842184598
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",2000,37980,"w/o kids: fam. hh",0.352100619176199
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",2009,37980,"w/o kids: fam. hh",0.320719981484988
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",2013,37980,"w/o kids: fam. hh",0.330457987874956
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",2017,37980,"w/o kids: fam. hh",0.340762761091667
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",1970,47900,"w/o kids: fam. hh",NA
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",1980,47900,"w/o kids: fam. hh",0.316067754244354
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",1990,47900,"w/o kids: fam. hh",0.346426400268576
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",2000,47900,"w/o kids: fam. hh",0.325894596861728
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",2009,47900,"w/o kids: fam. hh",0.30211909571561
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",2013,47900,"w/o kids: fam. hh",0.3124452195069
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",2017,47900,"w/o kids: fam. hh",0.320130928824157
+"Atlanta-Sandy Springs-Roswell, GA",1970,12060,"w/o kids: non-fam. hh",NA
+"Atlanta-Sandy Springs-Roswell, GA",1980,12060,"w/o kids: non-fam. hh",0.253041583879787
+"Atlanta-Sandy Springs-Roswell, GA",1990,12060,"w/o kids: non-fam. hh",0.286419244502126
+"Atlanta-Sandy Springs-Roswell, GA",2000,12060,"w/o kids: non-fam. hh",0.300697624641287
+"Atlanta-Sandy Springs-Roswell, GA",2009,12060,"w/o kids: non-fam. hh",0.319651943191348
+"Atlanta-Sandy Springs-Roswell, GA",2013,12060,"w/o kids: non-fam. hh",0.316512835702899
+"Atlanta-Sandy Springs-Roswell, GA",2017,12060,"w/o kids: non-fam. hh",0.321529093736216
+"Boston-Cambridge-Newton, MA-NH",1970,14460,"w/o kids: non-fam. hh",NA
+"Boston-Cambridge-Newton, MA-NH",1980,14460,"w/o kids: non-fam. hh",0.299403511418034
+"Boston-Cambridge-Newton, MA-NH",1990,14460,"w/o kids: non-fam. hh",0.328970813532529
+"Boston-Cambridge-Newton, MA-NH",2000,14460,"w/o kids: non-fam. hh",0.355179691433782
+"Boston-Cambridge-Newton, MA-NH",2009,14460,"w/o kids: non-fam. hh",0.3639616803088
+"Boston-Cambridge-Newton, MA-NH",2013,14460,"w/o kids: non-fam. hh",0.365109878530427
+"Boston-Cambridge-Newton, MA-NH",2017,14460,"w/o kids: non-fam. hh",0.359232895967931
+"Chicago-Naperville-Elgin, IL-IN-WI",1970,16980,"w/o kids: non-fam. hh",NA
+"Chicago-Naperville-Elgin, IL-IN-WI",1980,16980,"w/o kids: non-fam. hh",0.27349040275166
+"Chicago-Naperville-Elgin, IL-IN-WI",1990,16980,"w/o kids: non-fam. hh",0.296587686614074
+"Chicago-Naperville-Elgin, IL-IN-WI",2000,16980,"w/o kids: non-fam. hh",0.314915382460671
+"Chicago-Naperville-Elgin, IL-IN-WI",2009,16980,"w/o kids: non-fam. hh",0.331202713049287
+"Chicago-Naperville-Elgin, IL-IN-WI",2013,16980,"w/o kids: non-fam. hh",0.335474604765728
+"Chicago-Naperville-Elgin, IL-IN-WI",2017,16980,"w/o kids: non-fam. hh",0.343647111879655
+"Dallas-Fort Worth-Arlington, TX",1970,19100,"w/o kids: non-fam. hh",NA
+"Dallas-Fort Worth-Arlington, TX",1980,19100,"w/o kids: non-fam. hh",0.269394232397559
+"Dallas-Fort Worth-Arlington, TX",1990,19100,"w/o kids: non-fam. hh",0.301893527932051
+"Dallas-Fort Worth-Arlington, TX",2000,19100,"w/o kids: non-fam. hh",0.303002200251307
+"Dallas-Fort Worth-Arlington, TX",2009,19100,"w/o kids: non-fam. hh",0.305743818775114
+"Dallas-Fort Worth-Arlington, TX",2013,19100,"w/o kids: non-fam. hh",0.303374884081298
+"Dallas-Fort Worth-Arlington, TX",2017,19100,"w/o kids: non-fam. hh",0.302107178164435
+"Houston-The Woodlands-Sugar Land, TX",1970,26420,"w/o kids: non-fam. hh",NA
+"Houston-The Woodlands-Sugar Land, TX",1980,26420,"w/o kids: non-fam. hh",0.270533965426803
+"Houston-The Woodlands-Sugar Land, TX",1990,26420,"w/o kids: non-fam. hh",0.288945465443545
+"Houston-The Woodlands-Sugar Land, TX",2000,26420,"w/o kids: non-fam. hh",0.281843427929187
+"Houston-The Woodlands-Sugar Land, TX",2009,26420,"w/o kids: non-fam. hh",0.289159930897948
+"Houston-The Woodlands-Sugar Land, TX",2013,26420,"w/o kids: non-fam. hh",0.28848963364109
+"Houston-The Woodlands-Sugar Land, TX",2017,26420,"w/o kids: non-fam. hh",0.290174465928936
+"Los Angeles-Long Beach-Anaheim, CA",1970,31080,"w/o kids: non-fam. hh",NA
+"Los Angeles-Long Beach-Anaheim, CA",1980,31080,"w/o kids: non-fam. hh",0.322021536168783
+"Los Angeles-Long Beach-Anaheim, CA",1990,31080,"w/o kids: non-fam. hh",0.312984019635948
+"Los Angeles-Long Beach-Anaheim, CA",2000,31080,"w/o kids: non-fam. hh",0.305520066260145
+"Los Angeles-Long Beach-Anaheim, CA",2009,31080,"w/o kids: non-fam. hh",0.315749685653644
+"Los Angeles-Long Beach-Anaheim, CA",2013,31080,"w/o kids: non-fam. hh",0.31535946823099
+"Los Angeles-Long Beach-Anaheim, CA",2017,31080,"w/o kids: non-fam. hh",0.316764324770252
+"Miami-Fort Lauderdale-West Palm Beach, FL",1970,33100,"w/o kids: non-fam. hh",NA
+"Miami-Fort Lauderdale-West Palm Beach, FL",1980,33100,"w/o kids: non-fam. hh",0.294754547376355
+"Miami-Fort Lauderdale-West Palm Beach, FL",1990,33100,"w/o kids: non-fam. hh",0.349079576863749
+"Miami-Fort Lauderdale-West Palm Beach, FL",2000,33100,"w/o kids: non-fam. hh",0.332561921047386
+"Miami-Fort Lauderdale-West Palm Beach, FL",2009,33100,"w/o kids: non-fam. hh",0.347704421146202
+"Miami-Fort Lauderdale-West Palm Beach, FL",2013,33100,"w/o kids: non-fam. hh",0.347622994048068
+"Miami-Fort Lauderdale-West Palm Beach, FL",2017,33100,"w/o kids: non-fam. hh",0.34405460247542
+"New York-Newark-Jersey City, NY-NJ-PA",1970,35620,"w/o kids: non-fam. hh",NA
+"New York-Newark-Jersey City, NY-NJ-PA",1980,35620,"w/o kids: non-fam. hh",0.28632313101525
+"New York-Newark-Jersey City, NY-NJ-PA",1990,35620,"w/o kids: non-fam. hh",0.306212873115852
+"New York-Newark-Jersey City, NY-NJ-PA",2000,35620,"w/o kids: non-fam. hh",0.320692615124246
+"New York-Newark-Jersey City, NY-NJ-PA",2009,35620,"w/o kids: non-fam. hh",0.334217176259444
+"New York-Newark-Jersey City, NY-NJ-PA",2013,35620,"w/o kids: non-fam. hh",0.334472609275771
+"New York-Newark-Jersey City, NY-NJ-PA",2017,35620,"w/o kids: non-fam. hh",0.337086899923787
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",1970,37980,"w/o kids: non-fam. hh",NA
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",1980,37980,"w/o kids: non-fam. hh",0.260822384227796
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",1990,37980,"w/o kids: non-fam. hh",0.294159051070946
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",2000,37980,"w/o kids: non-fam. hh",0.321098726338356
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",2009,37980,"w/o kids: non-fam. hh",0.342000810489157
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",2013,37980,"w/o kids: non-fam. hh",0.348235518143779
+"Philadelphia-Camden-Wilmington, PA-NJ-DE-MD",2017,37980,"w/o kids: non-fam. hh",0.35271188313495
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",1970,47900,"w/o kids: non-fam. hh",NA
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",1980,47900,"w/o kids: non-fam. hh",0.306785785401722
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",1990,47900,"w/o kids: non-fam. hh",0.323622091131686
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",2000,47900,"w/o kids: non-fam. hh",0.335035413992545
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",2009,47900,"w/o kids: non-fam. hh",0.347971942665447
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",2013,47900,"w/o kids: non-fam. hh",0.33969954588077
+"Washington-Arlington-Alexandria, DC-VA-MD-WV",2017,47900,"w/o kids: non-fam. hh",0.336956471649753

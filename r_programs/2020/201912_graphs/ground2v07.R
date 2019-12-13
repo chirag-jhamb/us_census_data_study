@@ -11,8 +11,10 @@
 # december 9, 2019
 # december 10, 2019
 # december 11, 2019
-#
-# ground2v05.R 
+# december 12, 2019: edited by Chirag. Edits: changed input file name (updated date)
+# december 12, 2019: lfb
+
+# ground2v07.R 
 #
 ##################################################################
 
@@ -43,13 +45,13 @@ ageg2 <- FALSE
 totpop <- FALSE
 
 #### race graphs ################
-race1 <- FALSE
+race1 <- TRUE
 
 #### household composition graphs ##############
 # household size
-hh1 <- TRUE
+hh1 <- FALSE
 # household type
-hh2 <- TRUE
+hh2 <- FALSE
 
 #### income graphs ################
 
@@ -72,8 +74,8 @@ if(cdata){
   # these data are created in  
   # /groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_programs/2020/data_set_up
   # create_dataset_all_years.R 
-  orgd <- read.csv("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/20191211_dataset_all_years.csv")
-  #orgd <- read.csv("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_programs/2020/data_set_up/20191211_dataset_all_years.csv")
+  # changed by chirag from 20191211 to 20191212
+  orgd <- read.csv("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/20191212_dataset_all_years.csv")
   print(names(orgd))
   checker <- orgd
 
@@ -81,15 +83,21 @@ if(cdata){
   orgd$statefips <- substr(orgd$FIPS,1,2)
   orgd$countyfips <- substr(orgd$FIPS,3,5)
 
-  # make urban/suburban/exurban markers
-  orgd$area_type <- ifelse((orgd$countyfips %in% c("001") & orgd$statefips %in% c("11"))|
-                           (orgd$countyfips %in% c("013","510") & orgd$statefips %in% c("51")),"Urban",
-                      ifelse((orgd$countyfips %in% c("033","031") & orgd$statefips %in% c("24"))|
-                             (orgd$countyfips %in% c("059","600","610") & orgd$statefips %in% c("51")),"Suburban",
-                             "Exurban"))
-  # clear if msa
-  orgd$area_type <- ifelse(orgd$level == "msa",NA,orgd$area_type)
+  # make urban/suburban/exurban markers for counties only
+  orgd$area_type <- ifelse( ( (orgd$countyfips %in% c("001") & orgd$statefips %in% c("11"))|
+                             (orgd$countyfips %in% c("013","510") & orgd$statefips %in% c("51")))
+			   & orgd$level == "county_level","Urban",
+                      ifelse(((orgd$countyfips %in% c("033","031") & orgd$statefips %in% c("24"))|
+                             (orgd$countyfips %in% c("059","600","610") & orgd$statefips %in% c("51"))) 
+			     & orgd$level == "county_level","Suburban",
+                        ifelse(orgd$level == "county_level","Exurban", "nada")))
   print(table(orgd$area_type))
+
+  # create shares by age
+  ## < 18
+  orgd$s_lt_18 <- orgd$less_than_18/orgd$total_population
+  ## > 59
+  orgd$s_gt_59 <- orgd$above_59/orgd$total_population
 
   # create race shares
   orgd$s_white <- orgd$white_alone/orgd$total_population
@@ -153,14 +161,6 @@ if(cdata){
 ############### graph 1: msas vs dc ########################################
 
 if(ageg1){
-
-  #### calculate population shares by age
-  ## < 18
-  msas$s_lt_18 <- msas$less_than_18/msas$total_population
-  print(summary(msas$s_lt_18))
-  ## > 59
-  msas$s_gt_59 <- msas$above_59/msas$total_population
-  print(summary(msas$s_gt_59))
 
   ## keep only relevant columns
   msa_sub <- msas[,c("NAME","CBSA","year","s_lt_18","s_gt_59")]
@@ -310,9 +310,9 @@ if(totpop){
   ### make a graph -- total population
   age.g1 <- ggplot() +
     geom_line(data = msas[which(msas$CBSA != 47900),],
-    	      mapping = aes(x = year, y = total_population, color = as.factor(CBSA))) +
+    	      mapping = aes(x = year, y = total_population, color = as.factor(NAME))) +
     geom_line(data = msas[which(msas$CBSA == 47900),],
-    	      mapping = aes(x = year, y = total_population, color = as.factor(CBSA)),
+    	      mapping = aes(x = year, y = total_population, color = as.factor(NAME)),
 	      size = 1.5) +
     scale_y_continuous(labels = comma) +
     labs(title = "msas total population")
@@ -339,7 +339,7 @@ if(totpop){
   ### make a graph -- total population
   age.g1 <- ggplot() +
     geom_line(data = cnties,
-    	      mapping = aes(x = year, y = total_population, color = as.factor(FIPS))) +
+    	      mapping = aes(x = year, y = total_population, color = as.factor(county_name))) +
     scale_y_continuous(labels = comma) +
     labs(title = "county total population")
 
@@ -365,10 +365,62 @@ if(totpop){
 
 if(pop.tab){
 
-}
+  ### make the data wide ###
 
+  # first make a year variable has a character beginning
+  ptab <- orgd
+  ptab$year.char <- paste0("pop.tot_",ptab$year)
 
+  # make one name column
+  ptab$entity.name <- ifelse(ptab$level == "msa_level",as.character(ptab$NAME),as.character(ptab$county_name))
 
+  # keep only relevant columns 
+  ptab <- ptab[,c("entity.name","CBSA","statefips","countyfips","year.char","total_population")]
+
+  # spread
+  widepop <- spread(data = ptab,
+  	            key = "year.char",
+		    value = "total_population")
+
+  ### calculate annual percentage changes ##
+
+  widepop$an.pc.ch_1970_1980 <- (log(widepop$pop.tot_1980) - log(widepop$pop.tot_1970))/10
+  widepop$an.pc.ch_1980_1990 <- (log(widepop$pop.tot_1990) - log(widepop$pop.tot_1980))/10
+  widepop$an.pc.ch_1990_2000 <- (log(widepop$pop.tot_2000) - log(widepop$pop.tot_1990))/10
+  widepop$an.pc.ch_2000_2009 <- (log(widepop$pop.tot_2009) - log(widepop$pop.tot_2000))/9
+  widepop$an.pc.ch_2009_2013 <- (log(widepop$pop.tot_2013) - log(widepop$pop.tot_2009))/4
+  widepop$an.pc.ch_2013_2017 <- (log(widepop$pop.tot_2017) - log(widepop$pop.tot_2013))/4
+
+  print(widepop)
+
+  ### table to output levels
+
+  ptab.lvl <- widepop[,c("entity.name","CBSA","statefips","countyfips",
+		          "pop.tot_1970","pop.tot_1980","pop.tot_1990",      
+			  "pop.tot_2000","pop.tot_2009","pop.tot_2013",       
+			  "pop.tot_2017")]
+
+  nm <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/total_population/total_population_",
+               dateo,
+	       ".csv")
+  write.csv(ptab.lvl,
+            file = nm,
+	    row.names = FALSE)
+
+  ### table to output changes
+
+  ptab.lvl <- widepop[,c("entity.name","CBSA","statefips","countyfips",
+		          "an.pc.ch_1970_1980","an.pc.ch_1980_1990","an.pc.ch_1990_2000",
+			  "an.pc.ch_2000_2009","an.pc.ch_2009_2013","an.pc.ch_2013_2017")]
+
+  nm <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/total_population/population_change_",
+               dateo,
+	       ".csv")
+  write.csv(ptab.lvl,
+            file = nm,
+	    row.names = FALSE)
+
+} # end of population table gate
 
 
 #############################################################################
@@ -488,6 +540,16 @@ if(race1){
   ## lapply to this list 
   lapply(cnty.list,rfunc2)
 
+  ### output csv 
+  raceout <- orgd[,c("NAME","county_name","CBSA","statefips","countyfips","year","s_white","s_aa","s_hisp")]
+  nm <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/race/",
+     	       "race_msa_cnty_",
+               dateo,
+	       ".csv")
+  write.csv(x = raceout,
+  	    file = nm,
+	    row.names = FALSE)
+
   #########################################
   ##### urban/suburban/exurban ############
   #########################################
@@ -547,7 +609,16 @@ if(race1){
 
   ## lapply to this list 
   lapply(area.list,rfunc2)
-  
+
+  ### output csv 
+  threetout <- threet[,c("area_type","year","s_white","s_aa","s_hisp")]
+  nm <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/race/",
+     	       "race_area_type_",
+               dateo,
+	       ".csv")
+  write.csv(x = threetout,
+  	    file = nm,
+	    row.names = FALSE)  
 
 } # end of race1 gate -- county and msa shares by racial group
 
@@ -563,27 +634,27 @@ if(race1){
 
 if(hh1){
 
-  ##### set up useful for all graphs ######################
+  ##### make data long to do this #########
 
-  ### name the variables for graph ##
-  vals <- c("hhs_1","hhs_2","hhs_3","hhs_4")
-  hh.name <- c("hh w/ 1 person",
-  	       "hh w/ 2 people",
-	       "hh w/ 3 to 4 people",
-	       "hh w/ 5 + ppl")
-
-
-  ###### msas ###########################################3
+  ### keep only relevant variables to avoid confusion ###
+  orghh1 <- orgd[,c("NAME","year","CBSA","hhs_type","hhs_share")] 
 
   ### make msas long to do this ####
-  msas2 <- gather(data = msas, 
+  msas2 <- gather(data = orghh1, 
   	   	  key = hhs_type,
 		  value = hhs_share,
 		  hhs_1:hhs_4)
-  
-  ### keep only relevant variables to avoid confusion ###
-  msas2 <- msas2[,c("NAME","year","CBSA","hhs_type","hhs_share")]
+
+  msas2$hhs_type_name <- ifelse(msas2$hhs_type == "hhs_1","hh size: 1",
+  		           ifelse(msas2$hhs_type == "hhs_2","hh size: 2",
+			     ifelse(msas2$hhs_type == "hhs_3","hh size: 3 to 4",
+			       ifelse(msas2$hhs_type == "hhs_4","hh size: 5+","nada"))))
+
   print(head(msas2))
+
+  ###### msas ###########################################3
+
+
 
   #### msas #####
 ###### START HERE WITH LABELS ####
@@ -701,3 +772,22 @@ if(hh1){
 
 
 } # end of household composition by size  
+
+
+###
+if(hhs2){
+
+  # create household composition shares
+  orgd$ht.tot <- orgd$household_with_kids + orgd$family_household_without_kids + orgd$non_family_household_without_kids
+  print(summary(orgd$ht.tot))
+  orgd$hts_1 <- orgd$household_with_kids/orgd$ht.tot
+  print(summary(orgd$hts_1))
+  orgd$hts_2 <- orgd$family_household_without_kids/orgd$ht.tot
+  print(summary(orgd$hts_2))
+  orgd$hts_3 <- orgd$non_family_household_without_kids/orgd$ht.tot
+  print(summary(orgd$hts_3))
+
+  #### make a variable that has the name contents and plot by that
+  
+
+}
