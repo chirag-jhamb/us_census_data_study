@@ -1,5 +1,6 @@
 # Author: Chirag Jhamb, chirag@gwmail.gwu.edu
-# file containing functions which are used in multiple files
+# file containing functions which are used in multiple files (create_block_group.py, acs_county_2010_2017_v02, load_1970_2000_sasdata)
+# the functions return MSA level data, county names, FIPS grouped by which MSA they belong to  
 # to import this file in the code, run: exec(open("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/python_programs/2020/data_functions.py").read())
 
 import pandas as pd
