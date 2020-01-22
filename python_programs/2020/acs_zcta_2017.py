@@ -274,10 +274,10 @@ def get_summary_year_data(start_year, end_year):
     Population_df = get_data('TOTAL POPULATION', 'B01003')
     Age_df = get_data('SEX BY AGE', 'B01001')
     Median_Income_df = get_data('MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN ' + end_year + ' INFLATION-ADJUSTED DOLLARS)', 'B19013')
-    Race_df = get_data('RACE', 'B02001')
-    Income_df = get_data('HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN ' + end_year + ' INFLATION-ADJUSTED DOLLARS)', 'B19001')
+    Race_df = get_data('HISPANIC OR LATINO ORIGIN BY RACE', 'B03002')
+    # Income_df = get_data('HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN ' + end_year + ' INFLATION-ADJUSTED DOLLARS)', 'B19001')
 
-    data_frames = [Population_df, Age_df, Race_df, Median_Income_df,Income_df]
+    data_frames = [Population_df, Age_df, Race_df, Median_Income_df] #,Income_df]
 
     mergedDF = reduce(lambda left, right: pd.merge(left, right, on=["LOGRECNO", "FILETYPE", "ZCTA", "GEO_ID"], how='outer'),
                       data_frames)

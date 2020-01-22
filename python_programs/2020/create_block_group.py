@@ -13,19 +13,6 @@ import datetime, csv
 import shapefile
 # import the file having all the data functions, which contains MSA function that gives FIPS of all counties present in DMV(47900) MSA
 exec(open("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/python_programs/2020/data_functions.py").read())
-# start_year = '2013'
-# end_year = '2017'
-
-# 3 temp values for testing, to be deleted
-# table_id = 'B19001'
-# table_name = 'HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN 2017 INFLATION-ADJUSTED DOLLARS)'
-# block group data to be collected for these tables, table id
-# B19013
-# Income_df = ('HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN ' + end_year + ' INFLATION-ADJUSTED DOLLARS)', 'B19001')
-# Median_Income_df = ('MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN ' + end_year + ' INFLATION-ADJUSTED DOLLARS)', 'B19013')
-# Household_Income_B19080_df = ("HOUSEHOLD INCOME QUINTILE UPPER LIMITS","B19080")
-# Mean_Household_Income_B19081_df = ("MEAN HOUSEHOLD INCOME OF QUINTILES","B19081")
-# total_pop_df = ('(PER CAPITA INCOME IN THE PAST 12 MONTHS (IN' + end_year +' INFLATION-ADJUSTED DOLLARS)', 'B19301')
 
 # function to read and return shp files:
 def read_shapefile(shp_path):
@@ -152,7 +139,6 @@ for state in state_list:
         print(block_group_data.head())
         tract_data_file_list = []
         for data_index in [Median_Income_df, total_pop_df]:
-            # data_index = ('MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN ' + end_year + ' INFLATION-ADJUSTED DOLLARS)', 'B19013')
             table_name = data_index[0]
             table_id = data_index[1]
             print(table_id, table_name)
@@ -239,5 +225,5 @@ for i in years_merged_df.columns:
 		years_merged_df[i] = years_merged_df[i].astype("str")
 save_location = "/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/python_output/2020/block_group_data/"
 filename = save_location + datetime.datetime.today().strftime('%Y%m%d') + '_block_group_tract_data.csv'
-final_file.to_csv(filename, index=False, quoting=csv.QUOTE_NONNUMERIC)
+# final_file.to_csv(filename, index=False, quoting=csv.QUOTE_NONNUMERIC)
 print("File saved",filename)

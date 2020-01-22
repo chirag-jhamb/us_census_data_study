@@ -1,0 +1,1468 @@
+#################################################################
+#
+# this file tries to make graphs for state of the capital region 2020
+#
+# data are created in 
+# /groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_programs/2020/data_set_up
+# create_dataset_all_years.R
+#
+# december 7, 2019
+# december 8, 2019
+# december 9, 2019
+# december 10, 2019
+# december 11, 2019
+# december 12, 2019: edited by Chirag. Edits: changed input file name (updated date)
+# december 12, 2019: lfb
+# december 13, 2019
+# december 16, 2019
+# december 17, 2019 .. trying again with income data
+# december 19, 2019 .. trying again with income data 
+# january  20, 2019 .. trying to add block group size to income data
+#
+# ground2v15.R 
+#
+##################################################################
+
+####### A. basic set up stuff ##########################################
+
+#### packages ######
+require(tidyverse)
+require(ggplot2)
+require(scales)
+require(haven)
+require(sf)
+
+#### set todays date #####
+dateo <- paste(substr(Sys.Date(),1,4),substr(Sys.Date(),6,7),substr(Sys.Date(),9,10),sep="")
+dateo
+
+####### B. set gates ################################################
+
+# set colors for all graphs #
+gcolors <- TRUE
+
+# modify dataset with things for many graphs #
+cdata <- TRUE
+
+#### age graphs #####
+ageg1 <- FALSE
+ageg2 <- FALSE
+ageg3 <- FALSE
+
+#### total population graphs ####
+totpop <- FALSE
+
+#### race graphs ################
+race1 <- FALSE
+# show suburbs diversifying
+race2 <- FALSE
+# show fips to majority aa
+race3 <- FALSE
+# show urban divergence: dc more white, arl/alex less white
+race4 <- FALSE
+
+#### household composition graphs ##############
+# household size
+hh1 <- FALSE
+# household type
+hh2 <- FALSE
+
+#### income graphs ################
+# clean income data 
+inccln <- TRUE
+# median income dbns
+incg <- FALSE
+
+#### population tables ############
+pop.tab <- FALSE
+
+
+#####################################################################
+###### set common directories #######################################
+#####################################################################
+
+# location for january meeting output
+janmtg <- "/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/202001_meeting/"
+
+
+#####################################################################
+###### gcolors : set colors for all graphs #######################
+#####################################################################
+
+
+#####################################################################
+###### cdata: clean county/msa data with things needed for many graphs #########
+#####################################################################
+
+if(cdata){
+
+  # these data are created in  
+  # /groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_programs/2020/data_set_up
+  # create_dataset_all_years.R 
+  # changed by chirag from 20191211 to 20191212
+  orgd <- read.csv("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/20191212_dataset_all_years.csv")
+  print(names(orgd))
+  checker <- orgd
+
+  # make state code and county code
+  orgd$statefips <- substr(orgd$FIPS,1,2)
+  orgd$countyfips <- substr(orgd$FIPS,3,5)
+
+  # make urban/suburban/exurban markers for counties only
+  orgd$area_type <- ifelse( ( (orgd$countyfips %in% c("001") & orgd$statefips %in% c("11"))|
+                             (orgd$countyfips %in% c("013","510") & orgd$statefips %in% c("51")))
+			   & orgd$level == "county_level","Urban",
+                      ifelse(((orgd$countyfips %in% c("033","031") & orgd$statefips %in% c("24"))|
+                             (orgd$countyfips %in% c("059","600","610") & orgd$statefips %in% c("51"))) 
+			     & orgd$level == "county_level","Suburban",
+                        ifelse(orgd$level == "county_level","Exurban", "nada")))
+  print(table(orgd$area_type))
+
+  # create shares by age
+  ## < 18
+  orgd$s_lt_18 <- orgd$less_than_18/orgd$total_population
+  ## > 59
+  orgd$s_gt_59 <- orgd$above_59/orgd$total_population
+
+  # create race shares
+  orgd$s_white <- orgd$white_alone/orgd$total_population
+  orgd$s_aa <- orgd$AA_alone/orgd$total_population
+  orgd$s_hisp <- orgd$hispanic_or_latino/orgd$total_population
+
+  # create shares by household size 
+  #### this first row should be in dataset that i get. should be able to delete this line 
+  orgd$hhs_tot <- orgd$household_size_1 + orgd$household_size_2 + orgd$household_size_3_to_4 + orgd$household_size_more_than_4
+  orgd$hhs_1 <- orgd$household_size_1 / orgd$hhs_tot
+  orgd$hhs_2 <- orgd$household_size_2 / orgd$hhs_tot
+  orgd$hhs_3 <- orgd$household_size_3_to_4 / orgd$hhs_tot
+  orgd$hhs_4 <- orgd$household_size_more_than_4 / orgd$hhs_tot
+
+  # create household composition shares
+  orgd$ht.tot <- orgd$household_with_kids + orgd$family_household_without_kids + orgd$non_family_household_without_kids
+  print(summary(orgd$ht.tot))
+  orgd$hts_1 <- orgd$household_with_kids/orgd$ht.tot
+  print(summary(orgd$hts_1))
+  orgd$hts_2 <- orgd$family_household_without_kids/orgd$ht.tot
+  print(summary(orgd$hts_2))
+  orgd$hts_3 <- orgd$non_family_household_without_kids/orgd$ht.tot
+  print(summary(orgd$hts_3))
+
+  ###### make just msa data #######
+
+  msas <- orgd[which(orgd$level == "msa_level"),]
+  print("just msas")
+  print(dim(msas))
+
+  ##### make just county data ######
+
+  # load main data, keep only counties
+  cnties <- orgd[which(orgd$level == "county_level"),]
+  print("just counties")
+  print(dim(cnties))
+
+  ##### make urban/suburban/exurban data #######
+
+  # aggregate to three types
+  cnties <- group_by(.data = cnties, area_type, year)
+  threet <- summarize(.data = cnties, total_population = sum(total_population),
+  	    		              less_than_18 = sum(less_than_18),
+				      X18_to_29 = sum(X18_to_29),
+				      above_59 = sum(above_59),
+				      white_alone = sum(white_alone),
+				      AA_alone = sum(AA_alone),
+				      hispanic_or_latino = sum(hispanic_or_latino),
+				      household_with_kids = sum(household_with_kids),
+				      family_household_without_kids = sum(family_household_without_kids),
+				      non_family_household_without_kids = sum(non_family_household_without_kids)
+				      )
+
+} # end of cleaning / set up data gate
+
+#####################################################################
+###### inccln: clean block group level data for use ###################
+#####################################################################
+
+if(inccln){
+
+  ###### load cpi #################################
+
+  # cpi file 
+  cpinm <- "/groups/brooksgrp/consumer_price_index/all_urban_consumers/through_2018/cu.data.1.AllItems.txt"
+  # read tab delimited text file 
+  cpi <- read.table(file = cpinm,
+      	            header = TRUE,
+		    sep = "\t")
+
+  # limit file to relevant years and codes #
+  cpis <- filter(.data = cpi, str_trim(as.character(series_id)) == "CUSR0000SA0" & substr(str_trim(as.character(cpi$period)),1,1) == "M")
+  print(head(cpis))
+
+  # make annual average
+  cpis <- group_by(.data = cpis,year)
+  cpi.annual <- summarize(.data = cpis, cpi.ann = mean(value))
+  print(cpi.annual)
+
+  # get 2018 value into all values of a variable
+  c2018 <- filter(cpi.annual, year == 2018)
+  cpi.annual$o2018 <- ifelse(cpi.annual$year == 2018, cpi.annual$cpi.ann, -9)
+  cpi.annual <- mutate(.data = cpi.annual, v2018 = max(o2018, na.rm. = TRUE))
+  print(head(cpi.annual))
+
+  ## just keep relevant years
+  cpi.annual <- filter(cpi.annual, year %in% c(1990,2000,2013,2017))
+  print(cpi.annual)
+
+  ###### load block group data ###########################################################
+
+  ### load block group income data ###
+  # these data for years 2008-2012 and 2013-2017 are created in 
+  # /groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/python_programs/2020/create_block_group.py
+  # read.csv gives a lot of trouble loading character variables, so use read_csv()
+  bg1 <- read_csv("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/python_output/2020/block_group_data/20191217_block_group_tract_data.csv",
+      	   col_types = cols(
+     blockgrp = col_character(),
+     tract = col_character(),
+     statefips = col_character(),
+     countyfips = col_character(),
+     B19013_Median_household_income_in_the_past_12_months_ = col_double(),
+     B00001_Total = col_double(),
+     start_year = col_double(),
+     end_year = col_double(),
+     land_area = col_double()
+   ))
+
+  print("this is just-loaded bg1")
+  print(str(bg1))
+  # set variable year to last year of 5-year period
+  bg1$year <- bg1$end_year
+  # make bg_med_inc variable
+  bg1$bg_med_inc <- bg1$B19013_Median_household_income_in_the_past_12_months_
+  # make population variable
+  bg1$pop <- bg1$B00001_Total
+  # need to make state/county/tract/blkgrp into character variables
+  # get rid of start and end year variables 
+  bg1 <- bg1[, !(names(bg1) %in% c("start_year","end_year","B19013_Median_household_income_in_the_past_12_months_"))]
+
+  # 1990 and 2000 block group data
+  # these data are created in 
+  # /groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/sas_programs/2020/load_block_group_census/stackyearsv06.sas
+  bg9020 <- read_sas("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/sas_output/2020/dec_block_grp_census/bgs_1990_2000_dmv_20200120.sas7bdat")
+  print("names from 90/2000 file upon loading")
+  print(names(bg9020))
+
+  ## fix bgs for 1990 and 2000 to align with acs dataframe
+  # countyfips needs leading zeros 
+  # find length of countyfips
+  bg9020$leno <- str_length(str_trim(bg9020$countyfips))
+  # adjust with padding as needed
+  bg9020$countyfips <- ifelse(bg9020$leno == 1, paste0("00",str_trim(bg9020$countyfips)),
+  		         ifelse(bg9020$leno == 2, paste0("0",str_trim(bg9020$countyfips)),bg9020$countyfips))
+  print(head(bg9020))
+  # get rid of length variable
+  bg9020 <- bg9020[,!(names(bg9020) == "leno")]
+
+  # set marker variable for merge below
+  bg9020$inbgs <- 1
+
+  # drop some variables (for now) from acs data 
+  bg1$blkgrp <- bg1$blockgrp
+  bg1 <- bg1[, !(names(bg1) %in% c("land_area","blockgrp"))]
+
+  # add in padding zeros if needed for tract id
+  # find length of tract
+  bg9020$leno <- str_length(str_trim(bg9020$tract))
+  # adjust with padding as needed
+  bg9020$tract <- ifelse(bg9020$leno == 4, paste0(str_trim(bg9020$tract),"00"),
+  		    ifelse(bg9020$leno == 5, paste0(str_trim(bg9020$tract),"0"),
+		      ifelse(bg9020$leno == 6, bg9020$tract, bg9020$tract)))
+  print(head(bg9020))
+  # get rid of length variable
+  bg9020 <- bg9020[,!(names(bg9020) == "leno")]  
+
+  print("this is organization for 1990/2000")
+  print(head(bg9020))
+
+  ######### add in land area from 1990 and 2000 census block groups #########
+
+  #### 1990 data first 
+
+  ### load 1990 block group file map
+  df1990 <- st_read("/groups/brooksgrp/maps/united_states/census1990/block_groups/nhgis0025_shape/US_blck_grp_1990.shp")
+
+  ### calculate area 
+  df1990$land_area <- st_area(df1990)
+
+  ## get rid of geometry
+  st_geometry(df1990) <- NULL
+
+  ## get year, state, tract, block group ids
+  df1990$year <- 1990
+  df1990$statefips <- substr(as.character(df1990$FIPSSTCO),1,2)
+  df1990$countyfips <- substr(as.character(df1990$FIPSSTCO),3,5)
+  df1990$tract <- as.character(df1990$TRACT)
+  df1990$blkgrp <- as.character(df1990$GROUP)
+
+  ### check it
+  print("this is 1990 after clean-up")
+  print(head(df1990))
+
+  ### keep just relevant states and variables
+  df1990 <- filter(.data = df1990, statefips %in% c("11","24","51","54"))
+  df1990 <- df1990[,c("year","statefips","countyfips","tract","blkgrp","land_area")]
+
+  #### 2000 data #####
+
+  ### load data 2000 map to find area
+  df2000 <- st_read("/groups/brooksgrp/maps/united_states/census2000/block_groups/nhgis0026_shape/US_blck_grp_2000.shp")
+  print(names(df2000))
+  print(head(df2000))
+
+  ### calculate area
+  df2000$land_area <- st_area(df2000)
+
+  ### get rid of geometry  
+  st_geometry(df2000) <- NULL
+
+  ### get year, state, county, tract, block group of out file
+  df2000$year <- 2000
+  df2000$statefips <- substr(as.character(df2000$FIPSSTCO),1,2)
+  df2000$countyfips <- substr(as.character(df2000$FIPSSTCO),3,5)
+  df2000$tract <- as.character(df2000$TRACT)
+  df2000$blkgrp <- as.character(df2000$GROUP)
+
+  ### keep just relevant states and variables
+  df2000 <- filter(.data = df2000, statefips %in% c("11","24","51","54"))
+  df2000 <- df2000[,c("year","statefips","countyfips","tract","blkgrp","land_area")]
+
+  #### stack 1990 and 2000 data 
+  lands <- rbind(df1990,df2000)
+  lands$inland <- 1
+
+  ##### merge land area into dataframe with data
+  bg9020v2 <- merge(x = bg9020, 
+  	            y = lands, 
+		    by = c("year","statefips","countyfips","tract","blkgrp"),
+		    all = TRUE)  
+  # make nas from merge zeros
+  bg9020v2$inland <- ifelse(is.na(bg9020v2$inland) == TRUE,0,bg9020v2$inland)
+  bg9020v2$inbgs <- ifelse(is.na(bg9020v2$inbgs) == TRUE,0,bg9020v2$inbgs)
+
+  # check on merge status
+  print(table(bg9020v2$inland,bg9020v2$inbgs))
+
+  # just keep ones that have block group data
+  bg9020v2 <- filter(.data = bg9020v2, inbgs == 1 & inland == 1)
+  
+  # make sure that merged dataset has original dimensions and stop if not
+  print("check condition that merged dataset has same dimension as original one")
+  print(paste0("original dataset has ",dim(bg9020)[1]," rows"))
+  print(paste0("merged dataset has ",dim(bg9020v2)[1]," rows"))
+  stopifnot(dim(bg9020v2)[1] == dim(bg9020)[1])
+
+  ### put two block group datasets together ####
+
+  # rbind them!
+### start here -- this doesnt work
+  bgs <- rbind(bg9020v2,bg1)
+
+  # what about population varialbe
+
+  ### calculate population density and check ###
+  bgs$pop.den <- bgs$pop / bgs$land_area
+  summary(bgs$pop.den)
+
+
+  ############# merge in cpi data #######################################
+
+  # set up the merge
+  bgsc <- merge(x = bgs, y = cpi.annual,
+                by.x = "year", by.y = "year", all = TRUE)
+  print(dim(bgsc))
+
+  # convert to real dollars
+  bgsc$bg_med_inc_real <- bgsc$bg_med_inc / (bgsc$cpi.ann/bgsc$v2018)
+  
+  # check that it doesnt look crazy
+  checker <- group_by(.data = bgsc, year)
+  checker <- summarize(checker, mean_real_inc = mean(bg_med_inc_real), mean_nom_inc = mean(bg_med_inc) )
+  print("means for real income by decade")
+  print(checker)
+
+  ####### state and county variable ########
+
+  ### make state and county variable
+  bgsc$st.cnty <- paste0(bgsc$statefips,bgsc$countyfips)
+
+  ########## mark urban or suburban ####################
+
+#### this is defective!!! 
+
+  ### mark urb/sub/exurb
+  # better to have affirmative definition of stuff here for exurban #
+  bg1$area_type <- ifelse(  bg1$statefips == 11 |
+  		           (bg1$statefips == 51 & bg1$countyfips %in% c(13,510)), "Urban",
+		     ifelse( (bg1$statefips == 24 & bg1$countyfips %in% c(33,31)) |
+		     	     (bg1$statefips == 51 & bg1$countyfips %in% c(59,600,610)), "Suburban", "Exurban"))
+  print(table(bg1$area_type))
+
+
+} # end of income data cleaning gate
+
+
+#############################################################################
+#############################################################################
+############## AGE GRAPHS ###################################################
+#############################################################################
+#############################################################################
+
+
+############### graph 1: msas vs dc ########################################
+
+if(ageg1){
+
+  ## keep only relevant columns
+  msa_sub <- msas[,c("NAME","CBSA","year","s_lt_18","s_gt_59")]
+  print(msa_sub)
+
+  #### age < 18
+
+  ### make a graph -- age < 18
+  age.g1 <- ggplot() +
+    geom_line(data = msa_sub[which(msa_sub$CBSA != 47900),],
+    	      mapping = aes(x = year, y = s_lt_18, color = as.factor(NAME))) +
+    geom_line(data = msa_sub[which(msa_sub$CBSA == 47900),],
+    	      mapping = aes(x = year, y = s_lt_18, color = as.factor(NAME)),
+	      size = 1.5) +
+    labs(title = "share < 18")
+
+  ### output graph
+  nm <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/age/",
+     	       "age1a_",
+               dateo,
+	       ".jpg")
+  ggsave(filename = nm, 
+       plot = age.g1,
+       device = "jpg",
+       width = 11,
+       height = 8, 
+       units = c("in"))
+
+  #### age > 59
+
+  ### make a graph -- age > 59
+  age.g1 <- ggplot() +
+    geom_line(data = msa_sub[which(msa_sub$CBSA != 47900),],
+    	      mapping = aes(x = year, y = s_gt_59, color = as.factor(NAME))) +
+    geom_line(data = msa_sub[which(msa_sub$CBSA == 47900),],
+    	      mapping = aes(x = year, y = s_gt_59, color = as.factor(NAME)),
+	      size = 1.5) + 
+    labs(title = "share > 59")
+
+
+  ### output graph
+  nm <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/age/",
+     	       "age1b_",
+               dateo,
+	       ".jpg")
+  ggsave(filename = nm, 
+       plot = age.g1,
+       device = "jpg",
+       width = 11,
+       height = 8, 
+       units = c("in"))
+
+  ### output csv 
+  nm <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/age/",
+     	       "age1_",
+               dateo,
+	       ".csv")
+  write.csv(x = msa_sub,
+  	    file = nm,
+	    row.names = FALSE)
+
+} # end of age graph 1 and 2
+
+
+############### graph 2: urban/exurban/suburban ########################################
+
+if(ageg2){
+
+  #### calculate population shares by age
+  ## < 18
+  threet$s_lt_18 <- threet$less_than_18/threet$total_population
+  print(summary(threet$s_lt_18))
+  ## 18 to 29
+  threet$s_18_to_29 <- threet$X18_to_29/threet$total_population
+  print(summary(threet$s_lt_18))
+  ## > 59
+  threet$s_gt_59 <- threet$above_59/threet$total_population
+  print(summary(threet$s_gt_59))
+
+  ## keep only relevant columns
+  threet_sub <- msas[,c("NAME","statefips","countyfips","year","s_lt_18","s_gt_59")]
+  print(threet_sub)
+
+  ## make area_type factor
+  threet$area_type_f <- as.factor(threet$area_type)
+
+  ##### make three graphs
+  ggo <- function(varin,namer1,tit.text){
+
+    ### make a graph -- age > 59
+    age.g1 <- ggplot() +
+      geom_line(data = threet,
+    	        mapping = aes_string(x = "year", y = varin, color = "area_type_f")) +
+      labs(title = tit.text)
+
+    ### output graph
+    nm <- paste0(janmtg,
+     	         "age/age2",
+		 namer1,
+		 "_",
+               dateo,
+	       ".jpg")
+    ggsave(filename = nm, 
+           plot = age.g1,
+       	   device = "jpg",
+       	   width = 11,
+       	   height = 8, 
+       	   units = c("in"))
+  } # end of function to make three graphs 
+
+  ##### call function for three graphs 
+  # share < 18
+  ggo(varin = "s_lt_18",
+      namer1 = "a",
+      tit.text = "share lt age 18")
+  # share 18 to 29
+  ggo(varin = "s_18_to_29",
+      namer1 = "b",
+      tit.text = "share 18 to 29")
+  # share > 59
+  ggo(varin = "s_gt_59",
+      namer1 = "c",
+      tit.text = "share gt age 59")
+
+  ##### output csv #####
+  tout <- threet[,c("area_type","year","s_lt_18","s_18_to_29","s_gt_59")]
+  nm <- paste0(janmtg,
+               "age/age2_",
+               dateo,
+	       ".csv")
+  write.csv(x = tout,
+  	    file = nm,
+	    row.names = FALSE)
+
+} # end of second set of age graphs #
+
+
+############### graph 3: top 5 msas vs dc ########################################
+
+if(ageg3){
+
+  ## keep only relevant columns
+  msa_sub <- msas[,c("NAME","CBSA","year","total_population","s_lt_18","s_gt_59")]
+  ## rank msas by population to keep top 5
+  msa_sub <- group_by(.data = msa_sub, year)
+  msa_sub <- mutate(msa_sub, year_pop_rank = rank(-total_population))
+  ## put 2017 rank for all years 
+  msa_sub <- group_by(.data = msa_sub, CBSA)
+  msa_sub$pr2017 <- ifelse(msa_sub$year == 2017, msa_sub$year_pop_rank, NA)
+  print(head(msa_sub))
+  # max of 2017 rank is all rank
+  msa_sub <- mutate(msa_sub, pr2017a = max(pr2017,na.rm = TRUE))
+
+  ### just keep five largest 
+  msa_sub5 <- filter(.data = msa_sub, pr2017a >= 5)
+
+  #### age < 18
+
+  ### make a graph -- age < 18
+  age.g1 <- ggplot() +
+    geom_line(data = msa_sub5[which(msa_sub5$CBSA != 47900),],
+    	      mapping = aes(x = year, y = s_lt_18, color = as.factor(NAME))) +
+    geom_line(data = msa_sub5[which(msa_sub5$CBSA == 47900),],
+    	      mapping = aes(x = year, y = s_lt_18, color = as.factor(NAME)),
+	      size = 1.5) +
+    labs(title = "share < 18")
+
+  ### output graph
+  nm <- paste0(janmtg,
+     	       "age/age3a_",
+               dateo,
+	       ".jpg")
+  ggsave(filename = nm, 
+       plot = age.g1,
+       device = "jpg",
+       width = 8,
+       height = 8, 
+       units = c("in"))
+
+  #### age > 59
+
+  ### make a graph -- age > 59
+  age.g1 <- ggplot() +
+    geom_line(data = msa_sub5[which(msa_sub5$CBSA != 47900),],
+    	      mapping = aes(x = year, y = s_gt_59, color = as.factor(NAME))) +
+    geom_line(data = msa_sub5[which(msa_sub5$CBSA == 47900),],
+    	      mapping = aes(x = year, y = s_gt_59, color = as.factor(NAME)),
+	      size = 1.5) + 
+    labs(title = "share > 59")
+
+
+  ### output graph
+  nm <- paste0(janmtg,
+     	       "age/age3b_",
+               dateo,
+	       ".jpg")
+  ggsave(filename = nm, 
+       plot = age.g1,
+       device = "jpg",
+       width = 8,
+       height = 8, 
+       units = c("in"))
+
+  ### output csv 
+  nm <- paste0(janmtg,
+     	       "age/age3_",
+               dateo,
+	       ".csv")
+  write.csv(x = msa_sub5,
+  	    file = nm,
+	    row.names = FALSE)
+
+} # end of age graph 3 -- dc msa vs the rest
+
+
+#############################################################################
+#############################################################################
+############## TOTAL POPULATION GRAPHS -- FOR CHECKING ###################################################
+#############################################################################
+#############################################################################
+
+if(totpop){
+
+  ##### msas only ######
+
+  ### make a graph -- total population
+  age.g1 <- ggplot() +
+    geom_line(data = msas[which(msas$CBSA != 47900),],
+    	      mapping = aes(x = year, y = total_population, color = as.factor(NAME))) +
+    geom_line(data = msas[which(msas$CBSA == 47900),],
+    	      mapping = aes(x = year, y = total_population, color = as.factor(NAME)),
+	      size = 1.5) +
+    scale_y_continuous(labels = comma) +
+    labs(title = "msas total population")
+
+  ### output graph
+  nm <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/total_population/",
+     	       "totpop_msa_",
+               dateo,
+	       ".jpg")
+  ggsave(filename = nm, 
+       plot = age.g1,
+       device = "jpg",
+       width = 11,
+       height = 8, 
+       units = c("in"))
+
+  #### counties only ####
+
+  # load main data, keep only counties
+  cnties <- orgd[which(orgd$level == "county_level"),]
+  print("just counties")
+  print(dim(cnties))
+
+  ### make a graph -- total population
+  age.g1 <- ggplot() +
+    geom_line(data = cnties,
+    	      mapping = aes(x = year, y = total_population, color = as.factor(county_name))) +
+    scale_y_continuous(labels = comma) +
+    labs(title = "county total population")
+
+  ### output graph
+  nm <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/total_population/",
+     	       "totpop_cnty_",
+               dateo,
+	       ".jpg")
+  ggsave(filename = nm, 
+       plot = age.g1,
+       device = "jpg",
+       width = 11,
+       height = 8, 
+       units = c("in"))
+
+} # end of totpop gate 
+
+
+############################################################################
+########### table: msa and county population by year #######################
+########### table: msa and county pop growth rate by year ##################
+############################################################################
+
+if(pop.tab){
+
+  ### make the data wide ###
+
+  # first make a year variable has a character beginning
+  ptab <- orgd
+  ptab$year.char <- paste0("pop.tot_",ptab$year)
+
+  # make one name column
+  ptab$entity.name <- ifelse(ptab$level == "msa_level",as.character(ptab$NAME),as.character(ptab$county_name))
+
+  # keep only relevant columns 
+  ptab <- ptab[,c("entity.name","CBSA","statefips","countyfips","year.char","total_population")]
+
+  # spread
+  widepop <- spread(data = ptab,
+  	            key = "year.char",
+		    value = "total_population")
+
+  ### calculate annual percentage changes ##
+
+  widepop$an.pc.ch_1970_1980 <- (log(widepop$pop.tot_1980) - log(widepop$pop.tot_1970))/10
+  widepop$an.pc.ch_1980_1990 <- (log(widepop$pop.tot_1990) - log(widepop$pop.tot_1980))/10
+  widepop$an.pc.ch_1990_2000 <- (log(widepop$pop.tot_2000) - log(widepop$pop.tot_1990))/10
+  widepop$an.pc.ch_2000_2009 <- (log(widepop$pop.tot_2009) - log(widepop$pop.tot_2000))/9
+  widepop$an.pc.ch_2009_2013 <- (log(widepop$pop.tot_2013) - log(widepop$pop.tot_2009))/4
+  widepop$an.pc.ch_2013_2017 <- (log(widepop$pop.tot_2017) - log(widepop$pop.tot_2013))/4
+
+  print(widepop)
+
+  ### table to output levels
+
+  ptab.lvl <- widepop[,c("entity.name","CBSA","statefips","countyfips",
+		          "pop.tot_1970","pop.tot_1980","pop.tot_1990",      
+			  "pop.tot_2000","pop.tot_2009","pop.tot_2013",       
+			  "pop.tot_2017")]
+
+  nm <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/total_population/total_population_",
+               dateo,
+	       ".csv")
+  write.csv(ptab.lvl,
+            file = nm,
+	    row.names = FALSE)
+
+  ### table to output changes
+
+  ptab.lvl <- widepop[,c("entity.name","CBSA","statefips","countyfips",
+		          "an.pc.ch_1970_1980","an.pc.ch_1980_1990","an.pc.ch_1990_2000",
+			  "an.pc.ch_2000_2009","an.pc.ch_2009_2013","an.pc.ch_2013_2017")]
+
+  nm <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/total_population/population_change_",
+               dateo,
+	       ".csv")
+  write.csv(ptab.lvl,
+            file = nm,
+	    row.names = FALSE)
+
+} # end of population table gate
+
+
+#############################################################################
+#############################################################################
+############## RACE GRAPHS ###################################################
+#############################################################################
+#############################################################################
+
+### original by county graphs for reference
+
+if(race1){
+
+  #### msas #####
+
+  #### make a function to run through msas
+  rfunc <- function(areacode){
+
+    print("inside function")
+    print(paste0("areacode is ",areacode))
+
+    ## make a a subset 
+    msa_sub <- msas[which(msas$CBSA == areacode),]
+
+    tito <- paste0("race for msa: white in blue, aa in black, hisp in red. CBSA is ",
+    	           areacode)
+
+    ### make a graph -- total population
+    race1 <- ggplot() +
+      geom_line(data = msa_sub,
+    	      mapping = aes(x = year, y = s_white),
+	      color = "blue") +
+      geom_line(data = msa_sub,
+    	      mapping = aes(x = year, y = s_aa)) +
+      geom_line(data = msa_sub,
+    	      mapping = aes(x = year, y = s_hisp),
+	      color = "red") +
+      labs(title = tito,
+           ytitle = "share of population")
+
+    ### output graph
+    nm <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/race/",
+     	       "msa_",
+	       areacode,
+	       "_",
+               dateo,
+	       ".jpg")
+    ggsave(filename = nm, 
+       plot = race1,
+       device = "jpg",
+       width = 11,
+       height = 8, 
+       units = c("in"))
+
+    } # end of function to do graphs by msa 
+
+  #### call function to make graphs by msa 
+
+  ## make a list of msas 
+  msa.list <- unique(msas$CBSA)
+
+  ## lapply to this list 
+  lapply(msa.list,rfunc)
+
+  #### counties #####
+
+  #### make a function to run through msas
+  rfunc2 <- function(areacode){
+
+    print("inside function")
+    print(paste0("areacode is ",areacode))
+
+    ## make a a subset (msa name, but counties)
+    msa_sub <- cnties[which(cnties$FIPS == areacode),]
+  
+    ## put name into 1x1 thing
+    county_namep <- msa_sub[which(msa_sub$year == 2000),c("county_name")]
+    print("county name is ")
+    print(county_namep) 
+    tito <- paste0("race for county: white in blue, aa in black, hisp in red. County is ",
+    	           county_namep,
+		   ", code ",
+		   areacode)
+
+    ### make a graph -- total population
+    race1 <- ggplot() +
+      geom_line(data = msa_sub,
+    	      mapping = aes(x = year, y = s_white),
+	      color = "blue") +
+      geom_line(data = msa_sub,
+    	      mapping = aes(x = year, y = s_aa)) +
+      geom_line(data = msa_sub,
+    	      mapping = aes(x = year, y = s_hisp),
+	      color = "red") +
+      labs(title = tito,
+           ytitle = "share of population")
+
+    ### output graph
+    nm <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/race/",
+     	       "county_",
+	       areacode,
+	       "_",
+               dateo,
+	       ".jpg")
+    ggsave(filename = nm, 
+       plot = race1,
+       device = "jpg",
+       width = 11,
+       height = 8, 
+       units = c("in"))
+
+    } # end of function to do graphs by county
+
+  #### call function to make graphs by county
+
+  ## make a list of counties
+  cnty.list <- unique(cnties$FIPS)
+
+  ## lapply to this list 
+  lapply(cnty.list,rfunc2)
+
+  ### output csv 
+  raceout <- orgd[,c("NAME","county_name","CBSA","statefips","countyfips","year","s_white","s_aa","s_hisp")]
+  nm <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/race/",
+     	       "race_msa_cnty_",
+               dateo,
+	       ".csv")
+  write.csv(x = raceout,
+  	    file = nm,
+	    row.names = FALSE)
+
+  #########################################
+  ##### urban/suburban/exurban ############
+  #########################################
+
+  # create race shares
+  threet$s_white <- threet$white_alone/threet$total_population
+  threet$s_aa <- threet$AA_alone/threet$total_population
+  threet$s_hisp <- threet$hispanic_or_latino/threet$total_population
+
+  #### make a function to run through msas
+  rfunc2 <- function(areacode){
+
+    print("inside function")
+    print(paste0("areacode is ",areacode))
+
+    ## make a a subset (msa name, but counties)
+    msa_sub <- threet[which(threet$area_type == areacode),]
+  
+    ## make graph title
+    tito <- paste0("race for county: white in blue, aa in black, hisp in red. Land type is  ",
+		   areacode)
+
+    ### make a graph -- total population
+    race1 <- ggplot() +
+      geom_line(data = msa_sub,
+    	      mapping = aes(x = year, y = s_white),
+	      color = "blue") +
+      geom_line(data = msa_sub,
+    	      mapping = aes(x = year, y = s_aa),
+	      color = "black") +
+      geom_line(data = msa_sub,
+    	      mapping = aes(x = year, y = s_hisp),
+	      color = "red") +
+      labs(title = tito,
+           ytitle = "share of population")
+
+    ### output graph
+    nm <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/race/",
+     	       "land_type_",
+	       areacode,
+	       "_",
+               dateo,
+	       ".jpg")
+    ggsave(filename = nm, 
+       plot = race1,
+       device = "jpg",
+       width = 11,
+       height = 8, 
+       units = c("in"))
+
+    } # end of function to do graphs by area_type
+
+  #### call function to make graphs by area_type
+
+  ## make a list of counties
+  area.list <- unique(threet$area_type)
+
+  ## lapply to this list 
+  lapply(area.list,rfunc2)
+
+  ### output csv 
+  threetout <- threet[,c("area_type","year","s_white","s_aa","s_hisp")]
+  nm <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/race/",
+     	       "race_area_type_",
+               dateo,
+	       ".csv")
+  write.csv(x = threetout,
+  	    file = nm,
+	    row.names = FALSE)  
+
+} # end of race1 gate -- county and msa shares by racial group
+
+
+####### race2 graph: show diversifying suburbs ######################################
+
+if(race2){
+
+  #### counties #####
+
+  # just keep our three counties of interest: Loudoun, Mont, Fairfax 
+  coi <- cnties[which( (cnties$statefips == "51" & cnties$countyfips %in% c("107","059")) |
+                       (cnties$statefips == "24" & cnties$countyfips == "031") ), ]
+
+  #### make a function to run through race types
+  rfunc2 <- function(rshare,rshare.name){
+
+    ### make a graph -- total population
+    race1 <- ggplot() +
+      geom_line(data = coi,
+    	      mapping = aes_string(x = "year", y = rshare, color = "county_name" )) 
+      labs(title = rshare.name,
+           y = "share of population")
+
+    ### output graph
+    nm <- paste0(janmtg,
+       	         "race/suburbs/suburbs_",
+	         rshare,
+		 "_",
+                 dateo,
+	         ".jpg")
+    ggsave(filename = nm, 
+       plot = race1,
+       device = "jpg",
+       width = 11,
+       height = 8, 
+       units = c("in"))
+
+    } # end of function to do graphs by race type
+
+  ## run function
+  rfunc2(rshare = "s_white",rshare.name = "share white")
+  rfunc2(rshare = "s_aa",rshare.name = "share black (alone)")
+  rfunc2(rshare = "s_hisp",rshare.name = "share hispanic")
+
+  ### output csv 
+  raceout <- coi[,c("NAME","county_name","CBSA","statefips","countyfips","year","s_white","s_aa","s_hisp")]
+  nm <- paste0(janmtg,
+       	         "race/suburbs/suburbs_raceshares_",
+                 dateo,
+	         ".csv")
+  write.csv(x = raceout,
+  	    file = nm,
+	    row.names = FALSE)
+
+} # end of race2 gate 
+
+####### race3 graph: show flips to majority aa ###################################
+
+if(race3){
+
+  #### counties #####
+
+  # just keep our two counties of interest: charles and pg
+  coi <- cnties[which(                        (cnties$statefips == "24" & cnties$countyfips %in% c("017","033")) ), ]
+
+  #### make a function to run through race types
+  rfunc2 <- function(rshare,rshare.name){
+
+    ### make graph y axis title
+    tito <- paste0(rshare.name)
+
+    ### make a graph -- total population
+    race1 <- ggplot() +
+      geom_line(data = coi,
+    	      mapping = aes_string(x = "year", y = rshare, color = "county_name" )) 
+      labs(title = tito,
+           y = "share of population")
+
+    ### output graph
+    nm <- paste0(janmtg,
+       	         "race/to_majority_aa/maj_aa_",
+	         rshare,
+		 "_",
+                 dateo,
+	         ".jpg")
+    ggsave(filename = nm, 
+       plot = race1,
+       device = "jpg",
+       width = 11,
+       height = 8, 
+       units = c("in"))
+
+    } # end of function to do graphs by race type
+
+  ## run function
+  rfunc2(rshare = "s_white",rshare.name = "share white")
+  rfunc2(rshare = "s_aa",rshare.name = "share black (alone)")
+  rfunc2(rshare = "s_hisp",rshare.name = "share hispanic")
+
+  ### output csv 
+  raceout <- coi[,c("NAME","county_name","CBSA","statefips","countyfips","year","s_white","s_aa","s_hisp")]
+  nm <- paste0(janmtg,
+       	         "race/to_majority_aa/majority_aa__",
+                 dateo,
+	         ".csv")
+  write.csv(x = raceout,
+  	    file = nm,
+	    row.names = FALSE)
+
+} # end of race3 gate 
+
+####### race4 graph: divergence in urban jurisdictions ##########
+
+if(race4){
+
+  #### counties #####
+
+  # just keep our three counties of interest: DC, Arlington, Alexandria
+  coi <- cnties[which( (cnties$statefips == "51" & cnties$countyfips %in% c("013","510")) |
+                       (cnties$statefips == "11" & cnties$countyfips == "001") ), ]
+
+  #### make a function to run through race types
+  rfunc2 <- function(rshare,rshare.name){
+
+    ### make graph y axis title
+    tito <- paste0(rshare.name)
+
+    ### make a graph -- total population
+    race1 <- ggplot() +
+      geom_line(data = coi,
+    	      mapping = aes_string(x = "year", y = rshare, color = "county_name" )) 
+      labs(title = tito,
+           y = "share of population")
+
+    ### output graph
+    nm <- paste0(janmtg,
+       	         "race/urban/urban_",
+	         rshare,
+		 "_",
+                 dateo,
+	         ".jpg")
+    ggsave(filename = nm, 
+       plot = race1,
+       device = "jpg",
+       width = 11,
+       height = 8, 
+       units = c("in"))
+
+    } # end of function to do graphs by race type
+
+  ## run function
+  rfunc2(rshare = "s_white",rshare.name = "share white")
+  rfunc2(rshare = "s_aa",rshare.name = "share black (alone)")
+  rfunc2(rshare = "s_hisp",rshare.name = "share hispanic")
+
+  ### output csv 
+  raceout <- coi[,c("NAME","county_name","CBSA","statefips","countyfips","year","s_white","s_aa","s_hisp")]
+  nm <- paste0(janmtg,
+       	         "race/urban/urban_",
+                 dateo,
+	         ".csv")
+  write.csv(x = raceout,
+  	    file = nm,
+	    row.names = FALSE)
+
+} # end of race4 gate 
+
+
+#############################################################################
+#############################################################################
+############## HOUSEHOLD COMPOSITION GRAPHS ###################################################
+#############################################################################
+#############################################################################
+
+
+## household size share by msa and county 
+
+if(hh1){
+
+  ##### make data long to do this #########
+
+  ### keep only relevant variables to avoid confusion ###
+  orghh1 <- orgd[,c("NAME","year","CBSA","hhs_1","hhs_2","hhs_3","hhs_4")] 
+
+  ### make msas long to do this ####
+  msas2 <- gather(data = orghh1, 
+  	   	  key = hhs_type,
+		  value = hhs_share,
+		  hhs_1:hhs_4)
+
+  msas2$hhs_type_name <- ifelse(msas2$hhs_type == "hhs_1","hh size: 1",
+  		           ifelse(msas2$hhs_type == "hhs_2","hh size: 2",
+			     ifelse(msas2$hhs_type == "hhs_3","hh size: 3 to 4",
+			       ifelse(msas2$hhs_type == "hhs_4","hh size: 5+","nada"))))
+
+  print(head(msas2))
+
+  ###### msas ###########################################3
+
+  #### make a function to run through msas
+  rfunc <- function(areacode){
+
+    print("inside function")
+    print(paste0("areacode is ",areacode))
+
+    ## make a a subset 
+    msa_sub <- msas2[which(msas2$CBSA == areacode),]
+
+    ## get msa name into 1x1
+    msa_name <- msa_sub[which(msa_sub$year == 2000),c("NAME")]
+
+    tito <- paste0(msa_name,
+    	           ": Share of HH by HH size")
+
+    ### make a graph -- total population
+    race1 <- ggplot() +
+      geom_line(data = msa_sub,
+    	      mapping = aes(x = year, y = hhs_share, color = hhs_type_name)) +
+      labs(title = tito,
+           y = "share of households")
+
+    ### output graph
+    nm <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/household_size/",
+     	       "hhsize_msa_",
+	       areacode,
+	       "_",
+               dateo,
+	       ".jpg")
+    ggsave(filename = nm, 
+       plot = race1,
+       device = "jpg",
+       width = 11,
+       height = 8, 
+       units = c("in"))
+
+    } # end of function to do graphs by msa 
+
+  #### call function to make graphs by msa 
+
+  ## make a list of msas 
+  #msa.list <- unique(msas$CBSA)
+  msa.list <- "47900"
+
+  ## lapply to this list 
+  lapply(msa.list,rfunc)
+
+
+  ###### counties ###########################################3
+
+  #### make a function to run through msas
+  rfunc <- function(areacode){
+
+    print("inside function")
+    print(paste0("areacode is ",areacode))
+
+    ## make a a subset 
+    msa_sub <- msas2[which(msas2$FIPS == areacode),]
+
+    ## get msa name into 1x1
+    msa_name <- msa_sub[which(msa_sub$year == 2000),c("NAME")]
+
+    tito <- paste0(msa_name,
+    	           ": Share of HH by HH size")
+
+    ### make a graph -- total population
+    race1 <- ggplot() +
+      geom_line(data = msa_sub,
+    	      mapping = aes(x = year, y = hhs_share, color = hhs_type)) +
+      labs(title = tito,
+           ytitle = "share of population")
+
+    ### output graph
+    nm <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/household_size/",
+     	       "hhsize_cnty_",
+	       areacode,
+	       "_",
+               dateo,
+	       ".jpg")
+    ggsave(filename = nm, 
+       plot = race1,
+       device = "jpg",
+       width = 11,
+       height = 8, 
+       units = c("in"))
+
+    } # end of function to do graphs by msa 
+
+  #### call function to make graphs by msa 
+
+  ## make a list of counties
+  cnty.list <- unique(cnties$FIPS)
+  #msa.list <- "47900"
+
+  ## lapply to this list 
+  lapply(cnty.list,rfunc)
+
+  #### output csv with data #####
+
+  nm <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/household_size/",
+     	       "hh_size_cnty_msa",
+               dateo,
+	       ".csv")
+  write.csv(x = msas2,
+  	    file = nm,
+	    row.names = FALSE)  
+
+  #########################################################################
+  ##### by land type urb/sub/exurb ########################################
+  #########################################################################
+
+
+
+} # end of household size shares
+
+#############################################
+### household composition by family type ####
+#############################################
+
+if(hh2){
+
+  #########################################
+  ##### urban/suburban/exurban ############
+  #########################################
+
+  # get rid of non-urb/sub/exurb jurisdictions
+  threet <- filter(threet, area_type != "nada")
+  print(table(threet$area_type))
+
+  # create household composition shares
+  print("just before shares")
+  threet$ht.tot <- threet$household_with_kids + threet$family_household_without_kids + threet$non_family_household_without_kids
+  print(summary(threet$ht.tot))
+  threet$hts_1 <- threet$household_with_kids/threet$ht.tot
+  print(summary(threet$hts_1))
+  threet$hts_2 <- threet$family_household_without_kids/threet$ht.tot
+  print(summary(threet$hts_2))
+  threet$hts_3 <- threet$non_family_household_without_kids/threet$ht.tot
+  print(summary(threet$hts_3))
+
+  #### make data long to graph in case we need multiple types
+  ### keep only relevant variables to avoid confusion ###
+  orghh1 <- threet[,c("area_type","year","hts_1","hts_2","hts_3")]
+
+  ### make msas long to do this ####
+  msas2 <- gather(data = orghh1, 
+  	   	  key = hts_type,
+		  value = hts_share,
+		  hts_1:hts_3)
+
+  msas2$hhs_type_name <- ifelse(msas2$hts_type == "hts_1","hh w/ kids",
+  		           ifelse(msas2$hts_type == "hts_2","w/o kids: family hhs",
+			     ifelse(msas2$hts_type == "hhs_3","w/o kids: non-family hhs","nada")))
+
+  #### make a function to run through area types
+  rfunc2 <- function(areacode){
+
+    print("inside function")
+    print(paste0("areacode is ",areacode))
+
+    ## make a a subset (msa name, but counties)
+    msa_sub <- threet[which(threet$area_type == areacode),]
+  
+    ## make graph title
+    tito <- paste0("household type. hh w/ kids is blue. fam w/o kids is black. non-fam w/o kids is red : ",
+		   areacode)
+
+    ### make a graph
+    race1 <- ggplot() +
+      geom_line(data = msa_sub,
+    	      mapping = aes(x = year, y = hts_1),
+	      color = "blue") +
+      geom_line(data = msa_sub,
+    	      mapping = aes(x = year, y = hts_2),
+	      color = "black") +
+      geom_line(data = msa_sub,
+    	      mapping = aes(x = year, y = hts_3),
+	      color = "red") +
+      labs(title = tito,
+           y = "share of households")
+
+    ### output graph
+    nm <- paste0(janmtg,
+     	       "household_type/hhtype_",
+	       areacode,
+	       "_",
+               dateo,
+	       ".jpg")
+    ggsave(filename = nm, 
+       plot = race1,
+       device = "jpg",
+       width = 11,
+       height = 8, 
+       units = c("in"))
+
+    } # end of function to do graphs by area_type
+
+  #### call function to make graphs by area_type
+
+  ## make a list of counties
+  area.list <- unique(threet$area_type)
+
+  ## lapply to this list 
+  lapply(area.list,rfunc2)
+
+
+  #### make graph of just 1-person hh by area type
+  onep <- ggplot() +
+      geom_line(data = threet,
+    	      mapping = aes(x = year, y = hts_3, color = area_type)) +
+      labs(title = "one-person hhs by land area type",
+           y = "share of households")
+  print("graph done")
+  ### output graph
+  nm <- paste0(janmtg,
+     	       "household_type/hhtype_onep_hh_",
+               dateo,
+	       ".jpg")
+  ggsave(filename = nm, 
+       plot = onep,
+       device = "jpg",
+       width = 11,
+       height = 8, 
+       units = c("in"))
+
+  ### output csv 
+  threetout <- threet[,c("area_type","year","hts_1","hts_2","hts_3")]
+  nm <- paste0(janmtg,
+	       "household_type/",
+     	       "hhtype_area_type_",
+               dateo,
+	       ".csv")
+  write.csv(x = threetout,
+  	    file = nm,
+	    row.names = FALSE)    
+
+}
+
+#############################################################################
+#############################################################################
+############## INCOME GRAPHS ###################################################
+#############################################################################
+#############################################################################
+
+if(incg){
+
+  #### make a function to run through counties
+  rfunc <- function(areacode){
+
+    print("inside function")
+    print(paste0("areacode is ",areacode))
+
+    ## make a a subset 
+    bgsc_sub <- bgsc[which(bgsc$st.cnty == areacode),]
+    print("after subset")
+    print(dim(bgsc_sub))
+    print(head(bgsc_sub))
+    print(summary(bgsc_sub$bg_med_inc_real))
+    print(table(bgsc_sub$year))
+
+    ## get msa name into 1x1
+    ## not sure how to get this to work here
+    #msa_name <- msa_sub[which(msa_sub$year == 2000),c("NAME")]
+
+    dcg <- ggplot() +
+      geom_density(data = bgsc_sub,
+    	      mapping = aes(x = bg_med_inc_real, color = as.factor(year))) +
+      scale_x_continuous(labels = comma) +
+      labs(title = "real median income over tiem dc",
+           y = "real median income by block group")
+
+print("after plot")
+
+    ### output graph
+    nm <- paste0(janmtg,
+     	         "income/by_county/c",
+		 areacode,
+		 "_",
+               dateo,
+	       ".jpg")
+print("after namer")
+
+    ggsave(filename = nm, 
+       plot = dcg,
+       device = "jpg",
+       width = 11,
+       height = 8, 
+       units = c("in"))
+
+    } # end of function to do graphs by msa 
+
+  #### call function to make graphs by msa 
+
+  ## make a list of counties
+  cnty.list <- unique(bgsc$st.cnty)
+
+  ## lapply to this list 
+  lapply(cnty.list,rfunc)
+
+  ### save csv for all counties and years
+  cname <-paste0(janmtg,
+     	         "income/by_county/all_bgs_cnties_1990to2017_",
+		 dateo,
+		 ".csv")
+  write.csv(x = bgsc,
+  	    file = cname,
+	    row.names = FALSE)
+
+} # end of income distribution graphs 
