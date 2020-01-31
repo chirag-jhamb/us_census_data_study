@@ -122,7 +122,7 @@ def tracts_block_groups_data(seq_number, data_location,state):
     # final_df = pd.concat([file2_result, file1_result], axis=1, join = 'inner', sort = True)
     # return final_df
 
-end_years = ['2017', '2012']
+end_years = ['2017', '2013']
 
 all_state_dfs = []
 state_list = ["dc","va","wv","md"]
@@ -134,7 +134,9 @@ for state in state_list:
         start_year = str(int(year) - 4)
         end_year = year
         Median_Income_df = ('MEDIAN HOUSEHOLD INCOME IN THE PAST 12 MONTHS (IN ' + end_year + ' INFLATION-ADJUSTED DOLLARS)', 'B19013')
-        total_pop_df = ('UNWEIGHTED SAMPLE COUNT OF THE POPULATION', 'B00001')
+		# for total population, avoid UNWEIGHTED SAMPLE COUNT OF THE POPULATION - incorrect data
+
+        total_pop_df = ('TOTAL POPULATION', 'B01003')
         block_group_data = get_block_group_data(state)
         print(block_group_data.head())
         tract_data_file_list = []
@@ -225,5 +227,5 @@ for i in years_merged_df.columns:
 		years_merged_df[i] = years_merged_df[i].astype("str")
 save_location = "/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/python_output/2020/block_group_data/"
 filename = save_location + datetime.datetime.today().strftime('%Y%m%d') + '_block_group_tract_data.csv'
-# final_file.to_csv(filename, index=False, quoting=csv.QUOTE_NONNUMERIC)
+final_file.to_csv(filename, index=False, quoting=csv.QUOTE_NONNUMERIC)
 print("File saved",filename)
