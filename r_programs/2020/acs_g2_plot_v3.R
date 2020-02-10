@@ -2,6 +2,8 @@
 # Author: Chirag Jhamb
 ################################################################################
 # import libraries required:
+library(tidyverse)
+library(haven)
 library(data.table)
 library(dplyr)
 library(scales)
@@ -11,22 +13,40 @@ library(splitstackshape)
 library(sf)
 library(stringr)
 library(tidyr)
-### GATES
+
+
+####### GATES ############
+
+#### introduction #####
 gate_intro_g2 = FALSE
 gate_intro_g3 = FALSE
+
+#### chapter 1 #####
 gate_ch01_g1 = FALSE
 gate_ch01_g3 = FALSE
 gate_ch01_g4 = FALSE
+
+#### chapter 2 ####
 gate_ch01_map = FALSE
-gate_ch02_g4 = TRUE
-gate_ch03_g4 = TRUE
-gate_ch02_g1 = TRUE
+gate_ch02_g4 = FALSE
+
+#### chapter 3 ####
+# cleans data #
 gate_ch03_inccln = FALSE
+gate_ch03_g1 = TRUE
+gate_ch03_g2 = TRUE
+gate_ch03_g3 = TRUE
+
+
 #for proper numerical representation in graphs:
 options(scipen=5)
 # date
 dateo <- paste(substr(Sys.Date(),1,4),substr(Sys.Date(),6,7),substr(Sys.Date(),9,10),sep="")
 dateo
+
+####################################################################################
+#### load data #####################################################################
+####################################################################################
 
 df <- read.csv("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/20191212_dataset_all_years.csv")
 dmv_subset <- subset(df, level=="county_level")
@@ -51,6 +71,7 @@ groupDir <- "/groups/brooksgrp"
 out_dir_intro <- paste0(groupDir,"/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/2020_report/introduction/introduction_")
 out_dir_ch01 <- paste0(groupDir,"/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/2020_report/ch01/ch01_")
 out_dir_ch02 <- paste0(groupDir,"/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/2020_report/ch02/ch02_")
+out_dir_ch03 <- paste0(groupDir,"/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/2020_report/ch03/ch03_")
 if (gate_intro_g2){
   # Save dataset into a csv:
   save_path <- paste0(out_dir_intro,"g2_data_",dateo,".csv")
@@ -64,6 +85,11 @@ if (gate_intro_g2){
   save_path <- paste0(out_dir_intro,"g2_",dateo,".jpg")
   ggsave(save_path, plot = p, dpi = 300, width = 16, height = 11, units = c("in"))
 }
+
+
+####################################################################################
+#### introduction #####################################################################
+####################################################################################
 
 # compare DC MSA population growth to other areas
 if (gate_intro_g3){
@@ -79,6 +105,10 @@ if (gate_intro_g3){
   save_path <- paste0(out_dir_intro,"g3_",dateo,".jpg")
   ggsave(save_path, plot = intro_g3, dpi = 300, width = 16, height = 11, units = c("in"))
 }
+
+####################################################################################
+#### chapter 1: race #####################################################################
+####################################################################################
 
 if (gate_ch01_g1){
   # 3 panel: each graph has urban/suburban/exurban By % hispanic, % aa, % white (see image). Make all graphs have the same y axis
@@ -169,6 +199,10 @@ if (gate_ch01_map){
   }
 }
 
+####################################################################################
+#### chapter 2: household type #####################################################################
+####################################################################################
+
 if (gate_ch02_g4){
   ch02_g4 <- dmv_subset[c("household_with_kids","family_household_without_kids","non_family_household_without_kids","area_type","year")]
   # get rid of null values
@@ -176,7 +210,8 @@ if (gate_ch02_g4){
   main_cols <- c("household_with_kids","family_household_without_kids","non_family_household_without_kids")
   # sum all area_type, year pairs using group by:
   ch02_g4 <- ch02_g4 %>%group_by(area_type, year) %>%summarise_each(funs(sum))
-  ch02_g4$total <- rowSums(ch02_g4[main_cols])
+  ch02_g4$total_test <- rowSums(ch02_g4[main_cols])
+
   for (i in main_cols){
     ch02_g4[[i]] <- 100*ch02_g4[[i]]/ch02_g4$total
     save_path <- paste0(out_dir_ch02,"g4_",i,"_",dateo,".jpg")
@@ -236,13 +271,12 @@ if(gate_ch02_g1){
   save_path <- paste0(out_dir_ch02,"g1_above_59_",dateo,".jpg")
   print(save_path)
   ggsave(save_path, plot =age.g1, dpi = 300, width = 16, height = 11, units = c("in"))
-  #write to csv:
-  save_path <- paste0(out_dir_ch02,"g1_data_",dateo,".csv")
-  print("Saving to CSV")
-  print(save_path)
-  write.table(msa_sub5, file = save_path, row.names = FALSE)
 }
 
+
+####################################################################################
+#### chapter 3: income #####################################################################
+####################################################################################
 
 if(gate_ch03_inccln){
 
@@ -250,7 +284,7 @@ if(gate_ch03_inccln){
 
   # cpi file
   cpinm <- "/groups/brooksgrp/consumer_price_index/all_urban_consumers/through_2018/cu.data.1.AllItems.txt"
-  cpinm <- cpidats
+
   # read tab delimited text file
   cpi <- read.table(file = cpinm,
       	            header = TRUE,
@@ -475,10 +509,11 @@ if(gate_ch03_inccln){
   # better to have affirmative definition of stuff here for exurban #
   bgsc$area_type <-
     ifelse(  bgsc$statefips == "11" |
-  		           (bgsc$statefips == "51" & bgsc$countyfips %in% c("013","510")), "Urban",
+            (bgsc$statefips == "51" & bgsc$countyfips %in% c("013","510")), "Urban",
       ifelse((bgsc$statefips == "24" & bgsc$countyfips %in% c("033","031")) |
-		     	     (bgsc$statefips == "51" & bgsc$countyfips %in% c("059","600","610")), "Suburban",
-        ifelse((bgsc$statefips == "24" & bgsc$countyfips %in% c("009","017","021")) |			       (bgsc$statefips == "51" & bgsc$countyfips %in% c("043","047","059","061","069",
+	     (bgsc$statefips == "51" & bgsc$countyfips %in% c("059","600","610")), "Suburban",
+        ifelse((bgsc$statefips == "24" & bgsc$countyfips %in% c("009","017","021")) |			       
+               (bgsc$statefips == "51" & bgsc$countyfips %in% c("043","047","059","061","069",
 			       	       	 		   "107","153","157","177","179",
                                                    	   "187","600","610","630",
 							   "683","685","840")) |
@@ -490,5 +525,186 @@ if(gate_ch03_inccln){
   	             	 bgsc$tract == "001600" & bgsc$blkgrp == "3"),]
   my.house
 
+
+  ####### set missing values for income to zero when population is zero ####
+
+  bgsc$bg_med_inc_real <- ifelse(bgsc$pop == 0, NA, bgsc$bg_med_inc_real)
+
+  ####### save for later use ##################################
+
+  # where to save dataset
+  fn <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/interim_datasets/tract_income_",
+               dateo,".rds")
+  saveRDS(object = bgsc,
+          file = fn)
+
+}
+
+
+##### ch3, g1: income: income distribution for full msa, 1990 and 2017 #############
+
+if(gate_ch03_g1){
+
+  #### input data 
+  # set filename to read
+  fn <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/interim_datasets/tract_income_",
+               dateo,".rds")
+  # bring in data
+  bgsc <- readRDS(fn)
+
+  ## look into no income block groups in 1990
+  noinc <- filter(.data = bgsc, bgsc$year == 1990 & bgsc$bg_med_inc_real == 0)
+
+  ## limit data to 1990 and 2017 for ease of graphing and output
+  bgsc <- filter(.data = bgsc, year == 1990 | year == 2017)
+
+  ## make graph of full msa, 1990 and latest year 
+  dcg <- ggplot() +
+      geom_density(data = bgsc,
+                   mapping = aes(x = bg_med_inc_real, color = as.factor(year))) +
+      scale_x_continuous(labels = comma) +
+      labs(title = "real median income over time dc msa",
+           x = "real median income by block group",
+	   y = "share of block groups")
+
+  ## save the graph 
+  save_path <- paste0(out_dir_ch03,"g1_msa_income_",dateo,".jpg")
+  ggsave(save_path, 
+         plot = dcg,
+	 dpi = 300, 
+	 width = 16, 
+	 height = 11, 
+	 units = c("in"))
+
+  ## output data csv
+  bgsc <- bgsc[,c("statefips","countyfips","tract","blkgrp","area_type","pop","bg_med_inc_real")]
+  save_path <- paste0(out_dir_ch03,"g1_msa_income_",dateo,".csv")
+  write.csv(bgsc, save_path)
+
+}  # end of chapter 3, graph 1
+
+
+##### income g2: income distribution by area type, 1990 and 2017 #############
+
+if(gate_ch03_g2){
+
+  # for each area type, show 2 years distribution on graph 
+
+  #### input data 
+  # set filename to read
+  fn <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/interim_datasets/tract_income_",
+               dateo,".rds")
+  # bring in data
+  bgsc <- readRDS(fn)
+
+  #### make a function to run through area types
+  rfunc <- function(areacode){
+
+    ## make a a subset to just the relevant area type
+    bgsc_sub <- bgsc[which(bgsc$area_type == areacode),]
+
+    ## make a subset to the relevant years 
+    bgsc_sub <- filter(.data = bgsc_sub, year == 1990 | year == 2017)
+
+    ## make the graph 
+    dcg <- ggplot() +
+      geom_density(data = bgsc_sub,
+            mapping = aes(x = bg_med_inc_real, color = as.factor(year))) +
+      scale_x_continuous(labels = comma,
+      			 limits = c(0,300000),
+			 breaks = seq(0,300000,100000)) +
+      scale_y_continuous(limits = c(0,0.000018)) +
+      labs(title = paste0(areacode, "counties: real median income 1990 and 2017"),
+           y = "real median income by block group")
+
+    ### output graph
+    nm <- paste0(out_dir_ch03,
+		"g2_",
+		areacode,
+		"_",
+                dateo,
+	        ".jpg")
+
+    ggsave(filename = nm, 
+       plot = dcg,
+       device = "jpg",
+       width = 11,
+       height = 8, 
+       units = c("in"))
+
+    } # end of function to do graphs by msa 
+
+  #### call function to make graphs by msa 
+
+  ## make a list of counties
+  at.list <- unique(bgsc$area_type)
+
+  ## lapply to this list 
+  lapply(at.list,rfunc)
+
+} # end of income, graph 2 
+
+
+##### income g3: income distribution for particular jurisdictions, 1990 and 2017 #############
+
+if(gate_ch03_g3){
+
+  #### input data 
+  # set filename to read
+  fn <- paste0("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/interim_datasets/tract_income_",
+               dateo,".rds")
+  # bring in data
+  bgsc <- readRDS(fn)
+
+  # select relevant jurisdictions 
+  bgsc <- filter(.data = bgsc,
+                 (statefips == "11") |
+		 (statefips == "51" & countyfips %in% c("683","630")))
+
+  #### make a function to run through area types
+  rfunc <- function(areacode){
+
+    ## make a a subset to just the relevant area type
+    bgsc_sub <- bgsc[which(bgsc$st.cnty == areacode),]
+
+    ## make a subset to the relevant years 
+    bgsc_sub <- filter(.data = bgsc_sub, year == 1990 | year == 2017)
+
+    ## make the graph 
+    dcg <- ggplot() +
+      geom_density(data = bgsc_sub,
+            mapping = aes(x = bg_med_inc_real, color = as.factor(year))) +
+      scale_x_continuous(labels = comma,
+      			 limits = c(0,300000),
+			 breaks = seq(0,300000,100000)) +
+      scale_y_continuous(limits = c(0,0.0000375)) +
+      labs(title = paste0(areacode, ": real median income 1990 and 2017"),
+           y = "real median income by block group")
+
+    ### output graph
+    nm <- paste0(out_dir_ch03,
+		"g3_",
+		areacode,
+		"_",
+                dateo,
+	        ".jpg")
+
+    ggsave(filename = nm, 
+       plot = dcg,
+       device = "jpg",
+       width = 11,
+       height = 8, 
+       units = c("in"))
+
+    } # end of function to do graphs by msa 
+
+  #### call function to make graphs by msa 
+
+  ## make a list of counties
+  at.list <- unique(bgsc$st.cnty)
+
+  ## lapply to this list 
+  lapply(at.list,rfunc)
+  
 
 }
