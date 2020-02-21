@@ -68,13 +68,17 @@ def get_summary_year_data(start_year, end_year):
         # print('fetching data for state: ', state)
 
         # Specifying the path for documentation file
-        if int(end_year) < 2013:
-            docFilePath = inDir + '/Sequence_Number_and_Table_Number_Lookup.xls'
-        else:
-            docFilePath = inDir + '/ACS_5yr_Seq_Table_Number_Lookup.xls'
-
         # Import the documentation file as dataframe
-        documentation_file = pd.read_excel(docFilePath, header=0, dtype=object, na_filter=False)
+        if int(end_year)==2018:
+            docFilePath = inDir + '/ACS_5yr_Seq_Table_Number_Lookup.csv'
+            documentation_file = pd.read_csv(docFilePath, header=0, dtype=object, na_filter=False)
+        else:
+            # Specifying the path for documentation file
+            if int(end_year) < 2013:
+                docFilePath = inDir + '/Sequence_Number_and_Table_Number_Lookup.xls'
+            else:
+                docFilePath = inDir + '/ACS_5yr_Seq_Table_Number_Lookup.xls'
+            documentation_file = pd.read_excel(docFilePath, header=0, dtype=object, na_filter=False)
 
         # Printing the dataset observations
         print(documentation_file.head())
@@ -299,7 +303,7 @@ def get_summary_year_data(start_year, end_year):
     mergedDF_zcta.to_csv(save_file, sep=',', index=False)
 
 
-end_year = ['2017']
+end_year = ['2018']
 
 for year in end_year:
     get_summary_year_data(str(int(year) - 4), year)

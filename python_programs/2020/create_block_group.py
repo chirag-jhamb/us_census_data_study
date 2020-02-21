@@ -32,36 +32,41 @@ def read_shapefile(shp_path):
 	return df
 
 def documentation_file_data(table_id, table_name,state):  # reads the documentation file, gets the column name and row location of each detail
-    inDir = r'/groups/brooksgrp/census/american_community_survey/' + start_year + '_' + end_year + '_5year_estimates/raw_data'
-    if int(end_year) < 2013:
-        docFilePath = inDir + '/Sequence_Number_and_Table_Number_Lookup.xls'
-    else:
-        docFilePath = inDir + '/ACS_5yr_Seq_Table_Number_Lookup.xls'
-    dataDir = inDir + '/group1'
-    # documentation file table IDs, names and row location
-    documentation_file = pd.read_excel(docFilePath, header=0, dtype=object, na_filter=False)
-    # subset the data to the required table id, only to  get start position mentioned in the first row
-    data_records = documentation_file[documentation_file["Table ID"]==table_id]
-    # get start position mentioned in the first row
-    start_pos = int(data_records["Start Position"].iloc[0])-1
-    # subset the data where line isn't blank
-    data_records = documentation_file[(documentation_file["Table ID"]==table_id) & (documentation_file["Line Number"]!='')]
-    data_location = {}
-    # get row location and column name of each item in table id:
-    for i,r in data_records.iterrows():
-        seq_number = int(str(r['Sequence Number']).strip())
-        try:
-            # to avoid the decimal 0.5 in some cases
-            if float(r["Line Number"]).is_integer():
-                if table_id=="B19013":
-                     #to get rid of year in column name, causing multiple columns at merge
-                    data_location[r["Line Number"]+start_pos-1] = table_id+ "_"+ r["Table Title"].replace(":","").replace(" ","_").split("(")[0]
-                else:
-                    data_location[r["Line Number"]+start_pos-1] = table_id+ "_" + r["Table Title"].replace(":","").replace(" ","_")
-        # to encounter error when empty cell is parsed
-        except ValueError:
-            pass
-    return data_location, seq_number
+	inDir = r'/groups/brooksgrp/census/american_community_survey/' + start_year + '_' + end_year + '_5year_estimates/raw_data'
+	if int(end_year)==2018:
+		docFilePath = inDir + '/ACS_5yr_Seq_Table_Number_Lookup.csv'
+		# documentation file table IDs, names and row location
+		documentation_file = pd.read_csv(docFilePath, header=0, dtype=object, na_filter=False)
+	else:
+		if int(end_year) < 2013:
+			docFilePath = inDir + '/Sequence_Number_and_Table_Number_Lookup.xls'
+		else:
+			docFilePath = inDir + '/ACS_5yr_Seq_Table_Number_Lookup.xls'
+		# documentation file table IDs, names and row location
+		documentation_file = pd.read_excel(docFilePath, header=0, dtype=object, na_filter=False)
+	dataDir = inDir + '/group1'
+	# subset the data to the required table id, only to  get start position mentioned in the first row
+	data_records = documentation_file[documentation_file["Table ID"]==table_id]
+	# get start position mentioned in the first row
+	start_pos = int(data_records["Start Position"].iloc[0])-1
+	# subset the data where line isn't blank
+	data_records = documentation_file[(documentation_file["Table ID"]==table_id) & (documentation_file["Line Number"]!='')]
+	data_location = {}
+	# get row location and column name of each item in table id:
+	for i,r in data_records.iterrows():
+		seq_number = int(str(r['Sequence Number']).strip())
+		try:
+		    # to avoid the decimal 0.5 in some cases
+			if float(r["Line Number"]).is_integer():
+				if table_id=="B19013":
+		             #to get rid of year in column name, causing multiple columns at merge
+					data_location[int(r["Line Number"])+start_pos-1] = table_id+ "_"+ r["Table Title"].replace(":","").replace(" ","_").split("(")[0]
+				else:
+					data_location[int(r["Line Number"])+start_pos-1] = table_id+ "_" + r["Table Title"].replace(":","").replace(" ","_")
+		# to encounter error when empty cell is parsed
+		except ValueError:
+		    pass
+	return data_location, seq_number
 
 def get_block_group_data(state):
     inDir = r'/groups/brooksgrp/census/american_community_survey/' + start_year + '_' + end_year + '_5year_estimates/raw_data'
@@ -122,7 +127,7 @@ def tracts_block_groups_data(seq_number, data_location,state):
     # final_df = pd.concat([file2_result, file1_result], axis=1, join = 'inner', sort = True)
     # return final_df
 
-end_years = ['2017', '2013']
+end_years = ['2018','2017', '2013']
 
 all_state_dfs = []
 state_list = ["dc","va","wv","md"]
