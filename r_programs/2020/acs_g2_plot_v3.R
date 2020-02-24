@@ -18,27 +18,27 @@ library(tidyr)
 ####### GATES ############
 
 #### introduction #####
-gate_intro_g2 = TRUE
-gate_intro_g3 = TRUE
+gate_intro_g2 = F
+gate_intro_g3 = F
 
 #### chapter 1 #####
-gate_ch01_g1 = TRUE
-gate_ch01_g3 = TRUE
-gate_ch01_g4 = TRUE
-gate_ch01_map = TRUE
+gate_ch01_g1 = F
+gate_ch01_g3 = F
+gate_ch01_g4 = F
+gate_ch01_map = T
 #### chapter 2 ####
-gate_ch02_g1 = TRUE
+gate_ch02_g1 = F
 
-gate_ch02_g4 = TRUE
-gate_ch02_map = TRUE
+gate_ch02_g4 = F
+gate_ch02_map = F
 #### chapter 3 ####
 # cleans data #
-gate_ch03_inccln = TRUE
-gate_ch03_g1 = TRUE
-gate_ch03_g2 = TRUE
-gate_ch03_g3 = TRUE
+gate_ch03_inccln = F
+gate_ch03_g1 = F
+gate_ch03_g2 = F
+gate_ch03_g3 = F
 ##### appendix #####
-gate_appendix_map = TRUE
+gate_appendix_map = F
 
 #for proper numerical representation in graphs:
 options(scipen=5)
@@ -196,11 +196,13 @@ if (gate_ch01_g4){
 if (gate_ch01_map){
   source("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_programs/2020/acs_ch01_map_plot.R", echo=T)
   col_names <- c("white_alone", "AA_alone", "hispanic_or_latino")
+  col_names <- c("white_alone")
   for (col in col_names){
+    print(col)
     save_path <- paste0(out_dir_ch01,"map_roads_",col,"_",dateo,".jpg")
     plot_quantile_map(colname=col, fname=save_path, exurban = F, roads = T)
-    save_path <- paste0(out_dir_ch01,"map_",col,"_",dateo,".jpg")
-    plot_quantile_map(colname=col, fname=save_path, exurban = F, roads = F)
+    # save_path <- paste0(out_dir_ch01,"map_",col,"_",dateo,".jpg")
+    # plot_quantile_map(colname=col, fname=save_path, exurban = F, roads = F)
   }
 
 }

@@ -17,6 +17,7 @@ library(RColorBrewer)
 library(sf)
 library(grid)
 library(gridExtra)
+options(scipen=5)
 
 ########################### Functions to format the data ###################################################
 
@@ -64,6 +65,105 @@ reformat_acs_household_type_subset <- function(data) {
   colnames(data)[which(colnames(data) == "B11005_17_nonfamily_households")] <- 'non_family_household_without_kids'
   return(data)
 }
+
+
+
+# plot legend using bar graph plotting. Set Y values to 1s and use lables+colors on x to depict the break values of legend
+plot_special_legend <- function(lbl, color_val, save_location){
+  print("Plotting legend")
+  # lbl <- c(0.2,0.3,0.4,0.8)
+  print(lbl)
+  options(scipen=4)
+  df <- data.frame(x_ones = c(1,1,1,1,1),
+                   q = c(4,3,2,1,0),
+                   cutoffs = lbl)
+  df$q <- as.factor(df$q)
+  lbl <- paste(lbl, " ", sep="")
+  df <- mutate(df, cutoffs.sum=cumsum(cutoffs))
+  df
+  cc <- df$cutoffs.sum
+  # my.cols <- c("#F2F0F7","#CBC9E2","#9E9AC8","#6A51A3","#6A41A3")
+
+  my.cols <- color_val
+  my.cols <- rev(my.cols)
+  p1 <- ggplot() +
+    geom_bar(data = df,
+             mapping = aes(x = x_ones, fill = q, y = cutoffs),
+             position = "stack",
+             stat = "identity",
+             width = 0.1) +
+    coord_flip() +
+    labs(x = "",
+         y = "") +
+    scale_x_continuous(limits = c(0.95,1.25)) +
+    scale_y_continuous(breaks = cc, labels = lbl) +
+    scale_fill_manual(values=my.cols)+
+    theme(
+      axis.text.y = element_blank(),
+      axis.text.x = element_text(size = 15,
+                                 margin = margin(t = 0, r = 0, b = 0, l = -20)),
+      axis.ticks = element_blank(),
+      panel.background = element_rect(fill = "white"),
+      legend.position = "none"
+    )
+
+# save_location
+  ggsave("~/temp.jpg", plot = p1, dpi = 300, width = 15, height = 5, units = c("in"))
+
+}
+
+# lbl2 <- c(0.1,0.74,0.87,1.00)
+# q <- ggplot()+geom_bar(data = tdata,
+#          mapping = aes(x = group_col, fill = as.factor(name), y =  as.factor(name)),
+#          position = "fill",
+#          stat = "identity",
+#          width = 0.1)+
+#
+#          # position_fill()+
+#          labs(x = "")+
+#          labs(y = "")+
+#          # scale_y_continuous(waiver())+
+#          scale_fill_manual(values=my.cols)+
+#          # scale_color_manual(my.cols)+#+ scale_fill_manual(values=my.cols)
+#          theme(axis.text.x = element_blank(),
+#            axis.text.y = element_text(size = 15,  hjust = 0.01, vjust=0.1), #angle = 70, ,margin = margin(t = 0, r = 0, b = 0, l = -20)),
+#            axis.ticks = element_blank(),
+#            panel.background = element_rect(fill = "white"),
+#            legend.position = "none")
+#
+#
+# ggsave("~/temp.jpg", plot = q, dpi = 300, width = 16, height = 11, units = c("in"))
+
+### make a little dataframe
+# df <- data.frame(x_ones = c(1,1,1,1),
+#                  q = labels,
+#                  cutoffs = labels)
+#
+# df$q <- as.factor(df$q)
+#
+# ### can i make a cumulative sum?
+# df <- mutate(df, cutoffs.sum=cumsum(cutoffs))
+# cc <- df$cutoffs.sum
+#
+# p1 <- ggplot() +
+# geom_bar(data = df,
+#          mapping = aes(x = x_ones, fill = q, y = cutoffs),
+#          # mapping = aes(x = cutoffs, fill = q, y = x_ones),
+#          position = "stack",
+#          stat = "identity",
+#          width = 0.1) +
+# coord_flip() +
+# labs(x = "",
+#      y = "") +
+# # scale_x_continuous(limits = c(0.95,1.25)) +
+# scale_y_continuous(breaks = my.cols) +
+# theme(axis.text.y = element_blank(),
+#   axis.text.x = element_text(size = 15,
+#                              margin = margin(t = 0, r = 0, b = 0, l = -20)),
+#   axis.ticks = element_blank(),
+#   panel.background = element_rect(fill = "white"),
+#   legend.position = "none")+ scale_fill_manual(values=my.cols)
+# ggsave("~/temp.jpg", plot = p1, dpi = 300, width = 16, height = 11, units = c("in"))
 
 ##############################################################################
 # todays date
@@ -257,39 +357,9 @@ plot_quantile_map <- function(colname,  fname, exurban = T, roads = T){
     )
   print(fname)
   ggsave(fname, plot =tester, dpi = 300, width = 16, height = 11, units = c("in"))
+  fname <- str_replace(fname, ".jpg","_legend.jpg")
+  plot_special_legend(brks, my.cols ,fname)
 }
-
-  # print("PLOTTING LEGEND--")
-  # ### make a little dataframe
-  # df <- data.frame(cato = c(1,1,1,1),
-  #                  q = labels,
-  #                  cutoffs = labels)
-  #
-  # df$q <- as.factor(df$q)
-  #
-  # ### can i make a cumulative sum?
-  # df <- mutate(df, cutoffs.sum=cumsum(cutoffs))
-  # cc <- df$cutoffs.sum
-  #
-  # p1 <- ggplot() +
-  # geom_bar(data = df,
-  #          # mapping = aes(x = cato, fill = q, y = cutoffs),
-  #          mapping = aes(x = cutoffs, fill = q, y = cato),
-  #          position = "stack",
-  #          stat = "identity",
-  #          width = 0.1) +
-  # coord_flip() +
-  # labs(x = "",
-  #      y = "") +
-  # # scale_x_continuous(limits = c(0.95,1.25)) +
-  # scale_y_continuous(breaks = my.cols) +
-  # theme(axis.text.y = element_blank(),
-  #   axis.text.x = element_text(size = 15,
-  #                              margin = margin(t = 0, r = 0, b = 0, l = -20)),
-  #   axis.ticks = element_blank(),
-  #   panel.background = element_rect(fill = "white"),
-  #   legend.position = "none")+ scale_fill_manual(values=my.cols)
-  # ggsave("~/temp.jpg", plot = p1, dpi = 300, width = 16, height = 11, units = c("in"))
 
 
   plot_quantile_map_per_county <- function(colname,  fname){
@@ -399,5 +469,7 @@ plot_quantile_map <- function(colname,  fname, exurban = T, roads = T){
         save_name <- paste(fname,fip,"_income_",dateo,".jpg",sep="")
         print(save_name)
         ggsave(save_name, plot =tester, dpi = 300, width = 16, height = 11, units = c("in"))
+        save_name <- paste(fname,fip,"_income_legend_",dateo,".jpg",sep="")
+        plot_special_legend(brks, my.cols ,save_name)
       }
     }
