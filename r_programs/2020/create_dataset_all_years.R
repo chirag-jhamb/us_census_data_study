@@ -203,8 +203,11 @@ reformat_1970_2000_data <- function(data){
   data_1980['above_59'] <- rowSums(data_1980[,c("t15_22","t15_23","t15_24","t15_25","t15_26")])
 
   # race 1980 columns
-  data_1980['white_alone'] <- rowSums(data_1980[,c("t12_1","t14_2")])
-  data_1980['AA_alone'] <- rowSums(data_1980[,c("t12_2","t14_3")])
+  # data_1980['white_alone'] <- rowSums(data_1980[,c("t12_1","t14_2")])
+  # data_1980['AA_alone'] <- rowSums(data_1980[,c("t12_2","t14_3")])
+  # changed to white population - hispanic
+  data_1980['white_alone'] <- data_1980$t12_1 - data_1980$t14_2
+  data_1980['AA_alone'] <- data_1980$t12_2 - data_1980$t14_3
   names(data_1980)[names(data_1980) == 't14_1'] <- 'hispanic_or_latino'  # rename since only one column, need atleast two columns to apply the sum function
   # t3_1 for total population of 1980
   names(data_1980)[names(data_1980) == 't3_1'] <- 'total_population'  # rename since only one column, need atleast two columns to apply the sum function
@@ -493,6 +496,6 @@ final_df <- rbindlist(list(total_pop_df, dmv_subset),fill=TRUE)
 final_df$msa_name <- NULL
 print(head(final_df))
 filename <- paste("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/",dateo,"_dataset_all_years.csv",sep="")
-# print("Saving file..")
-# write.csv(final_df, filename)
-# print(filename)
+print("Saving file..")
+write.csv(final_df, filename)
+print(filename)

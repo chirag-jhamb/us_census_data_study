@@ -25,7 +25,7 @@ gate_intro_g3 = F
 gate_ch01_g1 = F
 gate_ch01_g3 = F
 gate_ch01_g4 = F
-gate_ch01_map = T
+gate_ch01_map = F
 #### chapter 2 ####
 gate_ch02_g1 = F
 
@@ -39,7 +39,7 @@ gate_ch03_g2 = F
 gate_ch03_g3 = F
 ##### appendix #####
 gate_appendix_map = F
-
+gate_appendix_g1 = T
 #for proper numerical representation in graphs:
 options(scipen=5)
 # date
@@ -50,7 +50,7 @@ dateo
 #### load data #####################################################################
 ####################################################################################
 
-df <- read.csv("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/20200219_dataset_all_years.csv")
+df <- read.csv("/groups/brooksgrp/center_for_washington_area_studies/state_of_the_capitol_region/r_output/2020/20191101_meeting/20200224_dataset_all_years.csv")
 dmv_subset <- subset(df, level=="county_level")
 # list of CBSAs to plot
 sub_cbsa <- c(12060,14460,26420,33100,37980,47900)
@@ -735,7 +735,7 @@ if(gate_ch03_g3){
   lapply(at.list,rfunc)
 }
 
-#### appendix map
+#### appendix map #############
 
 if (gate_appendix_map){
   # call the source file containing map function
@@ -744,4 +744,19 @@ if (gate_appendix_map){
   # run the plot function
   plot_quantile_map_per_county(colname=col, fname=out_dir_appendix)
 
+}
+
+#### appendix Graphs #############
+
+if (gate_appendix_g1){
+  region_id <- 11001
+  appendix_g1 <- subset(dmv_subset, FIPS=region_id)
+  appendix_g1_graph <- appendix_g1 %>%group_by(year) %>% summarise(total_population = sum(total_population))
+  p1 <- ggplot() +
+      geom_line(data = appendix_g1_graph,mapping = aes(x = year, y = total_population))+
+      scale_x_continuous(labels = c(1970,1980,1990,2000,2010,2018))
+  print("gate_appendix_g1")
+  save_path <- paste0(out_dir_appendix,"g1_",region_id,"_",dateo,".jpg")
+  print(save_path)
+  ggsave(save_path, plot = p1, dpi = 300, width = 16, height = 11, units = c("in"))
 }
